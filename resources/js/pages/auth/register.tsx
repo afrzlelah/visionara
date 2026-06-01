@@ -194,9 +194,9 @@ export default function Register({ passwordRules }: Props) {
                                     </div>
                                     <label htmlFor="agree" className="text-xs font-bold text-neutral-500 leading-normal select-none cursor-pointer">
                                         I agree to the{' '}
-                                        <span className="text-[#E1005E] hover:underline transition-all">
+                                        <Link href="/privacy-policy" className="text-[#E1005E] hover:underline transition-all">
                                             Therm Condition and Privacy policy
-                                        </span>
+                                        </Link>
                                     </label>
                                 </div>
 

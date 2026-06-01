@@ -1,11 +1,32 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
+import SuccessSplashScreen from '@/components/success-splash-screen';
 
 export default function Dashboard() {
+    const { flash } = usePage().props as any;
+    const [showSplash, setShowSplash] = useState(false);
+    const [splashType, setSplashType] = useState<'login' | 'register'>('login');
+
+    useEffect(() => {
+        if (flash?.success_action) {
+            setSplashType(flash.success_action === 'register' ? 'register' : 'login');
+            setShowSplash(true);
+        }
+    }, [flash]);
+
     return (
         <>
             <Head title="Dashboard" />
+            
+            {showSplash && (
+                <SuccessSplashScreen 
+                    type={splashType} 
+                    onClose={() => setShowSplash(false)} 
+                />
+            )}
+
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
@@ -18,7 +39,7 @@ export default function Dashboard() {
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>
             </div>
@@ -26,11 +47,11 @@ export default function Dashboard() {
     );
 }
 
-Dashboard.layout = (props: { currentTeam?: { slug: string } | null }) => ({
+Dashboard.layout = () => ({
     breadcrumbs: [
         {
             title: 'Dashboard',
-            href: props.currentTeam ? dashboard(props.currentTeam.slug) : '/',
+            href: dashboard().url,
         },
     ],
 });
