@@ -14,10 +14,13 @@ type Props = {
 
 export default function Register({ passwordRules }: Props) {
     // Parse initial role from query parameter
-    const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const searchParams =
+        typeof window !== 'undefined'
+            ? new URLSearchParams(window.location.search)
+            : null;
     const initialRole = searchParams?.get('role') || 'difabel';
     const [role, setRole] = useState<'volunteer' | 'difabel'>(
-        initialRole === 'volunteer' ? 'volunteer' : 'difabel'
+        initialRole === 'volunteer' ? 'volunteer' : 'difabel',
     );
 
     // Keep state in sync if URL query parameter changes
@@ -32,29 +35,37 @@ export default function Register({ passwordRules }: Props) {
 
     return (
         <>
-            <Head title={role === 'volunteer' ? 'Register as Volunteer' : 'Register as Support Seeker'} />
+            <Head
+                title={
+                    role === 'volunteer'
+                        ? 'Register as Volunteer'
+                        : 'Register as Support Seeker'
+                }
+            />
 
-            <div className="min-h-screen bg-white flex flex-col items-center justify-center font-sans antialiased selection:bg-[#E1005E]/10 selection:text-[#E1005E] w-full py-8 px-6">
-                
-                <div className="w-full max-w-md flex flex-col justify-between flex-1">
-                    
+            <div className="flex min-h-screen w-full flex-col items-center justify-center bg-white px-6 py-8 font-sans antialiased selection:bg-[#E1005E]/10 selection:text-[#E1005E]">
+                <div className="flex w-full max-w-md flex-1 flex-col justify-between">
                     {/* Top Header with Back button */}
                     <div className="flex flex-col gap-6">
-                        <Link 
-                            href={home().url} 
-                            className="self-start p-2 rounded-full hover:bg-neutral-50 active:scale-95 transition-all -ml-2"
+                        <Link
+                            href={home().url}
+                            className="-ml-2 self-start rounded-full p-2 transition-all hover:bg-neutral-50 active:scale-95"
                         >
                             <ChevronLeft className="size-6 text-neutral-800" />
                         </Link>
 
                         <div className="flex flex-col items-center text-center">
                             {role === 'volunteer' ? (
-                                <h1 className="text-[32px] font-extrabold text-[#E1005E] tracking-tight font-Outfit leading-10">
-                                    Registration as<br />Volunteer
+                                <h1 className="font-Outfit text-[32px] leading-10 font-extrabold tracking-tight text-[#E1005E]">
+                                    Registration as
+                                    <br />
+                                    Volunteer
                                 </h1>
                             ) : (
-                                <h1 className="text-[32px] font-extrabold text-[#E1005E] tracking-tight font-Outfit leading-10">
-                                    Registration as<br />Support Seeker
+                                <h1 className="font-Outfit text-[32px] leading-10 font-extrabold tracking-tight text-[#E1005E]">
+                                    Registration as
+                                    <br />
+                                    Support Seeker
                                 </h1>
                             )}
                         </div>
@@ -64,17 +75,19 @@ export default function Register({ passwordRules }: Props) {
                     <Form
                         {...store.form()}
                         resetOnSuccess={['password', 'password_confirmation']}
-                        className="flex flex-col gap-5 mt-8 flex-1 justify-center"
+                        className="mt-8 flex flex-1 flex-col justify-center gap-5"
                     >
                         {({ processing, errors }) => (
                             <div className="grid gap-5">
-                                
                                 {/* Hidden role input to bind selected role */}
                                 <input type="hidden" name="role" value={role} />
 
                                 {/* Full Name Field */}
                                 <div className="grid gap-1.5">
-                                    <label htmlFor="name" className="text-xs md:text-sm font-bold text-neutral-800">
+                                    <label
+                                        htmlFor="name"
+                                        className="text-xs font-bold text-neutral-800 md:text-sm"
+                                    >
                                         Full name
                                     </label>
                                     <input
@@ -83,7 +96,7 @@ export default function Register({ passwordRules }: Props) {
                                         name="name"
                                         required
                                         autoFocus
-                                        className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm placeholder:text-neutral-400 outline-none"
+                                        className="w-full rounded-[14px] border border-neutral-300 bg-white px-4 py-3 text-sm text-black transition-all outline-none placeholder:text-neutral-400 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                         placeholder="Enter your full name..."
                                     />
                                     <InputError message={errors.name} />
@@ -91,7 +104,10 @@ export default function Register({ passwordRules }: Props) {
 
                                 {/* Email Field */}
                                 <div className="grid gap-1.5">
-                                    <label htmlFor="email" className="text-xs md:text-sm font-bold text-neutral-800">
+                                    <label
+                                        htmlFor="email"
+                                        className="text-xs font-bold text-neutral-800 md:text-sm"
+                                    >
                                         Email
                                     </label>
                                     <input
@@ -99,7 +115,7 @@ export default function Register({ passwordRules }: Props) {
                                         type="email"
                                         name="email"
                                         required
-                                        className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm placeholder:text-neutral-400 outline-none"
+                                        className="w-full rounded-[14px] border border-neutral-300 bg-white px-4 py-3 text-sm text-black transition-all outline-none placeholder:text-neutral-400 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                         placeholder="Enter your email..."
                                     />
                                     <InputError message={errors.email} />
@@ -107,7 +123,10 @@ export default function Register({ passwordRules }: Props) {
 
                                 {/* Phone Number Field */}
                                 <div className="grid gap-1.5">
-                                    <label htmlFor="phone" className="text-xs md:text-sm font-bold text-neutral-800">
+                                    <label
+                                        htmlFor="phone"
+                                        className="text-xs font-bold text-neutral-800 md:text-sm"
+                                    >
                                         Phone number
                                     </label>
                                     <input
@@ -115,7 +134,7 @@ export default function Register({ passwordRules }: Props) {
                                         type="tel"
                                         name="phone"
                                         required
-                                        className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm placeholder:text-neutral-400 outline-none"
+                                        className="w-full rounded-[14px] border border-neutral-300 bg-white px-4 py-3 text-sm text-black transition-all outline-none placeholder:text-neutral-400 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                         placeholder="Enter your phone number..."
                                     />
                                     <InputError message={errors.phone} />
@@ -124,43 +143,71 @@ export default function Register({ passwordRules }: Props) {
                                 {/* Conditionally Render: How can we support you? Dropdown for Support Seeker */}
                                 {role === 'difabel' && (
                                     <div className="grid gap-1.5">
-                                        <label htmlFor="support_type" className="text-xs md:text-sm font-bold text-neutral-800">
+                                        <label
+                                            htmlFor="support_type"
+                                            className="text-xs font-bold text-neutral-800 md:text-sm"
+                                        >
                                             How can we support you?
                                         </label>
-                                        <div className="relative">
+                                        <div className="relative text-black">
                                             <select
                                                 id="support_type"
                                                 name="support_type"
                                                 required
-                                                className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm outline-none appearance-none pr-10 text-neutral-850"
+                                                className="text-neutral-850 w-full appearance-none rounded-[14px] border border-neutral-300 bg-white px-4 py-3 pr-10 text-sm transition-all outline-none focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                                 defaultValue=""
                                             >
-                                                <option value="" disabled>Select an option</option>
-                                                <option value="Bantuan Navigasi / Jalan">Bantuan Navigasi / Jalan</option>
-                                                <option value="Panggilan Telepon Pendamping">Panggilan Telepon Pendamping</option>
-                                                <option value="Informasi Fasilitas Publik">Informasi Fasilitas Publik</option>
-                                                <option value="Lainnya">Lainnya</option>
+                                                <option value="" disabled>
+                                                    Select an option
+                                                </option>
+                                                <option value="Bantuan Navigasi / Jalan">
+                                                    Bantuan Navigasi / Jalan
+                                                </option>
+                                                <option value="Panggilan Telepon Pendamping">
+                                                    Panggilan Telepon Pendamping
+                                                </option>
+                                                <option value="Informasi Fasilitas Publik">
+                                                    Informasi Fasilitas Publik
+                                                </option>
+                                                <option value="Lainnya">
+                                                    Lainnya
+                                                </option>
                                             </select>
                                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#E1005E]">
-                                                <svg className="size-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                <svg
+                                                    className="size-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2.5"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                                    />
                                                 </svg>
                                             </div>
                                         </div>
-                                        <InputError message={errors.support_type} />
+                                        <InputError
+                                            message={errors.support_type}
+                                        />
                                     </div>
                                 )}
 
                                 {/* Password Field */}
                                 <div className="grid gap-1.5">
-                                    <label htmlFor="password" className="text-xs md:text-sm font-bold text-neutral-800">
+                                    <label
+                                        htmlFor="password"
+                                        className="text-xs font-bold text-neutral-800 md:text-sm"
+                                    >
                                         Password
                                     </label>
                                     <PasswordInput
                                         id="password"
                                         name="password"
                                         required
-                                        className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm placeholder:text-neutral-400 outline-none"
+                                        className="w-full rounded-[14px] border border-neutral-300 bg-white px-4 py-3 text-sm text-black transition-all outline-none placeholder:text-neutral-400 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                         placeholder="Creat your password..."
                                     />
                                     <InputError message={errors.password} />
@@ -168,33 +215,44 @@ export default function Register({ passwordRules }: Props) {
 
                                 {/* Confirm Password Field */}
                                 <div className="grid gap-1.5">
-                                    <label htmlFor="password_confirmation" className="text-xs md:text-sm font-bold text-neutral-800">
+                                    <label
+                                        htmlFor="password_confirmation"
+                                        className="text-xs font-bold text-neutral-800 md:text-sm"
+                                    >
                                         Confirm Password
                                     </label>
                                     <PasswordInput
                                         id="password_confirmation"
                                         name="password_confirmation"
                                         required
-                                        className="w-full px-4 py-3 rounded-[14px] border border-neutral-300 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E] bg-white transition-all text-sm placeholder:text-neutral-400 outline-none"
+                                        className="w-full rounded-[14px] border border-neutral-300 bg-white px-4 py-3 text-sm text-black transition-all outline-none placeholder:text-neutral-400 focus:border-[#E1005E] focus:ring-1 focus:ring-[#E1005E]"
                                         placeholder="Confirm your password ..."
                                     />
-                                    <InputError message={errors.password_confirmation} />
+                                    <InputError
+                                        message={errors.password_confirmation}
+                                    />
                                 </div>
 
                                 {/* Custom T&C Checkbox */}
-                                <div className="flex items-start gap-3 mt-1">
-                                    <div className="flex items-center h-5">
+                                <div className="mt-1 flex items-start gap-3">
+                                    <div className="flex h-5 items-center">
                                         <input
                                             id="agree"
                                             name="agree"
                                             type="checkbox"
                                             required
-                                            className="size-4.5 rounded border-neutral-300 text-[#E1005E] focus:ring-[#E1005E] cursor-pointer"
+                                            className="size-4.5 cursor-pointer rounded border-neutral-300 text-[#E1005E] focus:ring-[#E1005E]"
                                         />
                                     </div>
-                                    <label htmlFor="agree" className="text-xs font-bold text-neutral-500 leading-normal select-none cursor-pointer">
+                                    <label
+                                        htmlFor="agree"
+                                        className="cursor-pointer text-xs leading-normal font-bold text-neutral-500 select-none"
+                                    >
                                         I agree to the{' '}
-                                        <Link href="/privacy-policy" className="text-[#E1005E] hover:underline transition-all">
+                                        <Link
+                                            href="/privacy-policy"
+                                            className="text-[#E1005E] transition-all hover:underline"
+                                        >
                                             Therm Condition and Privacy policy
                                         </Link>
                                     </label>
@@ -204,9 +262,11 @@ export default function Register({ passwordRules }: Props) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="mt-4 w-full py-3.5 rounded-[14px] font-bold text-white bg-linear-to-r from-[#E1005E] to-[#0052FF] hover:opacity-95 disabled:opacity-50 active:scale-[0.99] transition-all duration-300 shadow-[0_4px_16px_rgba(225,0,94,0.2)] flex items-center justify-center gap-2 cursor-pointer select-none text-base"
+                                    className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-linear-to-r from-[#E1005E] to-[#0052FF] py-3.5 text-base font-bold text-white shadow-[0_4px_16px_rgba(225,0,94,0.2)] transition-all duration-300 select-none hover:opacity-95 active:scale-[0.99] disabled:opacity-50"
                                 >
-                                    {processing && <Spinner className="size-4 text-white" />}
+                                    {processing && (
+                                        <Spinner className="size-4 text-white" />
+                                    )}
                                     Sign Up
                                 </button>
                             </div>
@@ -214,16 +274,15 @@ export default function Register({ passwordRules }: Props) {
                     </Form>
 
                     {/* Footer */}
-                    <div className="text-center text-xs md:text-sm text-neutral-500 mt-8 pb-2">
+                    <div className="mt-8 pb-2 text-center text-xs text-neutral-500 md:text-sm">
                         Already have an account?{' '}
-                        <Link 
-                            href={login().url} 
-                            className="text-[#E1005E] font-bold hover:underline decoration-2 underline-offset-4 transition-all"
+                        <Link
+                            href={login().url}
+                            className="font-bold text-[#E1005E] decoration-2 underline-offset-4 transition-all hover:underline"
                         >
                             Log In
                         </Link>
                     </div>
-
                 </div>
             </div>
         </>
