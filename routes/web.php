@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CallController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +12,14 @@ Route::inertia('privacy-policy', 'privacy-policy')->name('privacy-policy');
 Route::middleware(['auth', 'verified'])
     ->group(function () {
         Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+        // Profile routes
         Route::inertia('profile', 'profile')->name('profile');
+        Route::get('profile/edit', [ProfileController::class, 'edit'])->name('user-profile.edit');
+        Route::put('profile', [ProfileController::class, 'update'])->name('user-profile.update');
+        Route::get('profile/share', [ProfileController::class, 'share'])->name('user-profile.share');
+        Route::get('profile/friends', [ProfileController::class, 'friends'])->name('user-profile.friends');
+
         Route::inertia('settings', 'settings')->name('settings');
         Route::get('call', function () {
             return inertia('call', [

@@ -15,101 +15,81 @@ export default function Profile() {
             <div className="flex flex-col gap-6 w-full font-sans antialiased pb-6 selection:bg-[#E1005E]/10 selection:text-[#E1005E]">
                 
                 {/* Header */}
-                <div className="flex items-center gap-1.5 self-start">
-                    <h1 className="text-2xl font-extrabold text-[#E1005E] tracking-tight font-Outfit">
+                <div className="flex items-center gap-1.5 self-start mb-6">
+                    <h1 className="text-xl font-extrabold text-[#E1005E] tracking-tight font-Outfit">
                         Profile User
                     </h1>
-                    <ChevronDown className="size-6 text-[#E1005E] translate-y-[2px]" />
+                    <ChevronDown className="size-4 text-[#E1005E]" />
                 </div>
 
                 {/* Profile Card Container */}
-                <div className="w-full p-5 rounded-[24px] border-2 border-[#E1005E] bg-white relative flex flex-col gap-4 shadow-[0_4px_16px_rgba(225,0,94,0.03)]">
+                <div className="w-full pt-4 pb-5 px-5 rounded-[16px] border border-[#E1005E] bg-white relative shadow-sm mt-8">
                     
-                    <div className="flex items-start gap-4">
-                        {/* Avatar Wrapper with blue/purple/pink gradient ring */}
-                        <div className="relative size-20 rounded-full p-[3px] bg-linear-to-tr from-[#E1005E] via-[#5C2CD5] to-[#0052FF] flex items-center justify-center shrink-0">
+                    {/* Avatar overlapping the top border */}
+                    <div className="absolute -top-10 left-5">
+                        <div className="size-20 rounded-full bg-linear-to-tr from-[#E1005E] via-[#5C2CD5] to-[#0052FF] p-[2px] shadow-sm">
                             {user.photo_url ? (
                                 <img 
                                     src={user.photo_url} 
                                     alt={user.name} 
-                                    className="size-full rounded-full object-cover border border-white"
+                                    className="size-full rounded-full object-cover border-[3px] border-white"
                                 />
                             ) : (
-                                <div className="size-full rounded-full bg-neutral-100 flex items-center justify-center border border-white text-2xl font-black text-[#E1005E] font-Outfit">
+                                <div className="size-full rounded-full bg-neutral-200 flex items-center justify-center border-[3px] border-white text-2xl font-black text-[#E1005E] font-Outfit">
                                     {userInitial}
                                 </div>
                             )}
                         </div>
+                    </div>
 
-                        {/* User Details */}
-                        <div className="flex flex-col gap-1.5 pt-1.5">
-                            <h2 className="text-xl font-bold text-[#E1005E] leading-tight font-Outfit truncate max-w-[200px]">
-                                {user.name}
-                            </h2>
-                            <p className="text-xs font-extrabold text-[#E1005E]/80 tracking-wide font-sans">
-                                {user.role === 'volunteer' ? 'Volunteer' : 'Support Seeker'}
-                            </p>
-                            <p className="text-xs font-semibold text-neutral-500 font-sans">
-                                {user.phone || 'No phone number'}
-                            </p>
-                        </div>
+                    {/* User Details Next to Avatar */}
+                    <div className="ml-[90px] pt-1 flex flex-col gap-0.5">
+                        <h2 className="text-lg font-bold text-[#E1005E] leading-tight font-Outfit truncate">
+                            {user.name}
+                        </h2>
+                        <p className="text-[11px] font-medium text-[#E1005E] tracking-wide">
+                            {user.gender || 'Gender'} <span className="mx-1 opacity-50">|</span> {user.age || 'Age'}
+                        </p>
                     </div>
 
                     {/* Bio Paragraph */}
-                    <div className="mt-1 pl-1">
-                        <p className="text-xs text-neutral-400 font-bold italic leading-relaxed">
-                            Bio: Always ready to help and support those in need. Compassion is our guiding light.
+                    <div className="mt-8">
+                        <p className="text-[13px] text-neutral-500 leading-relaxed">
+                            {user.bio || 'Bio....'}
                         </p>
                     </div>
 
                 </div>
 
                 {/* Edit & Share Buttons wrapped in bordered container */}
-                <div className="w-full p-4 rounded-[20px] border border-[#E1005E]/50 bg-white flex items-center gap-4">
+                <div className="w-full p-4 rounded-[16px] border border-[#E1005E] bg-white flex items-center gap-4 shadow-sm">
                     
                     <Link 
-                        href="/settings/profile"
-                        className="flex-1 py-3 rounded-[14px] bg-neutral-100 hover:bg-neutral-200 active:scale-[0.98] transition-all font-bold text-[#E1005E] text-center text-xs md:text-sm flex items-center justify-center gap-1.5 select-none cursor-pointer"
+                        href="/profile/edit"
+                        className="flex-1 py-2.5 rounded-[8px] bg-neutral-100 hover:bg-neutral-200 active:scale-[0.98] transition-all font-semibold text-[#E1005E] text-center text-[13px] select-none cursor-pointer"
                     >
-                        <Edit3 className="size-4" />
                         Edit Profile
                     </Link>
 
-                    <button
-                        onClick={() => {
-                            if (navigator.share) {
-                                navigator.share({
-                                    title: user.name,
-                                    text: `Check out ${user.name}'s profile on Optira!`,
-                                    url: window.location.href,
-                                });
-                            } else {
-                                navigator.clipboard.writeText(window.location.href);
-                                alert('Profile link copied to clipboard!');
-                            }
-                        }}
-                        className="flex-1 py-3 rounded-[14px] bg-neutral-100 hover:bg-neutral-200 active:scale-[0.98] transition-all font-bold text-[#E1005E] text-center text-xs md:text-sm flex items-center justify-center gap-1.5 select-none cursor-pointer"
+                    <Link
+                        href="/profile/share"
+                        className="flex-1 py-2.5 rounded-[8px] bg-neutral-100 hover:bg-neutral-200 active:scale-[0.98] transition-all font-semibold text-[#E1005E] text-center text-[13px] select-none cursor-pointer"
                     >
-                        <Share2 className="size-4" />
                         Share Profile
-                    </button>
+                    </Link>
 
                 </div>
 
                 {/* Friends Box Container */}
-                <div className="w-full p-4.5 rounded-[20px] border border-[#E1005E]/50 bg-white hover:bg-neutral-50 transition-colors cursor-pointer select-none">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="size-8 rounded-full bg-[#E1005E]/10 flex items-center justify-center">
-                                <Users className="size-4.5 text-[#E1005E]" />
-                            </div>
-                            <span className="text-sm font-extrabold text-[#E1005E]">
-                                Friends
-                            </span>
-                        </div>
-                        <ChevronRight className="size-5 text-[#E1005E]" />
-                    </div>
-                </div>
+                <Link 
+                    href="/profile/friends"
+                    className="w-full p-4 rounded-[16px] border border-[#E1005E] bg-white hover:bg-neutral-50 transition-colors cursor-pointer select-none flex items-center justify-between shadow-sm block"
+                >
+                    <span className="text-[13px] font-bold text-[#E1005E]">
+                        Friends
+                    </span>
+                    <ChevronRight className="size-4 text-[#E1005E]" />
+                </Link>
 
             </div>
         </>
