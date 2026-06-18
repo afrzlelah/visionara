@@ -32,7 +32,9 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
     const [activeCall, setActiveCall] = useState<any | null>(null);
     const [incomingCall, setIncomingCall] = useState<any | null>(null);
     const [statusMessage, setStatusMessage] = useState<string>('');
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const callTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const isAssigningRef = useRef<boolean>(false);
     const activeCallRef = useRef<any | null>(null);
 
     // Keep ref in sync with state (for use inside event handlers that capture stale closure)
@@ -101,7 +103,8 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
             if (role === 'difabel') {
                 privateChannel.listen('CallAccepted', (event: { call: any }) => {
                     console.log('[CALL EVENT] CallAccepted', event.call);
-                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                    if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+                    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
                     setActiveCall(event.call);
                     setCallState('active');
                     setStatusMessage('');
@@ -110,7 +113,8 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
                 // CallDeclined — only fires when ALL volunteers are exhausted
                 privateChannel.listen('CallDeclined', () => {
                     console.log('[CALL EVENT] CallDeclined (all volunteers exhausted)');
-                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                    if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+                    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
                     setStatusMessage('Semua volunteer sedang tidak tersedia. Silakan coba beberapa menit lagi.');
                     setCallState('idle');
                     setActiveCall(null);
@@ -120,7 +124,8 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
             // ── Both roles: call ended by the other party ──
             privateChannel.listen('CallEnded', (event: { call: any }) => {
                 console.log('[CALL EVENT] CallEnded', event.call);
-                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+                if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
                 setCallState('idle');
                 setActiveCall(null);
                 setIncomingCall(null);
@@ -148,27 +153,50 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
         console.log('[CALL] initiateCall() — searching for volunteer');
         setCallState('searching');
         setStatusMessage('Mencari volunteer...');
+        
+        if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+        if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+        
+        // Timeout if no volunteer can be connected after 30 seconds of searching
+        searchTimeoutRef.current = setTimeout(() => {
+            console.log('[CALL] search timeout — no volunteer available');
+            setStatusMessage('Semua volunteer sedang tidak tersedia. Silakan coba beberapa menit lagi.');
+            setCallState('idle');
+            setActiveCall(null);
+        }, 30000);
+    }, []);
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // Attempt Call Assignment 
+    // Called when searching and a volunteer is available
+    // ─────────────────────────────────────────────────────────────────────────
+    const attemptCallAssignment = useCallback(async () => {
+        if (isAssigningRef.current || callState !== 'searching') return;
+        
+        isAssigningRef.current = true;
         try {
             const onlineIds = onlineVolunteers.map((v) => v.id);
-            console.log('[CALL] online volunteer IDs:', onlineIds);
+            console.log('[CALL] attempt assignment, online IDs:', onlineIds);
 
             const response = await axios.post('/calls', {
                 online_volunteer_ids: onlineIds,
             });
 
-            console.log('[CALL] success', response.status, response.data);
+            console.log('[CALL] assignment success', response.status, response.data);
+            
+            // Stop searching timeout since we successfully assigned
+            if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+            
             setActiveCall(response.data.call);
             setCallState('calling');
             setStatusMessage('Menghubungkan ke volunteer...');
 
-            // Start a 30s timeout — if no accept within 30s, reset
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(async () => {
-                console.log('[CALL] timeout — no response in 30s');
+            // Start ringing timeout — if volunteer doesn't answer in 30s
+            if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+            callTimeoutRef.current = setTimeout(async () => {
+                console.log('[CALL] call timeout — volunteer no response in 30s');
                 setStatusMessage('Volunteer tidak merespons. Silakan coba lagi.');
                 
-                // End the call on the backend so the volunteer's ringing state resets to idle
                 const currentCall = activeCallRef.current || response.data.call;
                 if (currentCall?.id) {
                     try {
@@ -182,19 +210,38 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
                 setActiveCall(null);
             }, 30000);
         } catch (error: any) {
-            console.error('[CALL] failed', error);
-            if (error.response?.status === 409) {
-                setStatusMessage(
-                    error.response?.data?.message ||
-                    'Semua volunteer sedang tidak tersedia. Silakan coba beberapa menit lagi.'
-                );
-            } else {
-                setStatusMessage('Terjadi kesalahan. Silakan coba lagi.');
-            }
-            setCallState('idle');
-            setActiveCall(null);
+            console.error('[CALL] assignment failed', error);
+            // If it fails (e.g. 409 busy), we do NOT exit searching state.
+            // We just wait for another volunteer to become available or for the searchTimeout to hit.
+        } finally {
+            isAssigningRef.current = false;
         }
-    }, [onlineVolunteers]);
+    }, [onlineVolunteers, callState]);
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Auto-Retry Queue Loop
+    // ─────────────────────────────────────────────────────────────────────────
+    useEffect(() => {
+        let interval: ReturnType<typeof setInterval>;
+        
+        if (callState === 'searching') {
+            // Immediate check
+            if (onlineVolunteers.length > 0 && !isAssigningRef.current) {
+                attemptCallAssignment();
+            }
+            
+            // Poll every 3 seconds to catch volunteers who might have just become available
+            interval = setInterval(() => {
+                if (callState === 'searching' && onlineVolunteers.length > 0 && !isAssigningRef.current) {
+                    attemptCallAssignment();
+                }
+            }, 3000);
+        }
+        
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [callState, onlineVolunteers, attemptCallAssignment]);
 
     // ─────────────────────────────────────────────────────────────────────────
     // Accept Call — Volunteer only
@@ -246,7 +293,8 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
     //   3. Broadcasts CallEnded to BOTH participants
     // ─────────────────────────────────────────────────────────────────────────
     const hangUp = useCallback(async () => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        if (callTimeoutRef.current) clearTimeout(callTimeoutRef.current);
+        if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
 
         const currentCall = activeCallRef.current || incomingCall;
         if (currentCall?.id) {
