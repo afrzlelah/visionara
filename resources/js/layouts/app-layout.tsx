@@ -13,6 +13,7 @@ export default function AppLayout({
     // Check which tab is active
     const isDashboard = url === '/dashboard';
     const isChat = url.startsWith('/chat');
+    const isCall = url.startsWith('/call');
     const isProfile = url.startsWith('/profile');
     const isSettings = url.startsWith('/settings') && !url.startsWith('/settings/profile') && !url.startsWith('/settings/security') && !url.startsWith('/settings/appearance');
 
@@ -34,7 +35,7 @@ export default function AppLayout({
                     {/* Floating Center Phone Button */}
                     <Link 
                         href="/call"
-                        className="absolute -top-7 left-1/2 -translate-x-1/2 z-20 size-14 rounded-full bg-linear-to-r from-[#E1005E] to-[#0052FF] flex items-center justify-center shadow-[0_6px_16px_rgba(225,0,94,0.35)] border-[3.5px] border-white active:scale-95 hover:opacity-95 transition-all cursor-pointer"
+                        className={`absolute -top-7 left-1/2 -translate-x-1/2 z-20 size-14 rounded-full bg-linear-to-r from-[#E1005E] to-[#0052FF] flex items-center justify-center shadow-[0_6px_16px_rgba(225,0,94,0.35)] border-[3.5px] border-white active:scale-95 hover:opacity-95 transition-all cursor-pointer ${isCall ? 'ring-2 ring-offset-2 ring-[#E1005E]' : ''}`}
                     >
                         <Phone className="size-5 text-white fill-current rotate-90 translate-y-[0.5px]" />
                     </Link>
