@@ -294,5 +294,6 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
         acceptCall,
         declineCall,
         hangUp,
+        clearStatusMessage: () => setStatusMessage(''),
     };
 }

@@ -140,7 +140,7 @@ class CallController extends Controller
         }
 
         // No other volunteer available — NOW broadcast declined to the caller
-        broadcast(new CallDeclined($call))->toOthers();
+        broadcast(new CallDeclined($call));
 
         return response()->json([
             'message' => 'Declined. No other volunteers available.',

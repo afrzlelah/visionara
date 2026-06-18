@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CallController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,13 @@ Route::middleware(['auth', 'verified'])
         Route::put('profile', [ProfileController::class, 'update'])->name('user-profile.update');
         Route::get('profile/share', [ProfileController::class, 'share'])->name('user-profile.share');
         Route::get('profile/friends', [ProfileController::class, 'friends'])->name('user-profile.friends');
+
+        // Friendship routes
+        Route::get('profile/friends/add', [FriendshipController::class, 'index'])->name('friendships.index');
+        Route::post('profile/friends', [FriendshipController::class, 'store'])->name('friendships.store');
+        Route::post('profile/friends/{friendship}/accept', [FriendshipController::class, 'accept'])->name('friendships.accept');
+        Route::post('profile/friends/{friendship}/decline', [FriendshipController::class, 'decline'])->name('friendships.decline');
+        Route::delete('profile/friends/{friend}', [FriendshipController::class, 'destroy'])->name('friendships.destroy');
 
         Route::inertia('settings', 'settings')->name('settings');
         Route::get('call', function () {

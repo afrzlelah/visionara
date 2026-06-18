@@ -105,10 +105,11 @@ class CallService
 
         if (! empty($onlineVolunteerIds)) {
             // Also exclude the declined volunteer from the online list
-            $filteredIds = array_filter($onlineVolunteerIds, fn ($id) => $id !== $oldCall->receiver_id);
-            if (! empty($filteredIds)) {
-                $query->whereIn('id', $filteredIds);
+            $filteredIds = array_filter($onlineVolunteerIds, fn ($id) => (int) $id !== (int) $oldCall->receiver_id);
+            if (empty($filteredIds)) {
+                return null; // No other online volunteers available
             }
+            $query->whereIn('id', $filteredIds);
         }
 
         $candidates = $query

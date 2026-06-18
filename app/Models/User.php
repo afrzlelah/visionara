@@ -54,4 +54,37 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function friendsOfMine()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
+            ->withPivot('status')
+            ->wherePivot('status', 'accepted');
+    }
+
+    public function friendOf()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'friend_id', 'user_id')
+            ->withPivot('status')
+            ->wherePivot('status', 'accepted');
+    }
+
+    public function getFriendsAttribute()
+    {
+        if (! array_key_exists('friends', $this->relations)) {
+            $this->setRelation('friends', $this->friendsOfMine->merge($this->friendOf));
+        }
+
+        return $this->getRelation('friends');
+    }
+
+    public function pendingFriendRequestsSent()
+    {
+        return $this->hasMany(Friendship::class, 'user_id')->where('status', 'pending');
+    }
+
+    public function pendingFriendRequestsReceived()
+    {
+        return $this->hasMany(Friendship::class, 'friend_id')->where('status', 'pending');
+    }
 }

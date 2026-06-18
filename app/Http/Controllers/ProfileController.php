@@ -55,6 +55,31 @@ class ProfileController extends Controller
 
     public function friends()
     {
-        return Inertia::render('profile/friends');
+        $user = auth()->user();
+
+        $friends = $user->friends->map(function ($friend) {
+            return [
+                'id' => $friend->id,
+                'name' => $friend->name,
+                'photo' => $friend->photo_url ?: 'https://api.dicebear.com/7.x/avataaars/svg?seed='.$friend->name,
+            ];
+        });
+
+        // Incoming requests
+        $requests = $user->pendingFriendRequestsReceived()->with('user')->get()->map(function ($request) {
+            return [
+                'id' => $request->id, // Friendship ID
+                'user' => [
+                    'id' => $request->user->id,
+                    'name' => $request->user->name,
+                    'photo' => $request->user->photo_url ?: 'https://api.dicebear.com/7.x/avataaars/svg?seed='.$request->user->name,
+                ],
+            ];
+        });
+
+        return Inertia::render('profile/friends', [
+            'friends' => $friends,
+            'requests' => $requests,
+        ]);
     }
 }
