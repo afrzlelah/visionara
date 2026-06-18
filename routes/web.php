@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('calls/{call}/accept', [CallController::class, 'accept'])->name('calls.accept');
         Route::post('calls/{call}/decline', [CallController::class, 'decline'])->name('calls.decline');
         Route::post('calls/{call}/end', [CallController::class, 'end'])->name('calls.end');
+        Route::post('calls/{call}/signal', [CallController::class, 'signal'])->name('calls.signal');
     });
 
 Route::middleware(['auth'])->group(function () {

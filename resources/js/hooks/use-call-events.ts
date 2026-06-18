@@ -164,11 +164,22 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
 
             // Start a 30s timeout — if no accept within 30s, reset
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
+            timeoutRef.current = setTimeout(async () => {
                 console.log('[CALL] timeout — no response in 30s');
+                setStatusMessage('Volunteer tidak merespons. Silakan coba lagi.');
+                
+                // End the call on the backend so the volunteer's ringing state resets to idle
+                const currentCall = activeCallRef.current || response.data.call;
+                if (currentCall?.id) {
+                    try {
+                        await axios.post(`/calls/${currentCall.id}/end`);
+                    } catch (err) {
+                        console.error('[CALL] Failed to cancel call on timeout', err);
+                    }
+                }
+
                 setCallState('idle');
                 setActiveCall(null);
-                setStatusMessage('Volunteer tidak merespons. Silakan coba lagi.');
             }, 30000);
         } catch (error: any) {
             console.error('[CALL] failed', error);

@@ -6,6 +6,7 @@ use App\Events\CallAccepted;
 use App\Events\CallDeclined;
 use App\Events\CallEnded;
 use App\Events\IncomingCallReceived;
+use App\Events\WebrtcSignalReceived;
 use App\Models\Call;
 use App\Services\CallService;
 use Illuminate\Http\JsonResponse;
@@ -177,5 +178,38 @@ class CallController extends Controller
             'message' => 'Call ended successfully.',
             'call' => $call,
         ]);
+    }
+
+    /**
+     * Handle WebRTC Signaling (Offers, Answers, ICE Candidates).
+     */
+    public function signal(Request $request, Call $call): JsonResponse
+    {
+        $userId = (int) auth()->id();
+
+        // Ensure the sender is part of this call
+        if (! in_array($userId, [(int) $call->caller_id, (int) $call->receiver_id])) {
+            return response()->json(['error' => 'unauthorized'], 403);
+        }
+
+        $request->validate([
+            'signal' => 'required|array',
+            'signal.type' => 'required|string',
+        ]);
+
+        // The target is the OTHER participant
+        $targetUserId = ($userId === (int) $call->caller_id)
+            ? (int) $call->receiver_id
+            : (int) $call->caller_id;
+
+        // Broadcast the signal to the target user
+        broadcast(new WebrtcSignalReceived(
+            $call->id,
+            $userId,
+            $targetUserId,
+            $request->input('signal')
+        ))->toOthers();
+
+        return response()->json(['message' => 'Signal relayed successfully.']);
     }
 }

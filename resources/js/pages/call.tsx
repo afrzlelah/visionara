@@ -4,6 +4,7 @@ import { Phone, PhoneOff, Video, VideoOff, Mic, MicOff, RotateCcw, PhoneIncoming
 import AppLogo from '@/components/app-logo';
 import type { Auth } from '@/types';
 import { useCallEvents } from '@/hooks/use-call-events';
+import { useWebRTC } from '@/hooks/use-webrtc';
 
 /**
  * Call state machine:
@@ -81,6 +82,31 @@ export default function Call({ role }: Props) {
     const [isCameraOff, setIsCameraOff] = useState(false);
     const [callDuration, setCallDuration] = useState(0);
     const durationRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    // WebRTC Integration
+    const { localStream, remoteStream } = useWebRTC({
+        activeCall,
+        userId: auth.user.id,
+        isMuted,
+        isCameraOff,
+    });
+
+    const localVideoRef = useRef<HTMLVideoElement>(null);
+    const remoteVideoRef = useRef<HTMLVideoElement>(null);
+
+    // Attach local stream
+    useEffect(() => {
+        if (localVideoRef.current && localStream) {
+            localVideoRef.current.srcObject = localStream;
+        }
+    }, [localStream, callState]);
+
+    // Attach remote stream
+    useEffect(() => {
+        if (remoteVideoRef.current && remoteStream) {
+            remoteVideoRef.current.srcObject = remoteStream;
+        }
+    }, [remoteStream, callState]);
 
     // Duration counter when call is active
     useEffect(() => {
@@ -424,11 +450,18 @@ export default function Call({ role }: Props) {
         <>
             <Head title="Dalam Panggilan" />
             <div className="fixed inset-0 z-50 bg-white flex flex-col">
-                {/* Main video area */}
-                <div className="flex-1 relative bg-neutral-200">
+                {/* Main video area (Remote Stream) */}
+                <div className="flex-1 relative bg-neutral-900 overflow-hidden">
+                    <video
+                        ref={remoteVideoRef}
+                        autoPlay
+                        playsInline
+                        className="w-full h-full object-cover"
+                    />
+
                     {isCameraOff && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                            <div className="w-20 h-20 rounded-full bg-neutral-300 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-neutral-800 flex flex-col items-center justify-center gap-3 z-10">
+                            <div className="w-20 h-20 rounded-full bg-neutral-700 flex items-center justify-center">
                                 <VideoOff className="w-8 h-8 text-neutral-400" />
                             </div>
                             <p className="text-neutral-400 text-sm">Kamera dimatikan</p>
@@ -436,10 +469,18 @@ export default function Call({ role }: Props) {
                     )}
 
                     {/* Self-camera thumbnail — top left */}
-                    <div className="absolute top-4 left-4 w-20 h-28 bg-neutral-300 rounded-2xl shadow-lg overflow-hidden border-2 border-white" />
+                    <div className="absolute top-4 left-4 w-28 h-40 bg-black rounded-2xl shadow-lg overflow-hidden border-2 border-white/20 z-20">
+                        <video
+                            ref={localVideoRef}
+                            autoPlay
+                            playsInline
+                            muted
+                            className="w-full h-full object-cover scale-x-[-1]"
+                        />
+                    </div>
 
                     {/* Duration badge — top center */}
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/30 backdrop-blur-sm rounded-full px-4 py-1">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-1 z-20">
                         <span className="text-white text-sm font-mono font-semibold">
                             {formatDuration(callDuration)}
                         </span>
@@ -447,7 +488,7 @@ export default function Call({ role }: Props) {
                 </div>
 
                 {/* Controls bar */}
-                <div className="bg-white border-t border-neutral-100 px-8 py-5 flex items-center justify-between">
+                <div className="bg-neutral-900 border-t border-neutral-800 px-8 py-5 flex items-center justify-between pb-safe">
                     <button
                         id="call-rotate-cam"
                         onClick={() => { /* flip cam */ }}
