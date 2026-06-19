@@ -12,7 +12,9 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - php - 8.5
 - inertiajs/inertia-laravel (INERTIA_LARAVEL) - v3
 - laravel/fortify (FORTIFY) - v1
-- laravel/framework (LARAVEL) - v13
+- laravel/framework (LARAVEL) Edited call.tsx
+
+<|channel|>commentary<|message|>{"path":"file:///home/afrzl/Documents/UIN%20Walisongo/Lomba/Lomba%20ICT/source_code/Optira/resources/js/hooks/use-call-events.ts","StartLine":80,"EndLine":96}- v13
 - laravel/prompts (PROMPTS) - v0
 - laravel/wayfinder (WAYFINDER) - v0
 - laravel/boost (BOOST) - v2
