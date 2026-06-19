@@ -15,7 +15,7 @@ export default function AppLayout({
     const isChat = url.startsWith('/chat');
     const isCall = url.startsWith('/call');
     const isProfile = url.startsWith('/profile');
-    const isSettings = url.startsWith('/settings') && !url.startsWith('/settings/profile') && !url.startsWith('/settings/security') && !url.startsWith('/settings/appearance');
+    const isSettings = url.startsWith('/settings');
 
     return (
         <div className="min-h-screen bg-neutral-900 flex items-center justify-center font-sans antialiased">
@@ -28,20 +28,20 @@ export default function AppLayout({
                 </main>
 
                 {/* Bottom Navigation Bar */}
-                <div className="absolute bottom-0 left-0 right-0 z-40 bg-white">
+                <div className={`absolute bottom-0 left-0 right-0 z-40 ${isChat ? 'bg-transparent pointer-events-none' : 'bg-white'}`}>
                     {/* Semicircular Cutout Mask */}
-                    <div className="absolute -top-9 left-1/2 -translate-x-1/2 size-18 bg-white rounded-full z-10 shadow-[0_-6px_10px_rgba(0,0,0,0.01)]" />
+                    <div className={`absolute -top-9 left-1/2 -translate-x-1/2 size-18 rounded-full z-10 shadow-[0_-6px_10px_rgba(0,0,0,0.01)] ${isChat ? 'bg-transparent' : 'bg-white'}`} />
                     
                     {/* Floating Center Phone Button */}
                     <Link 
                         href="/call"
-                        className={`absolute -top-7 left-1/2 -translate-x-1/2 z-20 size-14 rounded-full bg-linear-to-r from-[#E1005E] to-[#0052FF] flex items-center justify-center shadow-[0_6px_16px_rgba(225,0,94,0.35)] border-[3.5px] border-white active:scale-95 hover:opacity-95 transition-all cursor-pointer ${isCall ? 'ring-2 ring-offset-2 ring-[#E1005E]' : ''}`}
+                        className={`absolute -top-7 left-1/2 -translate-x-1/2 z-20 size-14 rounded-full bg-linear-to-r from-[#E1005E] to-[#0052FF] flex items-center justify-center shadow-[0_6px_16px_rgba(225,0,94,0.35)] border-[3.5px] border-white active:scale-95 hover:opacity-95 transition-all cursor-pointer pointer-events-auto ${isCall ? 'ring-2 ring-offset-2 ring-[#E1005E]' : ''}`}
                     >
                         <Phone className="size-5 text-white fill-current rotate-90 translate-y-[0.5px]" />
                     </Link>
 
                     {/* Bottom Nav Bar Background */}
-                    <nav className="relative h-16 bg-[#E1005E] flex items-center justify-between px-6 text-white rounded-t-[24px] shadow-[0_-4px_16px_rgba(225,0,94,0.15)] z-15">
+                    <nav className="relative h-16 bg-[#E1005E] flex items-center justify-between px-6 text-white rounded-t-[24px] shadow-[0_-4px_16px_rgba(225,0,94,0.15)] z-15 pointer-events-auto">
                         
                         {/* Tab 1: Dashboard (Sparkles) */}
                         <Link 

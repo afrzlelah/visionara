@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])
         Route::delete('profile/friends/{friend}', [FriendshipController::class, 'destroy'])->name('friendships.destroy');
 
         Route::inertia('settings', 'settings')->name('settings');
+        Route::inertia('chat', 'chat')->name('chat');
         Route::get('call', function () {
             return inertia('call', [
                 'role' => Auth::user()->role,
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'verified'])
         Route::post('calls/{call}/decline', [CallController::class, 'decline'])->name('calls.decline');
         Route::post('calls/{call}/end', [CallController::class, 'end'])->name('calls.end');
         Route::post('calls/{call}/signal', [CallController::class, 'signal'])->name('calls.signal');
+
+        // AI Vision
+        Route::post('/api/analyze-image', [App\Http\Controllers\AiVisionController::class, 'analyze'])->name('api.analyze-image');
     });
 
 Route::middleware(['auth'])->group(function () {
