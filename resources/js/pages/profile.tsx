@@ -83,7 +83,7 @@ export default function Profile() {
                 {/* Friends Box Container */}
                 <Link 
                     href="/profile/friends"
-                    className="w-full p-4 rounded-[16px] border border-[#E1005E] bg-white hover:bg-neutral-50 transition-colors cursor-pointer select-none flex items-center justify-between shadow-sm block"
+                    className="w-full p-4 rounded-[16px] border border-[#E1005E] bg-white hover:bg-neutral-50 transition-colors cursor-pointer select-none flex items-center justify-between shadow-sm"
                 >
                     <span className="text-[13px] font-bold text-[#E1005E]">
                         Friends

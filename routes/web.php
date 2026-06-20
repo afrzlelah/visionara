@@ -13,7 +13,7 @@ Route::inertia('privacy-policy', 'privacy-policy')->name('privacy-policy');
 
 Route::middleware(['auth', 'verified'])
     ->group(function () {
-        Route::inertia('dashboard', 'dashboard')->name('dashboard');
+        Route::inertia('aivision', 'aivision')->name('aivision');
 
         // Profile routes
         Route::inertia('profile', 'profile')->name('profile');
@@ -45,6 +45,14 @@ Route::middleware(['auth', 'verified'])
 
         // AI Vision
         Route::post('/api/analyze-image', [AiVisionController::class, 'analyze'])->name('api.analyze-image');
+
+        // Settings toggle
+        Route::post('settings/offline', function (Illuminate\Http\Request $request) {
+            $user = $request->user();
+            $user->is_offline = !$user->is_offline;
+            $user->save();
+            return back();
+        })->name('settings.offline');
     });
 
 Route::middleware(['auth'])->group(function () {
