@@ -81,7 +81,9 @@ export default function SettingsPage() {
                                     Notifications {isOffline ? '(Offline)' : '(Online)'}
                                 </span>
                             </div>
-                            <ChevronRight className="size-5 text-neutral-400" />
+                            <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${!isOffline ? 'bg-[#E1005E]' : 'bg-neutral-300'}`}>
+                                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${!isOffline ? 'translate-x-6' : 'translate-x-1'}`} />
+                            </div>
                         </button>
                     ) : (
                         <div className="w-full px-5 py-4 bg-transparent flex items-center justify-between select-none text-left opacity-60">
@@ -91,7 +93,9 @@ export default function SettingsPage() {
                                     Notifications
                                 </span>
                             </div>
-                            <ChevronRight className="size-5 text-neutral-400" />
+                            <div className="relative inline-flex h-6 w-11 items-center rounded-full bg-neutral-300">
+                                <span className="inline-block h-4 w-4 transform rounded-full bg-white translate-x-1" />
+                            </div>
                         </div>
                     )}
                     <div className="h-px w-[calc(100%-2.5rem)] mx-auto bg-neutral-200/60" />

@@ -252,7 +252,7 @@ export default function Call({ role }: Props) {
                 <div className="flex flex-col h-full min-h-[calc(100vh-5rem)] relative">
                     {/* Beautiful Status Popup Modal */}
                     {statusMessage && (
-                        <div className="fixed inset-0 z-100 flex items-center justify-center px-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center px-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
                             <div className="bg-white rounded-[24px] w-full max-w-[320px] shadow-[0_20px_40px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col items-center p-8 text-center animate-in zoom-in-95 duration-300 relative border border-neutral-100">
                                 {/* Close Button (Top Right) */}
                                 <button 
@@ -265,7 +265,7 @@ export default function Call({ role }: Props) {
                                     </svg>
                                 </button>
                                 
-                                <div className="size-20 rounded-full bg-linear-to-tr from-amber-100 to-rose-100 flex items-center justify-center mb-5 shadow-inner">
+                                <div className="size-20 rounded-full bg-gradient-to-tr from-amber-100 to-rose-100 flex items-center justify-center mb-5 shadow-inner">
                                     <svg className="size-10 text-[#E1005E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
