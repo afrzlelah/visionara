@@ -23,13 +23,17 @@ export default function EditProfile() {
         e.preventDefault();
         post('/profile', {
             preserveScroll: true,
+            forceFormData: true,
+            onSuccess: () => {
+                alert('Profile berhasil diperbarui!');
+            }
         });
     };
 
     const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setData('photo', file);
+            setData('photo' as any, file);
             setPreviewUrl(URL.createObjectURL(file));
         }
     };
@@ -77,7 +81,7 @@ export default function EditProfile() {
                         <button 
                             type="button" 
                             onClick={() => fileInputRef.current?.click()}
-                            className="text-sm text-[#4DBAE9] font-medium"
+                            className="text-sm text-[#4DBAE9] font-medium cursor-pointer"
                         >
                             Edit picture
                         </button>
@@ -93,7 +97,7 @@ export default function EditProfile() {
                                 type="text"
                                 value={data.name}
                                 onChange={e => setData('name', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
                             />
                             {errors.name && <span className="text-xs text-red-500">{errors.name}</span>}
                         </div>
@@ -105,7 +109,7 @@ export default function EditProfile() {
                                 type="number"
                                 value={data.age}
                                 onChange={e => setData('age', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
                             />
                             {errors.age && <span className="text-xs text-red-500">{errors.age}</span>}
                         </div>
@@ -150,19 +154,19 @@ export default function EditProfile() {
                                 type="text"
                                 value={data.bio}
                                 onChange={e => setData('bio', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
                             />
                             {errors.bio && <span className="text-xs text-red-500">{errors.bio}</span>}
                         </div>
 
                     </div>
 
-                    {/* Fixed Bottom Action */}
-                    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-neutral-100 p-4 pb-8 z-50">
+                    {/* Bottom Action */}
+                    <div className="w-full pt-6 pb-20 flex justify-center">
                         <button 
                             type="submit" 
                             disabled={processing}
-                            className="w-full py-3 rounded-full bg-[#D9D9D9] hover:bg-[#c9c9c9] active:scale-[0.98] transition-all font-semibold text-neutral-600 text-center disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-fit px-5 py-3 rounded-full bg-[#E1005E] hover:bg-[#a7094b] active:scale-[0.98] transition-all font-semibold text-white text-center disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                         >
                             {processing ? 'Saving...' : 'Save Changes'}
                         </button>

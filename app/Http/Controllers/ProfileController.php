@@ -34,18 +34,18 @@ class ProfileController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($user->photo_url) {
-                // If the URL contains '/storage/', we can extract the path to delete it
-                $path = str_replace('/storage/', 'public/', $user->photo_url);
-                Storage::delete($path);
+                // Extract the path from the URL
+                $path = preg_replace('/.*\/storage\//', '', $user->photo_url);
+                Storage::disk('public')->delete($path);
             }
 
-            $path = $request->file('photo')->store('public/profile-photos');
-            $updateData['photo_url'] = Storage::url($path);
+            $path = $request->file('photo')->store('profile-photos', 'public');
+            $updateData['photo_url'] = '/storage/' . $path;
         }
 
         $user->update($updateData);
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        return redirect('/profile')->with('success', 'Profile updated successfully.');
     }
 
     public function share()
