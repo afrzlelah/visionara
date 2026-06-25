@@ -42,7 +42,7 @@ export default function ConfirmPassword() {
                                         placeholder="Password"
                                         autoComplete="current-password"
                                         autoFocus
-                                        className="mt-1 block w-full rounded-xl border-neutral-300 focus:border-[#E1005E] focus:ring-[#E1005E]"
+                                        className="mt-1 block w-full rounded-xl border-neutral-300 text-black focus:border-[#E1005E] focus:ring-[#E1005E]"
                                     />
 
                                     <InputError message={errors.password} />
