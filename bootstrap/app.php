@@ -26,6 +26,10 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
             SetTeamUrlDefaults::class,
         ]);
+        // 
+        $middleware->trustProxies(
+        at: '*'
+    );
 
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,

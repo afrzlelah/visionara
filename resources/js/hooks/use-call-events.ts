@@ -226,13 +226,13 @@ export function useCallEvents(userId: number, role: 'volunteer' | 'difabel' | 'a
         
         if (callState === 'searching') {
             // Immediate check
-            if (onlineVolunteers.length > 0 && !isAssigningRef.current) {
+            if (!isAssigningRef.current) {
                 attemptCallAssignment();
             }
             
             // Poll every 3 seconds to catch volunteers who might have just become available
             interval = setInterval(() => {
-                if (callState === 'searching' && onlineVolunteers.length > 0 && !isAssigningRef.current) {
+                if (callState === 'searching' && !isAssigningRef.current) {
                     attemptCallAssignment();
                 }
             }, 3000);
