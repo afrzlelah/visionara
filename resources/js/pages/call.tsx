@@ -4,7 +4,7 @@ import { Phone, PhoneOff, Video, VideoOff, Mic, MicOff, RotateCcw, PhoneIncoming
 import AppLogo from '@/components/app-logo';
 import type { Auth } from '@/types';
 import { useCallEvents } from '@/hooks/use-call-events';
-import { useWebRTC } from '@/hooks/use-webrtc';
+import ActiveCall from '@/components/active-call';
 
 /**
  * Call state machine:
@@ -81,48 +81,8 @@ export default function Call({ role }: Props) {
 
     const [isMuted, setIsMuted] = useState(false);
     const [isCameraOff, setIsCameraOff] = useState(false);
-    const [callDuration, setCallDuration] = useState(0);
-    const durationRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    // WebRTC Integration
-    const { localStream, remoteStream } = useWebRTC({
-        activeCall,
-        userId: auth.user.id,
-        isMuted,
-        isCameraOff,
-    });
-
-    const localVideoRef = useRef<HTMLVideoElement>(null);
-    const remoteVideoRef = useRef<HTMLVideoElement>(null);
-
-    // Attach local stream
-    useEffect(() => {
-        if (localVideoRef.current && localStream) {
-            localVideoRef.current.srcObject = localStream;
-        }
-    }, [localStream, callState]);
-
-    // Attach remote stream
-    useEffect(() => {
-        if (remoteVideoRef.current && remoteStream) {
-            remoteVideoRef.current.srcObject = remoteStream;
-        }
-    }, [remoteStream, callState]);
-
-    // Duration counter when call is active
-    useEffect(() => {
-        if (callState === 'active') {
-            durationRef.current = setInterval(() => {
-                setCallDuration((prev) => prev + 1);
-            }, 1000);
-        } else {
-            setCallDuration(0);
-            if (durationRef.current) clearInterval(durationRef.current);
-        }
-        return () => {
-            if (durationRef.current) clearInterval(durationRef.current);
-        };
-    }, [callState]);
+    // Duration counter when call is active is now handled inside ActiveCall component
 
     /** Support seeker initiates a call — NO volunteer selection on frontend */
     function handleStartCall() {
@@ -140,7 +100,6 @@ export default function Call({ role }: Props) {
         acceptCall();
     }
 
-    /** Hang up / reject — calls POST /calls/{id}/end */
     function handleHangUp() {
         if (callState === 'ringing') {
             declineCall();
@@ -149,12 +108,6 @@ export default function Call({ role }: Props) {
         }
         setIsMuted(false);
         setIsCameraOff(false);
-    }
-
-    function formatDuration(seconds: number) {
-        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-        const s = (seconds % 60).toString().padStart(2, '0');
-        return `${m}:${s}`;
     }
 
     /** Format member-since date: "10 Juni 2026" */
@@ -476,93 +429,13 @@ export default function Call({ role }: Props) {
     // ACTIVE CALL STATE — Call in progress (both roles)
     // ─────────────────────────────────────────────────────────────────────────
     return (
-        <>
-            <Head title="Dalam Panggilan" />
-            <div className="fixed inset-0 z-50 bg-white flex flex-col">
-                {/* Main video area (Remote Stream) */}
-                <div className="flex-1 relative bg-neutral-900 overflow-hidden">
-                    <video
-                        ref={remoteVideoRef}
-                        autoPlay
-                        playsInline
-                        className="w-full h-full object-cover"
-                    />
-
-                    {isCameraOff && (
-                        <div className="absolute inset-0 bg-neutral-800 flex flex-col items-center justify-center gap-3 z-10">
-                            <div className="w-20 h-20 rounded-full bg-neutral-700 flex items-center justify-center">
-                                <VideoOff className="w-8 h-8 text-neutral-400" />
-                            </div>
-                            <p className="text-neutral-400 text-sm">Kamera dimatikan</p>
-                        </div>
-                    )}
-
-                    {/* Self-camera thumbnail — top left */}
-                    <div className="absolute top-4 left-4 w-28 h-40 bg-black rounded-2xl shadow-lg overflow-hidden border-2 border-white/20 z-20">
-                        <video
-                            ref={localVideoRef}
-                            autoPlay
-                            playsInline
-                            muted
-                            className="w-full h-full object-cover scale-x-[-1]"
-                        />
-                    </div>
-
-                    {/* Duration badge — top center */}
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-1 z-20">
-                        <span className="text-white text-sm font-mono font-semibold">
-                            {formatDuration(callDuration)}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Controls bar */}
-                <div className="bg-neutral-900 border-t border-neutral-800 px-8 py-5 flex items-center justify-between pb-safe">
-                    <button
-                        id="call-rotate-cam"
-                        onClick={() => { /* flip cam */ }}
-                        className="w-13 h-13 rounded-full bg-neutral-100 flex items-center justify-center active:scale-95 transition-all"
-                        aria-label="Ganti kamera"
-                    >
-                        <RotateCcw className="w-5 h-5 text-neutral-600" />
-                    </button>
-
-                    <button
-                        id="call-toggle-video"
-                        onClick={() => setIsCameraOff((prev) => !prev)}
-                        className="w-13 h-13 rounded-full bg-neutral-100 flex items-center justify-center active:scale-95 transition-all"
-                        aria-label="Toggle video"
-                    >
-                        {isCameraOff ? (
-                            <VideoOff className="w-5 h-5 text-neutral-600" />
-                        ) : (
-                            <Video className="w-5 h-5 text-neutral-600" />
-                        )}
-                    </button>
-
-                    <button
-                        id="call-toggle-mute"
-                        onClick={() => setIsMuted((prev) => !prev)}
-                        className="w-13 h-13 rounded-full bg-neutral-100 flex items-center justify-center active:scale-95 transition-all"
-                        aria-label="Toggle mute"
-                    >
-                        {isMuted ? (
-                            <MicOff className="w-5 h-5 text-neutral-600" />
-                        ) : (
-                            <Mic className="w-5 h-5 text-neutral-600" />
-                        )}
-                    </button>
-
-                    <button
-                        id="call-hangup-active"
-                        onClick={handleHangUp}
-                        className="w-13 h-13 rounded-full bg-[#E1005E] flex items-center justify-center shadow-[0_4px_16px_rgba(225,0,94,0.4)] active:scale-95 transition-all"
-                        aria-label="Akhiri panggilan"
-                    >
-                        <PhoneOff className="w-5 h-5 text-white" />
-                    </button>
-                </div>
-            </div>
-        </>
+        <ActiveCall
+            activeCall={activeCall}
+            isCameraOff={isCameraOff}
+            setIsCameraOff={setIsCameraOff}
+            isMuted={isMuted}
+            setIsMuted={setIsMuted}
+            handleHangUp={handleHangUp}
+        />
     );
 }

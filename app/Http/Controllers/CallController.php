@@ -6,12 +6,15 @@ use App\Events\CallAccepted;
 use App\Events\CallDeclined;
 use App\Events\CallEnded;
 use App\Events\IncomingCallReceived;
-use App\Events\WebrtcSignalReceived;
 use App\Models\Call;
 use App\Services\CallService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Peterujah\Agora\Agora;
+use Peterujah\Agora\Builders\RtcToken;
+use Peterujah\Agora\Roles;
+use Peterujah\Agora\User;
 
 class CallController extends Controller
 {
@@ -181,35 +184,41 @@ class CallController extends Controller
     }
 
     /**
-     * Handle WebRTC Signaling (Offers, Answers, ICE Candidates).
+     * Generate an Agora token for a call (for the authenticated user).
      */
-    public function signal(Request $request, Call $call): JsonResponse
+    public function token(Call $call): JsonResponse
     {
         $userId = (int) auth()->id();
+        $appId = env('AGORA_APP_ID');
+        $appCertificate = env('AGORA_APP_CERTIFICATE');
 
-        // Ensure the sender is part of this call
-        if (! in_array($userId, [(int) $call->caller_id, (int) $call->receiver_id])) {
-            return response()->json(['error' => 'unauthorized'], 403);
+        if (! $appId || ! $appCertificate) {
+            return response()->json(['error' => 'Agora credentials missing'], 500);
         }
 
-        $request->validate([
-            'signal' => 'required|array',
-            'signal.type' => 'required|string',
+        $expirationInSeconds = 3600;
+
+        // Initialize Agora client
+        $agora = new Agora($appId, $appCertificate);
+        $agora->setExpiration(time() + $expirationInSeconds);
+
+        $channel = $call->room_name;
+        $uid = $userId;
+
+        // Prepare user object for token generation
+        $user = new User($uid);
+        $user->setChannel($channel);
+        $user->setRole(Roles::RTC_PUBLISHER);
+        $user->setPrivilegeExpire(time() + $expirationInSeconds);
+
+        // Build token
+        $token = RtcToken::buildTokenWithUid($agora, $user);
+
+        return response()->json([
+            'appId' => $appId,
+            'channel' => $channel,
+            'uid' => $uid,
+            'token' => $token,
         ]);
-
-        // The target is the OTHER participant
-        $targetUserId = ($userId === (int) $call->caller_id)
-            ? (int) $call->receiver_id
-            : (int) $call->caller_id;
-
-        // Broadcast the signal to the target user
-        broadcast(new WebrtcSignalReceived(
-            $call->id,
-            $userId,
-            $targetUserId,
-            $request->input('signal')
-        ))->toOthers();
-
-        return response()->json(['message' => 'Signal relayed successfully.']);
     }
 }

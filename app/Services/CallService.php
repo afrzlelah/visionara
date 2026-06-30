@@ -55,12 +55,14 @@ class CallService
                     return null; // try next volunteer
                 }
 
+                $roomName = 'optira-'.Str::uuid();
+
                 // Create the call
                 $newCall = Call::create([
                     'caller_id' => $callerId,
                     'receiver_id' => $volunteer->id,
                     'status' => Call::STATUS_PENDING,
-                    'room_name' => 'optira-'.Str::uuid(),
+                    'room_name' => $roomName,
                 ]);
 
                 // Update distribution marker

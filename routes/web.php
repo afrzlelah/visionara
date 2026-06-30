@@ -5,6 +5,7 @@ use App\Http\Controllers\CallController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('call');
     }
+
     return inertia('welcome');
 })->name('home');
 Route::inertia('privacy-policy', 'privacy-policy')->name('privacy-policy');
@@ -47,15 +49,17 @@ Route::middleware(['auth', 'verified'])
         Route::post('calls/{call}/decline', [CallController::class, 'decline'])->name('calls.decline');
         Route::post('calls/{call}/end', [CallController::class, 'end'])->name('calls.end');
         Route::post('calls/{call}/signal', [CallController::class, 'signal'])->name('calls.signal');
+        Route::get('calls/{call}/token', [CallController::class, 'token'])->name('calls.token');
 
         // AI Vision
         Route::post('/api/analyze-image', [AiVisionController::class, 'analyze'])->name('api.analyze-image');
 
         // Settings toggle
-        Route::post('settings/offline', function (Illuminate\Http\Request $request) {
+        Route::post('settings/offline', function (Request $request) {
             $user = $request->user();
-            $user->is_offline = !$user->is_offline;
+            $user->is_offline = ! $user->is_offline;
             $user->save();
+
             return back();
         })->name('settings.offline');
     });
