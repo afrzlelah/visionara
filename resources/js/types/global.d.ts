@@ -20,3 +20,10 @@ declare module '@inertiajs/core' {
         };
     }
 }
+
+declare global {
+    interface Window {
+        Echo: any;
+        Pusher: any;
+    }
+}

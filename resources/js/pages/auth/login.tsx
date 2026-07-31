@@ -31,7 +31,7 @@ export default function Login() {
                             <p className="mt-2 text-sm font-semibold text-neutral-500">
                                 Login to continue to{' '}
                                 <span className="font-bold text-[#E1005E]">
-                                    Optira
+                                    Visionara
                                 </span>
                             </p>
                         </div>

@@ -6,6 +6,7 @@ use App\Events\IncomingCallReceived;
 use App\Models\Call;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CallService
@@ -55,12 +56,14 @@ class CallService
                     return null; // try next volunteer
                 }
 
+                $roomName = 'visionara-'.Str::uuid();
+
                 // Create the call
                 $newCall = Call::create([
                     'caller_id' => $callerId,
                     'receiver_id' => $volunteer->id,
                     'status' => Call::STATUS_PENDING,
-                    'room_name' => 'optira-'.Str::uuid(),
+                    'room_name' => $roomName,
                 ]);
 
                 // Update distribution marker
@@ -71,7 +74,11 @@ class CallService
 
             if ($call) {
                 // Broadcast to the selected volunteer
-                broadcast(new IncomingCallReceived($call))->toOthers();
+                try {
+                    broadcast(new IncomingCallReceived($call))->toOthers();
+                } catch (\Exception $e) {
+                    Log::warning('Failed to broadcast IncomingCallReceived: '.$e->getMessage());
+                }
 
                 return $call;
             }
@@ -146,7 +153,11 @@ class CallService
             });
 
             if ($newCall) {
-                broadcast(new IncomingCallReceived($newCall))->toOthers();
+                try {
+                    broadcast(new IncomingCallReceived($newCall))->toOthers();
+                } catch (\Exception $e) {
+                    Log::warning('Failed to broadcast IncomingCallReceived on reassign: '.$e->getMessage());
+                }
 
                 return $newCall;
             }

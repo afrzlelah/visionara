@@ -14,11 +14,11 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { call } from '@/routes';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
-    const dashboardUrl = dashboard().url;
+    const dashboardUrl = call().url;
 
     const mainNavItems: NavItem[] = [
         {

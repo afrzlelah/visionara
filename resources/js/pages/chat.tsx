@@ -41,7 +41,7 @@ export default function ChatPage() {
                     </h2>
                     
                     <p className="text-sm font-medium text-neutral-500 leading-relaxed max-w-[280px]">
-                        There are no user chats for this profile yet. Get active on Optira now!
+                        There are no user chats for this profile yet. Get active on Visionara now!
                     </p>
 
                 </div>

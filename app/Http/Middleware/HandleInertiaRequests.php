@@ -49,6 +49,11 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success_action' => $request->session()->get('success_action'),
             ],
+            'turn' => [
+                'url' => env('TURN_SERVER_URL'),
+                'username' => env('TURN_SERVER_USERNAME'),
+                'credential' => env('TURN_SERVER_CREDENTIAL'),
+            ],
         ];
     }
 }

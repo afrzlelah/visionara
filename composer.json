@@ -16,7 +16,8 @@
         "laravel/framework": "^13.7",
         "laravel/reverb": "*",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14"
+        "laravel/wayfinder": "^0.1.14",
+        "peterujah/php-agora-tokens": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
@@ -51,10 +52,10 @@
             "npm install",
             "npm run build"
         ],
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve --host=localhost\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
-        ],
+       "dev": [
+    "Composer\\Config::disableProcessTimeout",
+    "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74,#8b5cf6,#a7f3d0\" \"php artisan serve --host=0.0.0.0\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev\" \"php artisan reverb:start\" \"node dev-proxy.js\" --names=server,queue,vite,reverb,proxy --kill-others"
+],
         "lint": [
             "pint --parallel"
         ],

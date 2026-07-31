@@ -25,7 +25,7 @@ test('new users can register as difabel', function () {
     $user = User::where('email', 'test@example.com')->first();
     expect($user->role)->toBe('difabel');
 
-    $response->assertRedirect(route('dashboard'));
+    $response->assertRedirect(route('call'));
 });
 
 test('new users can register as volunteer', function () {
@@ -43,7 +43,7 @@ test('new users can register as volunteer', function () {
     $user = User::where('email', 'volunteer@example.com')->first();
     expect($user->role)->toBe('volunteer');
 
-    $response->assertRedirect(route('dashboard'));
+    $response->assertRedirect(route('call'));
 });
 
 test('users cannot register as admin', function () {
