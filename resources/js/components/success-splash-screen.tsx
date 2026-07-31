@@ -27,11 +27,11 @@ export default function SuccessSplashScreen({ type, onClose }: SuccessSplashScre
                 <div className="space-y-3 w-full">
                     {type === 'register' ? (
                         <h1 className="text-[32px] font-extrabold text-neutral-900 tracking-tight leading-tight font-Outfit">
-                            Welcome to <span className="text-[#E1005E]">Optira</span>
+                            Welcome to <span className="text-[#E1005E]">Visionara</span>
                         </h1>
                     ) : (
                         <h1 className="text-[32px] font-extrabold text-neutral-900 tracking-tight leading-tight font-Outfit">
-                            Welcome back to <span className="text-[#E1005E]">Optira</span>
+                            Welcome back to <span className="text-[#E1005E]">Visionara</span>
                         </h1>
                     )}
 

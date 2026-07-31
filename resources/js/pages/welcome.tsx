@@ -47,7 +47,7 @@ export default function Welcome() {
 
     return (
         <>
-            <Head title="Welcome to Optira" />
+            <Head title="Welcome to Visionara" />
 
             <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-white font-sans antialiased selection:bg-[#E1005E]/10 selection:text-[#E1005E]">
                 
@@ -64,8 +64,8 @@ export default function Welcome() {
                         <div>
                             <img
                                 className="h-auto w-48 object-contain md:w-56"
-                                src="/images/logoOptira.png"
-                                alt="logo optira"
+                                src="/images/Visiora 1.png"
+                                alt="logo Visionara"
                             />
                         </div>
                         <div className="mt-4 flex flex-col gap-1">
@@ -95,7 +95,7 @@ export default function Welcome() {
                     }`}
                 >
                     <h1 className="text-2xl font-extrabold text-[#E1005E] tracking-tight mb-12">
-                        Optira
+                        Visionara
                     </h1>
 
                     {/* Image Placeholder Box */}
@@ -157,8 +157,8 @@ export default function Welcome() {
                     <div className="flex justify-center pt-4">
                         <img
                             className="h-auto w-48 object-contain md:w-56"
-                            src="/images/logoOptira.png"
-                            alt="logo optira"
+                            src="/images/Visiora 1.png"
+                            alt="logo Visionara"
                         />
                     </div>
 

@@ -208,7 +208,7 @@ export default function Call({ role }: Props) {
                         <div className="fixed inset-0 z-[100] flex items-center justify-center px-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
                             <div className="bg-white rounded-[24px] w-full max-w-[320px] shadow-[0_20px_40px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col items-center p-8 text-center animate-in zoom-in-95 duration-300 relative border border-neutral-100">
                                 {/* Close Button (Top Right) */}
-                                <button 
+                                <button
                                     onClick={clearStatusMessage}
                                     className="absolute top-4 right-4 p-1.5 rounded-full text-neutral-400 hover:bg-neutral-100 transition-colors"
                                     aria-label="Tutup"
@@ -217,20 +217,20 @@ export default function Call({ role }: Props) {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
-                                
+
                                 <div className="size-20 rounded-full bg-gradient-to-tr from-amber-100 to-rose-100 flex items-center justify-center mb-5 shadow-inner">
                                     <svg className="size-10 text-[#E1005E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
                                 </div>
-                                
+
                                 <h3 className="text-xl font-extrabold text-neutral-800 mb-2 font-Outfit tracking-tight">Panggilan Gagal</h3>
-                                
+
                                 <p className="text-[13px] font-medium text-neutral-500 leading-relaxed mb-7">
                                     {statusMessage}
                                 </p>
-                                
-                                <button 
+
+                                <button
                                     onClick={clearStatusMessage}
                                     className="w-full bg-[#E1005E] text-white font-bold text-sm py-3.5 rounded-[14px] shadow-[0_4px_14px_rgba(225,0,94,0.3)] hover:bg-[#c20050] active:scale-[0.98] transition-all"
                                 >

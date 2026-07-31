@@ -11,6 +11,7 @@ use App\Services\CallService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Peterujah\Agora\Agora;
 use Peterujah\Agora\Builders\RtcToken;
 use Peterujah\Agora\Roles;
@@ -89,7 +90,11 @@ class CallController extends Controller
         // Refresh the call to get updated status
         $call->refresh();
 
-        broadcast(new CallAccepted($call))->toOthers();
+        try {
+            broadcast(new CallAccepted($call))->toOthers();
+        } catch (\Exception $e) {
+            Log::warning('Failed to broadcast CallAccepted: '.$e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Call accepted successfully.',
@@ -143,7 +148,11 @@ class CallController extends Controller
         }
 
         // No other volunteer available — NOW broadcast declined to the caller
-        broadcast(new CallDeclined($call));
+        try {
+            broadcast(new CallDeclined($call));
+        } catch (\Exception $e) {
+            Log::warning('Failed to broadcast CallDeclined: '.$e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Declined. No other volunteers available.',
@@ -174,8 +183,11 @@ class CallController extends Controller
             'ended_at' => now(),
         ]);
 
-        // Broadcast to BOTH participants
-        broadcast(new CallEnded($call));
+        try {
+            broadcast(new CallEnded($call));
+        } catch (\Exception $e) {
+            Log::warning('Failed to broadcast CallEnded: '.$e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Call ended successfully.',

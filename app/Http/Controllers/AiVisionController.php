@@ -42,7 +42,9 @@ class AiVisionController extends Controller
             $mimeType = $matches[1] ?? 'image/jpeg';
 
             // Send request to Google Gemini API
-            $response = Http::post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey, [
+            $response = Http::withoutVerifying()
+                ->timeout(30)
+                ->post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey, [
                 'contents' => [
                     [
                         'parts' => [
