@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LandingPageController;
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('call');
