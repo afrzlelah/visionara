@@ -1,7 +1,7 @@
 // resources/js/Layouts/App.jsx
 import { Head, usePage } from '@inertiajs/react';
-import NavBar from '@/Components/NavBar';
-import Footer from '@/Components/Footer';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 export default function App({ children, title = 'Padhang', hideNavBar = false }) {
   return (
