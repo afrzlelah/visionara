@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import {
     ArrowDown,
     ArrowRight,
@@ -110,7 +110,7 @@ const tw = {
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     nav: 'sticky top-0 z-40 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
-    brand: 'inline-flex items-center gap-2 text-[28px] font-extrabold tracking-[-1.6px] text-[#ff0000] max-[640px]:text-[25px]',
+    brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[#ff0000] max-[640px]:text-[25px]',
     brandInverse: '!text-white',
     brandMark:
         'relative inline-block size-[30px] rotate-[-42deg] max-[640px]:size-[27px]',
@@ -235,7 +235,7 @@ const tw = {
     appDescription:
         'my-[17px] mb-[21px] max-w-[380px] text-[13px] leading-[1.7] text-[#def0ff]',
     playButton:
-        'flex min-h-[49px] w-[182px] items-center gap-2.5 rounded-md bg-[#12171a] px-[11px] py-1.5 text-white',
+        'flex min-h-[49px]  items-center gap-2.5 rounded-md bg-[#12171a] px-[11px] py-1.5 text-white',
     playTriangle: 'text-[26px] text-[#61d488]',
     appCaption:
         'mt-[21px] flex items-center gap-[7px] text-[10px] text-[#c0e3ff]',
@@ -296,15 +296,12 @@ function Brand({ inverse = false }: { inverse?: boolean }) {
     return (
         <a
             href="#beranda"
-            aria-label="Silang.id beranda"
+            aria-label="Padhang beranda"
             className={`${tw.brand} ${inverse ? tw.brandInverse : ''}`}
         >
-            <span className={tw.brandMark} aria-hidden="true">
-                <i className={tw.brandMarkBar} />
-                <i className={tw.brandMarkBar} />
-            </span>
+            <img src="/images/logo padhang.png" alt="Padhang" height="20" width="80" className="object-contain m-0 pl-1  " />
             <span>
-                silang<span className="text-[#ff0000]">.</span>id
+                Padhang
             </span>
         </a>
     );
@@ -336,7 +333,7 @@ export default function Welcome() {
 
     return (
         <>
-            <Head title="Silang.id — Semua Bisa Akses" />
+            <Head title="Padhang — Semua Bisa Akses" />
             <div className={tw.root} id="beranda">
                 <header className={tw.nav}>
                     <div className={`${tw.wrap} ${tw.navInner}`}>
@@ -378,18 +375,18 @@ export default function Welcome() {
                                     Rencanakan acara yang lebih aksesibel untuk
                                     Tuli bersama kami.
                                 </p>
-                                <a
+                                <Link
                                     className={`${tw.button} ${tw.yellowButton}`}
-                                    href="#kontak"
+                                    href="/intro"
                                 >
-                                    Pesan Sekarang <ArrowRight size={18} />
-                                </a>
+                                    Masuk Sekarang <ArrowRight size={18} />
+                                </Link>
                             </div>
                             <div className={tw.heroVisual}>
                                 <div className={tw.heroImage}>
                                     <img
                                         src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1100&q=85"
-                                        alt="Perempuan tersenyum menyambut pengunjung Silang.id"
+                                        alt="Perempuan tersenyum menyambut pengunjung Padhang"
                                     />
                                 </div>
                             </div>
@@ -405,7 +402,7 @@ export default function Welcome() {
 
                     <section
                         className={tw.statsWrap}
-                        aria-label="Pencapaian Silang.id"
+                        aria-label="Pencapaian Padhang"
                     >
                         <div className={`${tw.stats} p-10`} >
                             {[
@@ -436,11 +433,7 @@ export default function Welcome() {
                                     alt="Perempuan muda tersenyum, mewakili komunitas Tuli yang berdaya"
                                 />
                                 <span className={tw.badge}>
-                                    <span>✳</span> Semua Bisa Akses
-                                </span>
-                                <span className="absolute right-[3px] bottom-[-27px] z-[2] flex items-center gap-2 text-[10px] font-bold text-[#8493a1] max-[640px]:bottom-[-24px]">
-                                    01 <i className="h-px w-10 bg-[#bbc8d2]" />{' '}
-                                    03
+                                    {/* <span>✳</span> Semua Bisa Akses */}
                                 </span>
                             </div>
                             <div>
@@ -451,7 +444,7 @@ export default function Welcome() {
                                     berbagai acara
                                 </h2>
                                 <p className={tw.body}>
-                                    Silang.id adalah startup yang bergerak untuk
+                                    Padhang adalah startup yang bergerak untuk
                                     meningkatkan aksesibilitas Tuli melalui
                                     layanan Juru Bahasa Isyarat. Kami juga
                                     memiliki program pemberdayaan untuk membuka
@@ -713,7 +706,7 @@ export default function Welcome() {
                                     tetap terhubung dengan komunitas lewat
                                     aplikasi Silang.id.
                                 </p>
-                                <a href="#kontak" className={tw.playButton}>
+                                <a href="#kontak" className={` ${tw.playButton} w-1/2  `}>
                                     <span className={tw.playTriangle}>▶</span>
                                     <span className="flex flex-1 flex-col">
                                         <small className="text-[8px]">
@@ -744,7 +737,7 @@ export default function Welcome() {
                                     </div>
                                     <div className={tw.phoneBanner}>
                                         <small>
-                                            silang.id • akses untuk semua
+                                            Padhang • akses untuk semua
                                         </small>
                                         <b>
                                             Mau acara makin inklusif buat teman
@@ -834,7 +827,7 @@ export default function Welcome() {
                                 <p className={tw.eyebrow}>MARI MULAI BERSAMA</p>
                                 <h2>
                                     Konsultasikan kebutuhan Anda bersama
-                                    Silang.id
+                                    Padhang
                                 </h2>
                                 <a
                                     href="https://wa.me/6285183148932"
@@ -844,9 +837,7 @@ export default function Welcome() {
                                     <ArrowRight size={17} />
                                 </a>
                             </div>
-                            <span className="absolute top-[38px] right-[5%] text-[52px] text-[#dfff00] max-[640px]:hidden">
-                                ✳
-                            </span>
+
                         </div>
                     </section>
 
@@ -915,7 +906,7 @@ export default function Welcome() {
                                 </p>
                             </div>
                             <div>
-                                <h3>Silang.id</h3>
+                                <h3>Padhang</h3>
                                 <a href="#beranda">Beranda</a>
                                 <a href="#tentang">Tentang</a>
                                 <a href="#kontak">Kontak</a>

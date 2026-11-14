@@ -18,6 +18,11 @@ Route::get('/', function () {
 
     return inertia('welcome');
 })->name('home');
+
+Route::get('/intro', function () {
+    return inertia('intro');   // nama komponen Inertia = file intro.tsx
+})->name('intro');
+
 Route::inertia('privacy-policy', 'privacy-policy')->name('privacy-policy');
 
 Route::middleware(['auth', 'verified'])
