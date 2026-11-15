@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import {
     ArrowDown,
     ArrowRight,
@@ -8,87 +8,76 @@ import {
     MessageCircle,
     Minus,
     Plus,
-    Quote,
     Smartphone,
     X,
 } from 'lucide-react';
 import { useState } from 'react';
+import { register } from '@/routes';
 
 const navItems = [
     ['Beranda', '#beranda'],
-    ['Layanan', '#layanan'],
-    ['Blog', '#media'],
-    ['Tentang Kami', '#tentang'],
+    ['Fitur', '#fitur'],
+    ['Cara Kerja', '#cara-kerja'],
+    ['Tentang', '#tentang'],
     ['Kontak', '#kontak'],
-    ['Pertanyaan Umum', '#faq'],
+    ['FAQ', '#faq'],
 ];
 
 const testimonials = [
     {
-        quote: 'Kali pertama DANA membuat acara yang mengundang komunitas Tuli, dan sangat terbantu oleh layanan Juru Bahasa Isyarat dari Silang.id. Acara terasa lebih nyaman dan inklusif.',
-        name: 'Dike',
-        org: 'DANA Indonesia',
-        mark: 'DANA',
-        color: '#1688e9',
+        quote: 'Deskripsi situasi yang memberi konteks dapat membantu pengguna memahami lingkungan, bukan hanya mengenali satu objek.',
+        name: 'Konteks lingkungan',
+        org: 'Kebutuhan pengguna',
+        mark: 'AI',
+        color: '#d50057',
     },
     {
-        quote: 'Senang bekerja sama dengan Silang.id yang bisa mengakomodir kebutuhan Juru Bahasa Isyarat dalam acara kami. Timnya profesional dan sigap.',
-        name: 'Coni',
-        org: 'Women’s World Banking',
-        mark: 'WWB',
-        color: '#2c4b74',
+        quote: 'Pemindaian otomatis dirancang untuk mengurangi tindakan berulang saat pengguna mengeksplorasi lingkungan sekitar.',
+        name: 'Pemindaian otomatis',
+        org: 'Konsep Padhang',
+        mark: 'SCAN',
+        color: '#7c285e',
     },
     {
-        quote: 'Terima kasih tim sudah sering membantu menyediakan Juru Bahasa Isyarat pada kajian di Masjid Agung Al Azhar. Pelayanannya luar biasa.',
-        name: 'William',
-        org: 'Youth Islamic Study Club',
-        mark: 'YISC',
+        quote: 'Relawan dapat melengkapi AI ketika situasi tidak jelas, kompleks, atau membutuhkan bantuan manusia secara langsung.',
+        name: 'Bantuan relawan',
+        org: 'Dukungan manusia',
+        mark: 'SOS',
         color: '#56833c',
     },
 ];
 
 const faqs = [
     [
-        'Apa itu Juru Bahasa Isyarat?',
-        'Juru Bahasa Isyarat (JBI) membantu komunikasi antara pengguna bahasa isyarat dan pengguna bahasa lisan dalam acara, pertemuan, maupun layanan publik.',
+        'Apa itu Padhang?',
+        'Padhang adalah konsep platform asistif berbasis web untuk membantu pengguna tunanetra memahami lingkungan dan bergerak dengan lebih percaya diri.',
     ],
     [
-        'Apakah Juru Bahasa Isyarat Silang.id sudah tersertifikasi?',
-        'Kami bekerja dengan Juru Bahasa Isyarat berpengalaman dan menyesuaikan tim dengan kebutuhan serta konteks acara Anda.',
+        'Bagaimana Padhang membantu memahami lingkungan?',
+        'AI Vision menyusun deskripsi kontekstual tentang situasi sekitar. Informasi dapat disampaikan melalui interaksi suara dan text-to-speech.',
     ],
     [
-        'Apa layanan unggulan Silang.id?',
-        'Kami menyediakan Juru Bahasa Isyarat untuk acara, konsultasi aksesibilitas, dan program pemberdayaan Tuli.',
+        'Apakah objek dipindai secara otomatis?',
+        'Konsep Padhang mencakup deteksi objek otomatis agar pengguna tidak perlu mengulang pemindaian secara manual untuk setiap objek.',
     ],
     [
-        'Apakah Silang.id membuka kerja sama selain layanan tersedia?',
-        'Ya. Kami terbuka untuk berdiskusi tentang program aksesibilitas, pelatihan, dan kolaborasi yang sesuai dengan kebutuhan Anda.',
+        'Apakah AI menggantikan bantuan relawan?',
+        'Tidak. AI membantu pengenalan lingkungan sehari-hari, sedangkan sistem panggilan relawan menyediakan dukungan manusia untuk situasi yang belum jelas atau kompleks.',
     ],
     [
-        'Bagaimana cara memesan layanan?',
-        'Hubungi tim kami melalui WhatsApp atau formulir konsultasi. Ceritakan kebutuhan, tanggal, lokasi, dan format acara Anda.',
+        'Apakah Padhang dapat digunakan tanpa internet?',
+        'Konsep saat ini menggunakan layanan AI berbasis cloud sehingga membutuhkan koneksi internet. Dukungan offline merupakan pengembangan lanjutan.',
     ],
 ];
 
 const partners = [
-    'Kementerian Pertanian',
-    'Bappenas',
-    'KemenKopUKM',
-    'Pengayoman',
-    'Kejaksaan RI',
-    'Kementerian Sosial',
-    'Kemenkes RI',
-    'Dompet Dhuafa',
-    'Jakarta',
-    'bobobox',
-    'THINK POLICY',
-    'Alfamart',
-    'Speak Project',
-    'Dan+Dan',
+    'Mobilitas', 'Pendidikan', 'Kesehatan', 'Ruang publik', 'Aktivitas harian',
+    'Orientasi tempat', 'Komunikasi suara', 'Bantuan relawan', 'Deteksi objek',
+    'Navigasi GPS', 'Deskripsi lingkungan', 'Aksesibilitas digital',
 ];
 const partnerMarks = ['✿', '◈', '▦', '♧', '⚖', '✳'];
 const partnerMarkColors = [
-    'text-[#830000]',
+    'text-[#d50057]',
     'text-[#43a773]',
     'text-[#14a9ae]',
     'text-[#e3b800]',
@@ -96,33 +85,28 @@ const partnerMarkColors = [
     'text-[#098fa5]',
 ];
 const media = [
-    'kumparan',
-    'RCTI+',
-    'LIPUTAN6',
-    'KOMPAS',
-    'SEA TODAY',
-    'INDOZONE',
-    'TVRI WORLD',
+    'Gemini Vision AI', 'Deteksi otomatis', 'Navigasi GPS', 'Text-to-Speech',
+    'Interaksi suara', 'Panggilan relawan',
 ];
 
 const tw = {
-    root: 'isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--silang-blue:#830000] [--silang-cyan:#ff0000] [--silang-lime:#dfff00] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:[&_a]:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
+    root: 'isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:[&_a]:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     nav: 'sticky top-0 z-40 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
-    brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[#ff0000] max-[640px]:text-[25px]',
+    brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[#e6005e] max-[640px]:text-[25px]',
     brandInverse: '!text-white',
     brandMark:
         'relative inline-block size-[30px] rotate-[-42deg] max-[640px]:size-[27px]',
     brandMarkBar:
-        'absolute left-[9px] top-0 block h-[29px] w-[11px] rounded-lg bg-[#ff0000] first:rotate-0 last:rotate-90 max-[640px]:left-2 max-[640px]:h-[26px] max-[640px]:w-[10px]',
+        'absolute left-[9px] top-0 block h-[29px] w-[11px] rounded-lg bg-[#e6005e] first:rotate-0 last:rotate-90 max-[640px]:left-2 max-[640px]:h-[26px] max-[640px]:w-[10px]',
     menuButton:
         'hidden size-10 cursor-pointer place-items-center border-0 bg-transparent text-[#202124] max-[640px]:grid',
     navLinks:
-        'flex items-center gap-[clamp(18px,2.7vw,38px)] text-[13px] font-semibold [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-[#830000] max-[900px]:gap-[15px] max-[900px]:text-[11px] max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[66px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-0 max-[640px]:bg-white max-[640px]:px-5 max-[640px]:pb-[15px] max-[640px]:pt-[7px] max-[640px]:shadow-[0_15px_20px_#00193312] [&_a]:max-[640px]:border-b [&_a]:max-[640px]:border-[#edf1f4] [&_a]:max-[640px]:py-3 [&_a]:max-[640px]:text-sm',
+        'flex items-center gap-[clamp(18px,2.7vw,38px)] text-[13px] font-semibold [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-[#d50057] max-[900px]:gap-[15px] max-[900px]:text-[11px] max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[66px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-0 max-[640px]:bg-white max-[640px]:px-5 max-[640px]:pb-[15px] max-[640px]:pt-[7px] max-[640px]:shadow-[0_15px_20px_#00193312] [&_a]:max-[640px]:border-b [&_a]:max-[640px]:border-[#edf1f4] [&_a]:max-[640px]:py-3 [&_a]:max-[640px]:text-sm',
     navClosed: 'max-[640px]:hidden',
     navOpen: 'max-[640px]:flex',
-    blue: "relative isolate overflow-hidden bg-[#830000] text-white before:pointer-events-none before:absolute before:-z-10 before:left-[-155px] before:top-[215px] before:size-[510px] before:rotate-[42deg] before:rounded-[40%_60%_55%_45%] before:bg-white/5 before:content-[''] after:pointer-events-none after:absolute after:-z-10 after:right-[-230px] after:bottom-[-340px] after:size-[490px] after:rounded-full after:border after:border-white/15 after:shadow-[0_0_0_40px_rgb(255_255_255_/_4%),0_0_0_80px_rgb(255_255_255_/_3%)] after:content-['']",
+    blue: "relative isolate overflow-hidden bg-[#d50057] text-white before:pointer-events-none before:absolute before:-z-10 before:left-[-155px] before:top-[215px] before:size-[510px] before:rotate-[42deg] before:rounded-[40%_60%_55%_45%] before:bg-white/5 before:content-[''] after:pointer-events-none after:absolute after:-z-10 after:right-[-230px] after:bottom-[-340px] after:size-[490px] after:rounded-full after:border after:border-white/15 after:shadow-[0_0_0_40px_rgb(255_255_255_/_4%),0_0_0_80px_rgb(255_255_255_/_3%)] after:content-['']",
     hero: 'flex min-h-[635px] items-center max-[900px]:min-h-[570px] max-[640px]:min-h-0',
     heroGrid:
         'grid grid-cols-[1.02fr_.98fr] items-center gap-[46px] py-[70px] pb-[100px] max-[900px]:gap-[15px] max-[900px]:py-[60px] max-[900px]:pb-20 max-[640px]:grid-cols-1 max-[640px]:gap-3 max-[640px]:py-[55px] max-[640px]:pb-20',
@@ -146,7 +130,7 @@ const tw = {
     stats: 'grid min-h-[111px] grid-cols-3 items-center rounded-lg bg-white shadow-[0_12px_40px_#17365817] max-[640px]:min-h-[88px]',
     stat: 'relative flex min-h-[57px] flex-col items-center justify-center gap-0.5 max-[640px]:min-h-[50px]',
     statNumber:
-        'text-[38px] leading-none font-extrabold tracking-[-1px] text-[#830000] max-[640px]:text-[clamp(25px,8vw,32px)] max-[390px]:text-[25px]',
+        'text-[38px] leading-none font-extrabold tracking-[-1px] text-[#d50057] max-[640px]:text-[clamp(25px,8vw,32px)] max-[390px]:text-[25px]',
     statLabel:
         'text-[13px] font-semibold max-[640px]:text-[10px] max-[640px]:text-center max-[390px]:text-[9px]',
     statDivider:
@@ -163,12 +147,12 @@ const tw = {
     aboutVisual:
         'relative flex min-h-[480px] items-end justify-center max-[900px]:min-h-[390px] max-[640px]:mx-[6px] max-[640px]:min-h-[350px]',
     aboutShape:
-        'absolute inset-[57px_5px_6px_24px] rounded-tl-[36%] bg-linear-to-br from-[#830000] to-[#ff0000] max-[640px]:inset-[45px_0_0]',
+        'absolute inset-[57px_5px_6px_24px] rounded-tl-[36%] bg-linear-to-br from-[#d50057] to-[#e6005e] max-[640px]:inset-[45px_0_0]',
     aboutPhoto:
         'relative z-[1] h-[470px] w-[83%] rounded-t-[48%] object-cover object-[center_20%] max-[900px]:h-[385px] max-[640px]:h-[345px] max-[640px]:w-4/5',
-    badge: 'absolute top-9 left-0 z-[2] flex items-center gap-[9px] rounded-[3px] bg-white px-[14px] py-[11px] text-[10px] font-bold shadow-[0_7px_24px_#193c5c19] max-[640px]:top-5 [&_span]:text-xl [&_span]:text-[#830000]',
+    badge: 'absolute top-9 left-0 z-[2] flex items-center gap-[9px] rounded-[3px] bg-white px-[14px] py-[11px] text-[10px] font-bold shadow-[0_7px_24px_#193c5c19] max-[640px]:top-5 [&_span]:text-xl [&_span]:text-[#d50057]',
     eyebrow:
-        'mb-[13px] text-[11px] font-extrabold tracking-[.12em] text-[#830000]',
+        'mb-[13px] text-[11px] font-extrabold tracking-[.12em] text-[#d50057]',
     aboutTitle:
         'm-0 text-[clamp(32px,3.6vw,47px)] leading-[1.12] font-bold tracking-[-1.6px] max-[900px]:text-[36px] max-[640px]:text-[34px]',
     body: 'my-[22px] mb-[26px] text-sm leading-[1.8] text-[#66717d] max-[640px]:my-[17px] max-[640px]:mb-[21px] max-[640px]:text-[13px]',
@@ -184,18 +168,18 @@ const tw = {
     sectionHeadingLight: '[&_.eyebrow]:text-[#dfff00] [&_h2]:text-white',
     servicesSection: 'pt-10 pb-[105px] max-[640px]:pt-2 max-[640px]:pb-[70px]',
     serviceIntro:
-        'my-[-15px] mb-7 flex items-center justify-between gap-[30px] max-[640px]:my-[-6px] max-[640px]:mb-[22px] max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-3 [&_p]:m-0 [&_p]:max-w-[440px] [&_p]:text-[13px] [&_p]:leading-[1.6] [&_p]:text-[#6e7d88] [&_a]:inline-flex [&_a]:items-center [&_a]:gap-2 [&_a]:text-[12px] [&_a]:font-bold [&_a]:text-[#830000]',
+        'my-[-15px] mb-7 flex items-center justify-between gap-[30px] max-[640px]:my-[-6px] max-[640px]:mb-[22px] max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-3 [&_p]:m-0 [&_p]:max-w-[440px] [&_p]:text-[13px] [&_p]:leading-[1.6] [&_p]:text-[#6e7d88] [&_a]:inline-flex [&_a]:items-center [&_a]:gap-2 [&_a]:text-[12px] [&_a]:font-bold [&_a]:text-[#d50057]',
     serviceCards:
         'grid grid-cols-3 gap-[17px] max-[640px]:grid-cols-1 max-[640px]:gap-3',
     serviceCard:
         "relative min-h-[250px] overflow-hidden rounded-[7px] p-6 after:absolute after:top-[68px] after:right-[-74px] after:size-40 after:rounded-full after:border after:border-white/50 after:shadow-[0_0_0_20px_rgb(255_255_255_/_12%),0_0_0_40px_rgb(255_255_255_/_6%)] after:content-[''] max-[900px]:p-[19px] max-[640px]:min-h-[218px] max-[640px]:p-[21px]",
-    serviceBlue: 'bg-[#ff0000] text-white',
+    serviceBlue: 'bg-[#e6005e] text-white',
     serviceCyan: 'bg-[#e5f9ff] text-[#17384a]',
     serviceLime: 'bg-[#f5ffd0] text-[#263500]',
     serviceNumber: 'text-[9px] font-bold tracking-[.12em] opacity-70',
     serviceIcon:
         'my-5 mb-[15px] grid size-[45px] place-items-center rounded-full bg-white/15 text-2xl [&_svg]:w-[23px] max-[640px]:my-[14px] max-[640px]:mb-[11px]',
-    serviceIconCyan: 'bg-[#c6effb] text-[#830000]',
+    serviceIconCyan: 'bg-[#c6effb] text-[#d50057]',
     serviceIconLime: 'bg-[#e4f889] text-[#546a00]',
     serviceTitle: 'm-0 text-[19px] font-semibold tracking-[-.4px]',
     serviceDescription:
@@ -203,7 +187,7 @@ const tw = {
     serviceArrow:
         'absolute right-5 bottom-[17px] z-[2] grid size-8 place-items-center rounded-full border border-current [&_svg]:w-4',
     testimonialsSection:
-        'bg-[#830000] py-[92px] pb-[78px] max-[640px]:py-[70px] max-[640px]:pb-[54px]',
+        'bg-[#d50057] py-[92px] pb-[78px] max-[640px]:py-[70px] max-[640px]:pb-[54px]',
     testimonialWindow: 'min-w-0 max-[640px]:overflow-hidden',
     testimonialGrid:
         'grid grid-cols-3 gap-5 max-[640px]:flex max-[640px]:gap-0 max-[640px]:translate-x-[var(--testimonial-offset)] max-[640px]:transition-transform max-[640px]:duration-300',
@@ -223,7 +207,7 @@ const tw = {
         'flex min-h-[60px] items-center justify-center gap-[7px] text-left text-[11px] leading-[1.2] font-bold text-[#394c5a] max-[640px]:min-h-[55px] max-[640px]:text-[10px]',
     partnerSymbol: 'text-[26px] max-[640px]:text-[23px]',
     partnerFeatured: 'min-h-[76px] rounded bg-[#25235f] text-[#ffe81c]',
-    appSection: 'min-h-[480px] bg-[#830000] max-[640px]:min-h-0',
+    appSection: 'min-h-[480px] bg-[#d50057] max-[640px]:min-h-0',
     appGrid:
         'grid min-h-[480px] grid-cols-2 items-center gap-[60px] max-[640px]:min-h-0 max-[640px]:grid-cols-1 max-[640px]:gap-0',
     appCopy:
@@ -248,9 +232,9 @@ const tw = {
     phoneHeader:
         'flex items-center justify-between px-1 pt-1 pb-3 [&_.brand]:text-[20px] [&_.brand-mark]:size-5 [&_.brand-mark_i]:left-[6px] [&_.brand-mark_i]:h-[19px] [&_.brand-mark_i]:w-2',
     phoneAvatar:
-        'grid size-6 place-items-center rounded-full bg-[#dff6ff] text-[11px] font-extrabold text-[#830000]',
+        'grid size-6 place-items-center rounded-full bg-[#dff6ff] text-[11px] font-extrabold text-[#d50057]',
     phoneBanner:
-        'flex min-h-[145px] flex-col rounded-[13px] bg-linear-to-br from-[#ff0000] to-[#ff0d0d] p-[14px] text-white max-[640px]:min-h-[124px] [&_small]:text-[7px] [&_small]:opacity-80 [&_b]:my-2 [&_b]:mb-1 [&_b]:max-w-[160px] [&_b]:text-base [&_b]:leading-[1.1] [&_span]:text-[8px] [&_i]:mt-[10px] [&_i]:w-fit [&_i]:rounded-sm [&_i]:bg-[#dfff00] [&_i]:px-[7px] [&_i]:py-[5px] [&_i]:text-[7px] [&_i]:font-extrabold [&_i]:not-italic [&_i]:text-[#263000] max-[640px]:[&_b]:text-sm',
+        'flex min-h-[145px] flex-col rounded-[13px] bg-linear-to-br from-[#d50057] to-[#e6005e] p-[14px] text-white max-[640px]:min-h-[124px] [&_small]:text-[7px] [&_small]:opacity-80 [&_b]:my-2 [&_b]:mb-1 [&_b]:max-w-[160px] [&_b]:text-base [&_b]:leading-[1.1] [&_span]:text-[8px] [&_i]:mt-[10px] [&_i]:w-fit [&_i]:rounded-sm [&_i]:bg-[#dfff00] [&_i]:px-[7px] [&_i]:py-[5px] [&_i]:text-[7px] [&_i]:font-extrabold [&_i]:not-italic [&_i]:text-[#263000] max-[640px]:[&_b]:text-sm',
     phoneLabel:
         'mt-[15px] mb-[9px] text-[10px] font-bold max-[640px]:mt-[11px]',
     phoneTiles:
@@ -262,11 +246,11 @@ const tw = {
     mediaLogo:
         'text-[22px] font-extrabold tracking-[-1px] text-[#67727c] opacity-80 grayscale max-[640px]:text-[18px]',
     contactBanner:
-        'relative min-h-[305px] overflow-hidden bg-[#830000] text-white',
+        'relative min-h-[305px] overflow-hidden bg-[#d50057] text-white',
     contactPhoto:
         'absolute inset-0 bg-cover bg-[center_48%] opacity-[.22] grayscale',
     contactOverlay:
-        'absolute inset-0 bg-linear-to-r from-[#ff0000] from-[8%] via-[#ff0000] via-1/2 to-[#ff0000]',
+        'absolute inset-0 bg-linear-to-r from-[#e6005e] from-[8%] via-[#e6005e] via-1/2 to-[#e6005e]',
     contactInner:
         'relative grid min-h-[305px] grid-cols-[.85fr_1fr] items-center max-[640px]:min-h-[300px] max-[640px]:grid-cols-[.85fr_1.15fr] max-[640px]:gap-[10px] max-[390px]:grid-cols-[.78fr_1.22fr]',
     contactPerson:
@@ -277,7 +261,7 @@ const tw = {
         'mx-auto w-[min(970px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     faqList: 'grid gap-[10px]',
     faqItem:
-        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[#830000] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[#830000] max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
+        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[#d50057] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[#d50057] max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
     faqAnswer:
         'px-5 pr-[58px] pb-[17px] text-xs leading-[1.7] text-[#66717d] [&_p]:m-0 max-[640px]:pr-[45px] max-[640px]:pl-3 max-[640px]:pb-4',
     footer: 'bg-[#202124] py-[61px] pb-5 text-white max-[640px]:pt-[49px]',
@@ -368,25 +352,24 @@ export default function Welcome() {
                         <div className={`${tw.wrap} ${tw.heroGrid}`}>
                             <div className={tw.heroCopy}>
                                 <h1 className={tw.heroTitle}>
-                                    Layanan Aksesibilitas <span>&</span>{' '}
-                                    Pemberdayaan Tuli
+                                    Lebih paham sekitar, <span>lebih</span>{' '}
+                                    percaya diri melangkah
                                 </h1>
                                 <p className={tw.heroText}>
-                                    Rencanakan acara yang lebih aksesibel untuk
-                                    Tuli bersama kami.
+                                    Padhang memadukan deskripsi AI, deteksi objek otomatis, navigasi GPS, dan bantuan relawan dalam satu platform.
                                 </p>
-                                <Link
+                                <a
                                     className={`${tw.button} ${tw.yellowButton}`}
-                                    href="/intro"
+                                    href="#fitur"
                                 >
-                                    Masuk Sekarang <ArrowRight size={18} />
-                                </Link>
+                                    Mulai jelajahi <ArrowRight size={18} />
+                                </a>
                             </div>
                             <div className={tw.heroVisual}>
                                 <div className={tw.heroImage}>
                                     <img
-                                        src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1100&q=85"
-                                        alt="Perempuan tersenyum menyambut pengunjung Padhang"
+                                        src="/images/phone.webp"
+                                        alt="Ilustrasi teknologi asistif Padhang"
                                     />
                                 </div>
                             </div>
@@ -394,7 +377,7 @@ export default function Welcome() {
                         <a
                             href="#tentang"
                             className={tw.scroll}
-                            aria-label="Gulir ke tentang kami"
+                            aria-label="Gulir ke tentang Padhang"
                         >
                             <ArrowDown size={17} />
                         </a>
@@ -406,9 +389,9 @@ export default function Welcome() {
                     >
                         <div className={`${tw.stats} p-10`} >
                             {[
-                                ['300+', 'Klien'],
-                                ['1000+', 'Acara Terlaksana'],
-                                ['9+', 'Provinsi'],
+                                ['5', 'Fitur utama'],
+                                ['2', 'Jenis dukungan'],
+                                ['1', 'Platform terpadu'],
                             ].map(([number, label], i) => (
                                 <div className={`${tw.stat} text-2xl font-bold`} key={label}>
                                     <strong className={tw.statNumber}>
@@ -429,26 +412,22 @@ export default function Welcome() {
                                 <div className={tw.aboutShape} />
                                 <img
                                     className={tw.aboutPhoto}
-                                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85"
-                                    alt="Perempuan muda tersenyum, mewakili komunitas Tuli yang berdaya"
+                                    src="/images/community.webp"
+                                    alt="Ilustrasi komunitas dan aksesibilitas yang didukung Padhang"
                                 />
                                 <span className={tw.badge}>
                                     {/* <span>✳</span> Semua Bisa Akses */}
                                 </span>
                             </div>
                             <div>
-                                <p className={tw.eyebrow}>TENTANG KAMI</p>
+                                <p className={tw.eyebrow}>TENTANG PADHANG</p>
                                 <h2 className={tw.aboutTitle}>
-                                    Layanan ramah Tuli
-                                    <br className="max-[640px]:hidden" /> untuk
-                                    berbagai acara
+                                    Teknologi asistif untuk
+                                    <br className="max-[640px]:hidden" /> memahami
+                                    lingkungan
                                 </h2>
                                 <p className={tw.body}>
-                                    Padhang adalah startup yang bergerak untuk
-                                    meningkatkan aksesibilitas Tuli melalui
-                                    layanan Juru Bahasa Isyarat. Kami juga
-                                    memiliki program pemberdayaan untuk membuka
-                                    lebih banyak kesempatan yang setara.
+                                    Padhang adalah konsep platform berbasis web untuk membantu pengguna tunanetra memahami lingkungan dan bernavigasi. AI Vision, GPS, interaksi suara, serta panggilan relawan dirancang hadir dalam satu pengalaman.
                                 </p>
                                 <div className={tw.impact}>
                                     <div className={tw.sdgTitle}>
@@ -463,18 +442,17 @@ export default function Welcome() {
                                         </span>
                                     </div>
                                     <strong className="text-xs">
-                                        Kontribusi kami untuk masa depan
-                                        inklusif
+                                        Teknologi untuk akses yang lebih inklusif
                                     </strong>
                                     <div className={tw.sdgTags}>
                                         <span>
-                                            04{' '}
+                                            03{' '}
                                             <small>
-                                                Pendidikan Berkualitas
+                                                Kesehatan dan kesejahteraan
                                             </small>
                                         </span>
                                         <span>
-                                            08 <small>Pekerjaan Layak</small>
+                                            04 <small>Pendidikan berkualitas</small>
                                         </span>
                                         <span>
                                             10{' '}
@@ -484,27 +462,25 @@ export default function Welcome() {
                                         </span>
                                     </div>
                                 </div>
-                                <a className={tw.textLink} href="#layanan">
+                                <a className={tw.textLink} href="#fitur">
                                     Selengkapnya <ArrowUpRight size={17} />
                                 </a>
                             </div>
                         </div>
                     </section>
 
-                    <section className={tw.servicesSection} id="layanan">
+                    <section className={tw.servicesSection} id="fitur">
                         <div className={tw.wrap}>
                             <SectionHeading
-                                eyebrow="LAYANAN KAMI"
-                                title="Semua Bisa Akses Bersama Kami"
+                                eyebrow="FITUR PADHANG"
+                                title="Bantuan yang saling melengkapi"
                             />
                             <div className={tw.serviceIntro}>
                                 <p>
-                                    Setiap orang berhak ikut serta. Kami
-                                    membantu organisasi menghadirkan
-                                    aksesibilitas yang terasa sejak awal.
+                                    Padhang menggabungkan bantuan AI untuk kebutuhan rutin dengan dukungan relawan ketika situasi membutuhkan perhatian manusia.
                                 </p>
                                 <a href="#kontak">
-                                    Temukan layanan <ArrowRight size={16} />
+                                    Lihat cara kerja <ArrowRight size={16} />
                                 </a>
                             </div>
                             <div className={tw.serviceCards}>
@@ -512,20 +488,19 @@ export default function Welcome() {
                                     className={`${tw.serviceCard} ${tw.serviceBlue}`}
                                 >
                                     <div className={tw.serviceNumber}>
-                                        01 / LAYANAN
+                                        01 / PAHAMI
                                     </div>
-                                    <div className={tw.serviceIcon}>🤟</div>
+                                    <div className={tw.serviceIcon}>◉</div>
                                     <h3 className={tw.serviceTitle}>
-                                        Juru Bahasa Isyarat
+                                        Deskripsi lingkungan
                                     </h3>
                                     <p className={tw.serviceDescription}>
-                                        Interpretasi profesional untuk acara,
-                                        konferensi, rapat, dan konten digital.
+                                        AI Vision merangkum konteks sekitar menjadi informasi yang dapat didengarkan melalui text-to-speech.
                                     </p>
                                     <a
                                         className={tw.serviceArrow}
                                         href="#kontak"
-                                        aria-label="Tanya tentang Juru Bahasa Isyarat"
+                                        aria-label="Tanya tentang Deskripsi lingkungan"
                                     >
                                         <ArrowUpRight />
                                     </a>
@@ -534,7 +509,7 @@ export default function Welcome() {
                                     className={`${tw.serviceCard} ${tw.serviceCyan}`}
                                 >
                                     <div className={tw.serviceNumber}>
-                                        02 / KONSULTASI
+                                        02 / JELAJAHI
                                     </div>
                                     <div
                                         className={`${tw.serviceIcon} ${tw.serviceIconCyan}`}
@@ -542,16 +517,15 @@ export default function Welcome() {
                                         <MessageCircle />
                                     </div>
                                     <h3 className={tw.serviceTitle}>
-                                        Konsultasi Aksesibilitas
+                                        Deteksi dan navigasi
                                     </h3>
                                     <p className={tw.serviceDescription}>
-                                        Rancang pengalaman dan komunikasi yang
-                                        lebih ramah bagi semua.
+                                        Deteksi objek otomatis dan GPS mendukung orientasi serta mobilitas pengguna.
                                     </p>
                                     <a
                                         className={tw.serviceArrow}
                                         href="#kontak"
-                                        aria-label="Tanya tentang konsultasi"
+                                        aria-label="Pelajari deteksi dan navigasi"
                                     >
                                         <ArrowUpRight />
                                     </a>
@@ -560,7 +534,7 @@ export default function Welcome() {
                                     className={`${tw.serviceCard} ${tw.serviceLime}`}
                                 >
                                     <div className={tw.serviceNumber}>
-                                        03 / PEMBERDAYAAN
+                                        03 / TERHUBUNG
                                     </div>
                                     <div
                                         className={`${tw.serviceIcon} ${tw.serviceIconLime}`}
@@ -568,16 +542,15 @@ export default function Welcome() {
                                         <Check />
                                     </div>
                                     <h3 className={tw.serviceTitle}>
-                                        Program Inklusif
+                                        Panggilan relawan
                                     </h3>
                                     <p className={tw.serviceDescription}>
-                                        Kolaborasi yang membuka peluang dan
-                                        menguatkan komunitas Tuli.
+                                        Hubungi relawan melalui audio atau video tanpa berpindah dari platform.
                                     </p>
                                     <a
                                         className={tw.serviceArrow}
                                         href="#kontak"
-                                        aria-label="Tanya tentang program inklusif"
+                                        aria-label="Pelajari panggilan relawan"
                                     >
                                         <ArrowUpRight />
                                     </a>
@@ -589,8 +562,8 @@ export default function Welcome() {
                     <section className={`${tw.blue} ${tw.testimonialsSection}`}>
                         <div className={tw.wrap}>
                             <SectionHeading
-                                eyebrow="KATA PELANGGAN"
-                                title="Pengalaman bekerja sama dengan kami"
+                                eyebrow="PRINSIP DESAIN"
+                                title="Dibangun dari kebutuhan pengguna"
                                 light
                             />
                             <div className={tw.testimonialWindow}>
@@ -609,12 +582,12 @@ export default function Welcome() {
                                         >
                                             <div className={tw.testimonialTop}>
                                                 <span className={tw.pill}>
-                                                    Layanan Silang Interpreting
+                                                    INSIGHT PADHANG
                                                 </span>
-                                                <Quote size={23} />
+                                                <MessageCircle size={23} />
                                             </div>
                                             <p className={tw.quote}>
-                                                “{item.quote}”
+                                                {item.quote}
                                             </p>
                                             <div
                                                 className={tw.testimonialBottom}
@@ -631,16 +604,13 @@ export default function Welcome() {
                                                     {item.mark}
                                                 </b>
                                             </div>
-                                            <span className={tw.quoteGhost}>
-                                                “
-                                            </span>
                                         </article>
                                     ))}
                                 </div>
                             </div>
                             <div
                                 className={tw.dots}
-                                aria-label="Paginasi testimoni"
+                                aria-label="Paginasi insight"
                             >
                                 {testimonials.map((item, index) => (
                                     <button
@@ -648,7 +618,7 @@ export default function Welcome() {
                                         onClick={() =>
                                             setTestimonialPage(index)
                                         }
-                                        aria-label={`Tampilkan testimoni ${index + 1}`}
+                                        aria-label={`Tampilkan insight ${index + 1}`}
                                         aria-current={
                                             testimonialPage === index
                                                 ? 'true'
@@ -671,8 +641,8 @@ export default function Welcome() {
                     <section className={tw.partnersSection}>
                         <div className={tw.wrap}>
                             <SectionHeading
-                                eyebrow="DIPERCAYA BANYAK PIHAK"
-                                title="Klien Kami"
+                                eyebrow="AKTIVITAS YANG DIDUKUNG"
+                                title="Akses dalam keseharian"
                             />
                             <div className={tw.partnersGrid}>
                                 {partners.map((name, i) => (
@@ -692,33 +662,30 @@ export default function Welcome() {
                         </div>
                     </section>
 
-                    <section className={`${tw.blue} ${tw.appSection}`}>
+                    <section className={`${tw.blue} ${tw.appSection}`} id="cara-kerja">
                         <div className={`${tw.wrap} ${tw.appGrid}`}>
                             <div className={tw.appCopy}>
-                                <p className={tw.appHash}>#SemuaBisaAkses</p>
+                                <p className={tw.appHash}>#AksesLebihMudah</p>
                                 <h2 className={tw.appTitle}>
-                                    Bersama Aplikasi
+                                    Satu platform untuk
                                     <br />
-                                    Silang.id
+                                    memahami sekitar
                                 </h2>
                                 <p className={tw.appDescription}>
-                                    Temukan informasi aksesibilitas Tuli dan
-                                    tetap terhubung dengan komunitas lewat
-                                    aplikasi Silang.id.
+                                    Konsep Padhang menyatukan deskripsi lingkungan, deteksi objek, navigasi GPS, dan panggilan relawan dalam platform web.
                                 </p>
-                                <a href="#kontak" className={` ${tw.playButton} w-1/2  `}>
+                                <a href="#fitur" className={`${tw.playButton} w-fit`}>
                                     <span className={tw.playTriangle}>▶</span>
                                     <span className="flex flex-1 flex-col">
                                         <small className="text-[8px]">
-                                            Segera hadir di
+                                            PLATFORM BERBASIS WEB
                                         </small>
-                                        <b className="text-sm">Google Play</b>
+                                        <b className="text-sm">Jelajahi fitur</b>
                                     </span>
                                     <ArrowUpRight size={16} />
                                 </a>
                                 <div className={tw.appCaption}>
-                                    <Smartphone size={17} /> Akses informasi, di
-                                    mana saja.
+                                    <Smartphone size={17} /> Bantuan yang terhubung dalam satu tempat.
                                 </div>
                             </div>
                             <div className={tw.phoneStage}>
@@ -740,30 +707,28 @@ export default function Welcome() {
                                             Padhang • akses untuk semua
                                         </small>
                                         <b>
-                                            Mau acara makin inklusif buat teman
-                                            Tuli?
+                                            Pahami lingkungan dengan lebih banyak konteks
                                         </b>
                                         <span>
-                                            Pesan Juru Bahasa Isyarat lewat
-                                            Silang
+                                            Deskripsi AI, GPS, dan relawan dalam satu platform
                                         </span>
-                                        <i>Pesan sekarang ↗</i>
+                                        <i>Kenali fitur ↗</i>
                                     </div>
                                     <p className={tw.phoneLabel}>
-                                        Layanan untukmu
+                                        Fitur Padhang
                                     </p>
                                     <div className={tw.phoneTiles}>
                                         <span>
-                                            📹<small>Video Call</small>
+                                            ◉<small>Deteksi</small>
                                         </span>
                                         <span>
-                                            🎙️<small>Transcribe</small>
+                                            🎙️<small>Suara</small>
                                         </span>
                                         <span>
-                                            🤟<small>Interpreting</small>
+                                            🧭<small>Navigasi</small>
                                         </span>
                                         <span>
-                                            🗓️<small>Acara</small>
+                                            ☎<small>Relawan</small>
                                         </span>
                                     </div>
                                     <div className={tw.phoneNav}>
@@ -790,8 +755,8 @@ export default function Welcome() {
                     <section className={tw.mediaSection} id="media">
                         <div className={tw.wrap}>
                             <SectionHeading
-                                eyebrow="CERITA KAMI"
-                                title="Telah diliput oleh"
+                                eyebrow="TEKNOLOGI TERPADU"
+                                title="Satu pengalaman, beragam dukungan"
                             />
                             <div className={tw.mediaLogos}>
                                 {media.map((name, i) => (
@@ -809,31 +774,27 @@ export default function Welcome() {
                     <section className={tw.contactBanner} id="kontak">
                         <div
                             className="absolute inset-0 bg-cover bg-[center_48%] opacity-[.22] grayscale"
-                            style={{
-                                backgroundImage:
-                                    'url(https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=80)',
-                            }}
+                            style={{ backgroundImage: 'url(/images/handshake.webp)' }}
                         />
                         <div className={tw.contactOverlay} />
                         <div className={`${tw.wrap} ${tw.contactInner}`}>
                             <div className={tw.contactPerson}>
                                 <img
-                                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=85"
-                                    alt="Konsultan Silang.id siap membantu kebutuhan aksesibilitas"
+                                    src="/images/phone.webp"
+                                    alt="Ilustrasi dukungan teknologi dan relawan Padhang"
                                 />
-                                <span>🤟</span>
+                                <span>☎</span>
                             </div>
                             <div className={tw.contactCopy}>
-                                <p className={tw.eyebrow}>MARI MULAI BERSAMA</p>
+                                <p className={tw.eyebrow}>DUKUNGAN YANG TERHUBUNG</p>
                                 <h2>
-                                    Konsultasikan kebutuhan Anda bersama
-                                    Padhang
+                                    AI membantu memahami sekitar. Relawan melengkapi dukungan saat dibutuhkan.
                                 </h2>
                                 <a
-                                    href="https://wa.me/6285183148932"
+                                    href={register({ query: { role: 'volunteer' } }).url}
                                     className={`${tw.button} ${tw.yellowButton}`}
                                 >
-                                    <MessageCircle size={17} /> Hubungi Kami{' '}
+                                    <MessageCircle size={17} /> Bergabung sebagai relawan{' '}
                                     <ArrowRight size={17} />
                                 </a>
                             </div>
@@ -846,7 +807,7 @@ export default function Welcome() {
                             <div className={tw.faqHeading}>
                                 <SectionHeading
                                     eyebrow="PERTANYAAN UMUM"
-                                    title="Pertanyaan seputar layanan Silang.id"
+                                    title="Pertanyaan seputar Padhang"
                                 />
                             </div>
                             <div className={tw.faqList}>
@@ -898,11 +859,9 @@ export default function Welcome() {
                         <div className={tw.footerGrid}>
                             <div className={tw.footerBrand}>
                                 <Brand inverse />
-                                <strong>PT Inovasi Digital Inklusi</strong>
+                                <strong>Teknologi asistif berbasis web</strong>
                                 <p>
-                                    Jalan Tebet Timur Dalam IX E No. 17,
-                                    <br />
-                                    Tebet, Jakarta Selatan, DKI Jakarta 12820
+                                    Membantu pengguna tunanetra memahami lingkungan, bernavigasi, dan terhubung dengan relawan.
                                 </p>
                             </div>
                             <div>
@@ -913,33 +872,29 @@ export default function Welcome() {
                                 <a href="#faq">Pertanyaan Umum</a>
                             </div>
                             <div>
-                                <h3>Bantuan</h3>
-                                <a href="#footer">Kebijakan Privasi</a>
-                                <a href="#footer">Syarat & Ketentuan</a>
-                                <a href="#kontak">Panduan layanan</a>
+                                <h3>Fitur</h3>
+                                <a href="#fitur">AI Vision</a>
+                                <a href="#fitur">Navigasi GPS</a>
+                                <a href="#fitur">Panggilan relawan</a>
                             </div>
                             <div>
                                 <h3>Hubungi Kami</h3>
                                 <p>
-                                    Customer Support
+                                    Jelajahi konsep Padhang
                                     <br />
-                                    Senin – Jumat
-                                    <br />
-                                    09.00 – 17.00 WIB
+                                    atau bergabung sebagai relawan
                                 </p>
                                 <a
                                     className={tw.footerPhone}
-                                    href="https://wa.me/6285183148932"
+                                    href={register({ query: { role: 'volunteer' } }).url}
                                 >
-                                    <MessageCircle size={17} /> +62
-                                    851-8314-8932
+                                    <MessageCircle size={17} /> Daftar relawan
                                 </a>
                             </div>
                         </div>
                         <div className={tw.footerBottom} id="footer">
                             <p>
-                                © 2026 Silang.id · PT Inovasi Digital Inklusi.
-                                Semua hak dilindungi.
+                                © 2026 Padhang. Konsep teknologi asistif untuk akses yang lebih inklusif.
                             </p>
                             <div className={tw.socials}>
                                 <a href="#footer" aria-label="Instagram">
