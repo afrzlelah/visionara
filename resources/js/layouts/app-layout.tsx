@@ -53,14 +53,25 @@ export default function AppLayout({
                     })}
                 </nav>
                 
-                <div className="mt-auto mb-7 flex gap-1.5 px-2 text-base font-base text-white/70">
-                    Supported by
-                    <img
-                        src="/images/logo-huawei.png"
-                        alt="Huawei"
-                        className="h-6 w-auto object-contain brightness-0 invert"
-                    />
-                    Huawei
+                <div className="mt-auto mb-7 pt-2 flex gap-1 px-2 text-[13px] text-black/80  bg-white rounded-lg flex-col">
+                    <div>Supported by :</div>
+                    <div className="flex items-bottom">
+                        <img
+                            src="/images/logo-uin-walisongo.png"
+                            alt="UIN Walisongo"
+                            className="h-15 p-1.5 w-auto "
+                            />
+                        <img
+                            src="/images/logo-huawei-merah.jpeg"
+                            alt="Huawei"
+                            className="h-18 w-auto "
+                            />
+                        <img
+                            src="/images/logo-huawei-ict.png"
+                            alt="Huawei ICT Academy"
+                            className="h-15 p-1 w-auto "
+                            />
+                    </div>
                 </div>
                 <div className="flex items-center gap-3 rounded-[14px] bg-white/10 p-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-brand-lime text-lg font-semibold text-brand-ink">
