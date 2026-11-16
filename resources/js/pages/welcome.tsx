@@ -90,16 +90,12 @@ const media = [
 ];
 
 const tw = {
-<<<<<<< HEAD
     root: 'scroll-smooth isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_section[id]]:scroll-mt-[90px] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
     reveal: 'translate-y-12 scale-90 rotate-[-2deg] opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] data-[revealed=true]:translate-y-0 data-[revealed=true]:scale-100 data-[revealed=true]:rotate-0 data-[revealed=true]:opacity-100 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:rotate-0 motion-reduce:opacity-100 motion-reduce:transition-none',
     cardMotion: 'group transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-2 hover:scale-[1.035] hover:rotate-[1deg] hover:shadow-[0_20px_38px_#182a3b28] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:hover:rotate-0',
     imageMotion: 'transition-transform duration-1000 ease-out group-hover:scale-110 motion-reduce:transition-none',
-=======
-    root: 'isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:[&_a]:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
     actions: 'flex flex-wrap items-center gap-3 max-[640px]:w-full',
     outlineButton: 'border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#830000]',
->>>>>>> d84a1d1475251a21ad4841e147dc14c513c423a0
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     nav: 'fixed inset-x-0 top-0 z-50 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
