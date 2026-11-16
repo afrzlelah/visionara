@@ -3,6 +3,12 @@ import { ChevronLeft } from 'lucide-react';
 import { FormEventHandler, useState, useRef } from 'react';
 import AppLayout from '@/layouts/app-layout';
 
+const inputClass =
+    'w-full rounded-[12px] border border-neutral-300 bg-white px-4 py-3 text-sm text-brand-ink outline-none transition-all placeholder:text-neutral-400 focus:border-brand-red focus:ring-1 focus:ring-brand-red md:bg-[#F8F8F8] md:py-3.5';
+
+const genderCardBase =
+    'flex cursor-pointer flex-col items-center justify-center gap-3 rounded-[16px] border p-4 transition-all md:p-5';
+
 export default function EditProfile() {
     const { auth } = usePage().props as any;
     const user = auth.user;
@@ -11,7 +17,7 @@ export default function EditProfile() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { data, setData, post, processing, errors } = useForm({
-        _method: 'PUT', // for method spoofing
+        _method: 'PUT',
         name: user.name || '',
         age: user.age || '',
         gender: user.gender || '',
@@ -26,7 +32,7 @@ export default function EditProfile() {
             forceFormData: true,
             onSuccess: () => {
                 alert('Profile berhasil diperbarui!');
-            }
+            },
         });
     };
 
@@ -38,140 +44,152 @@ export default function EditProfile() {
         }
     };
 
+    const genderOptions = [
+        { value: 'Male', seed: 'Felix' },
+        { value: 'Female', seed: 'Jessica' },
+    ];
+
     return (
         <>
             <Head title="Edit Profile" />
 
-            <div className="flex flex-col gap-6 w-full font-sans antialiased pb-24">
-                
+            <div className="flex w-full flex-col gap-6 font-sans antialiased selection:bg-brand-red/10 selection:text-brand-red md:gap-8">
                 {/* Header */}
                 <div className="flex items-center gap-1.5 self-start">
-                    <Link href="/profile" className="cursor-pointer active:scale-95 transition-all">
-                        <ChevronLeft className="size-5 text-[#E1005E]" />
+                    <Link href="/profile" className="-ml-1 cursor-pointer rounded-full p-1.5 transition-all hover:bg-neutral-50 active:scale-95">
+                        <ChevronLeft className="size-5 text-brand-red md:size-6" />
                     </Link>
-                    <h1 className="text-xl font-extrabold text-[#E1005E] tracking-tight font-Outfit">
-                        Edit Profile
-                    </h1>
+                    <h1 className="text-xl font-extrabold tracking-tight text-brand-red md:text-3xl">Edit Profile</h1>
                 </div>
 
-                <form onSubmit={submit} className="flex flex-col gap-5 w-full mt-4">
-                    
-                    {/* Avatar Section */}
-                    <div className="flex flex-col items-center gap-3">
-                        <div className="size-[90px] rounded-full p-[3px] bg-[#0052FF] flex items-center justify-center shrink-0 shadow-sm cursor-pointer active:scale-95 transition-all" onClick={() => fileInputRef.current?.click()}>
+                <form
+                    onSubmit={submit}
+                    className="flex w-full flex-col gap-6 md:grid md:grid-cols-[320px_minmax(0,1fr)] md:items-start md:gap-6"
+                >
+                    {/* Kolom kiri: foto profil */}
+                    <div className="flex flex-col items-center gap-3 rounded-[20px] border border-neutral-200 bg-white p-6 md:h-full md:min-h-120 md:justify-center md:gap-5 md:p-8">
+                        <div
+                            className="flex size-22.5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-linear-to-tr from-brand-red via-brand-red-bright to-brand-blue p-0.75 shadow-sm transition-all active:scale-95 md:size-40 md:p-1.25"
+                            onClick={() => fileInputRef.current?.click()}
+                        >
                             {previewUrl ? (
-                                <img 
-                                    src={previewUrl} 
-                                    alt={data.name} 
-                                    className="size-full rounded-full object-cover border-[3px] border-white"
+                                <img
+                                    src={previewUrl}
+                                    alt={data.name}
+                                    className="size-full rounded-full border-[3px] border-white object-cover"
                                 />
                             ) : (
-                                <div className="size-full rounded-full bg-neutral-200 flex items-center justify-center border-[3px] border-white text-3xl font-black text-[#0052FF] font-Outfit">
+                                <div className="flex size-full items-center justify-center rounded-full border-[3px] border-white bg-brand-lime text-3xl font-black text-brand-ink md:text-6xl">
                                     {data.name ? data.name.charAt(0).toUpperCase() : 'U'}
                                 </div>
                             )}
                         </div>
-                        <input 
-                            type="file" 
-                            className="hidden" 
-                            ref={fileInputRef} 
-                            accept="image/*"
-                            onChange={handlePhotoChange}
-                        />
-                        <button 
-                            type="button" 
+
+                        <input type="file" className="hidden" ref={fileInputRef} accept="image/*" onChange={handlePhotoChange} />
+
+                        <button
+                            type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="text-sm text-[#4DBAE9] font-medium cursor-pointer"
+                            className="cursor-pointer rounded-full bg-brand-red/10 px-4 py-2 text-sm font-semibold text-brand-red transition-all hover:bg-brand-red/15"
                         >
                             Edit picture
                         </button>
                     </div>
 
-                    {/* Form Fields */}
-                    <div className="flex flex-col gap-4">
-                        
+                    {/* Kolom kanan: form */}
+                    <div className="flex flex-col gap-5 rounded-[20px] border border-neutral-200 bg-white p-6 md:gap-6 md:p-8">
                         {/* Name */}
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-sm font-bold text-neutral-800">Name</label>
-                            <input 
+                            <label htmlFor="name" className="text-sm font-bold text-brand-ink">
+                                Name
+                            </label>
+                            <input
+                                id="name"
                                 type="text"
                                 value={data.name}
-                                onChange={e => setData('name', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                onChange={(e) => setData('name', e.target.value)}
+                                className={inputClass}
+                                placeholder="Enter your name..."
                             />
-                            {errors.name && <span className="text-xs text-red-500">{errors.name}</span>}
+                            {errors.name && <span className="text-xs text-brand-bright">{errors.name}</span>}
                         </div>
 
                         {/* Age */}
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-sm font-bold text-neutral-800">Age</label>
-                            <input 
+                            <label htmlFor="age" className="text-sm font-bold text-brand-ink">
+                                Age
+                            </label>
+                            <input
+                                id="age"
                                 type="number"
                                 value={data.age}
-                                onChange={e => setData('age', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                onChange={(e) => setData('age', e.target.value)}
+                                className={inputClass}
+                                placeholder="Enter your age..."
                             />
-                            {errors.age && <span className="text-xs text-red-500">{errors.age}</span>}
+                            {errors.age && <span className="text-xs text-brand-bright">{errors.age}</span>}
                         </div>
 
                         {/* Gender */}
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-sm font-bold text-neutral-800">Gender</label>
+                            <span className="text-sm font-bold text-brand-ink">Gender</span>
                             <div className="grid grid-cols-2 gap-4">
-                                
-                                {/* Male Card */}
-                                <div 
-                                    onClick={() => setData('gender', 'Male')}
-                                    className={`flex flex-col items-center justify-center p-4 rounded-[12px] border cursor-pointer transition-all ${data.gender === 'Male' ? 'border-[#E1005E] bg-[#E1005E]/5 shadow-sm' : 'border-neutral-300 bg-white hover:bg-neutral-50'}`}
-                                >
-                                    {/* Mockup illustration placeholder */}
-                                    <div className="size-16 rounded-full bg-[#E1005E]/10 flex items-center justify-center mb-2 overflow-hidden">
-                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Male" className="w-14 h-14" />
-                                    </div>
-                                    <span className="text-xs font-semibold text-[#E1005E]">Male</span>
-                                </div>
-
-                                {/* Female Card */}
-                                <div 
-                                    onClick={() => setData('gender', 'Female')}
-                                    className={`flex flex-col items-center justify-center p-4 rounded-[12px] border cursor-pointer transition-all ${data.gender === 'Female' ? 'border-[#E1005E] bg-[#E1005E]/5 shadow-sm' : 'border-neutral-300 bg-white hover:bg-neutral-50'}`}
-                                >
-                                    {/* Mockup illustration placeholder */}
-                                    <div className="size-16 rounded-full bg-[#E1005E]/10 flex items-center justify-center mb-2 overflow-hidden">
-                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jessica" alt="Female" className="w-14 h-14" />
-                                    </div>
-                                    <span className="text-xs font-semibold text-[#E1005E]">Female</span>
-                                </div>
-
+                                {genderOptions.map(({ value, seed }) => {
+                                    const selected = data.gender === value;
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={value}
+                                            onClick={() => setData('gender', value)}
+                                            aria-pressed={selected}
+                                            className={`${genderCardBase} ${
+                                                selected
+                                                    ? 'border-2 border-brand-red bg-brand-red/5 shadow-sm'
+                                                    : 'border-neutral-300 bg-white hover:bg-neutral-50'
+                                            }`}
+                                        >
+                                            <div className="flex size-16 items-center justify-center overflow-hidden rounded-full bg-brand-red/10 md:size-20">
+                                                <img
+                                                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`}
+                                                    alt={value}
+                                                    className="size-14 md:size-16"
+                                                />
+                                            </div>
+                                            <span className="text-sm font-semibold text-brand-red md:text-base">{value}</span>
+                                        </button>
+                                    );
+                                })}
                             </div>
-                            {errors.gender && <span className="text-xs text-red-500">{errors.gender}</span>}
+                            {errors.gender && <span className="text-xs text-brand-bright">{errors.gender}</span>}
                         </div>
 
                         {/* Bio */}
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-sm font-bold text-neutral-800">Bio</label>
-                            <input 
-                                type="text"
+                            <label htmlFor="bio" className="text-sm font-bold text-brand-ink">
+                                Bio
+                            </label>
+                            <textarea
+                                id="bio"
+                                rows={4}
                                 value={data.bio}
-                                onChange={e => setData('bio', e.target.value)}
-                                className="w-full rounded-[10px] border border-neutral-300 px-4 py-2 text-sm text-neutral-900 focus:ring-[#E1005E] focus:border-[#E1005E]"
+                                onChange={(e) => setData('bio', e.target.value)}
+                                className={`${inputClass} resize-none`}
+                                placeholder="Tulis bio singkat..."
                             />
-                            {errors.bio && <span className="text-xs text-red-500">{errors.bio}</span>}
+                            {errors.bio && <span className="text-xs text-brand-bright">{errors.bio}</span>}
                         </div>
 
+                        {/* Tombol simpan */}
+                        <div className="flex justify-center pt-2 pb-20 md:justify-end md:pb-0">
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="w-full cursor-pointer rounded-[14px] bg-brand-lime px-8 py-3.5 text-base font-bold text-brand-ink shadow-[0_4px_16px_rgba(223,255,0,0.35)] transition-all hover:opacity-95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 md:w-auto md:py-3"
+                            >
+                                {processing ? 'Saving...' : 'Save Changes'}
+                            </button>
+                        </div>
                     </div>
-
-                    {/* Bottom Action */}
-                    <div className="w-full pt-6 pb-20 flex justify-center">
-                        <button 
-                            type="submit" 
-                            disabled={processing}
-                            className="w-fit px-5 py-3 rounded-full bg-[#E1005E] hover:bg-[#a7094b] active:scale-[0.98] transition-all font-semibold text-white text-center disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
-                        >
-                            {processing ? 'Saving...' : 'Save Changes'}
-                        </button>
-                    </div>
-
                 </form>
             </div>
         </>
