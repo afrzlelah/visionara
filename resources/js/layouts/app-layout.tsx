@@ -25,9 +25,9 @@ export default function AppLayout({
         <div className="flex min-h-screen bg-[#F8F8F8] font-sans antialiased">
             {/* Sidebar: hanya tablet dan desktop */}
             <aside className="sticky top-0 hidden h-screen w-65 shrink-0 flex-col bg-brand-red px-5 pt-7 pb-6 md:flex">
-                <div className="mb-7 flex items-center gap-2.5 px-2">
-                    <div className="rounded-[10px] bg-white p-2">
-                        <Eye className="size-5 text-brand-bright" />
+                <div className="mb-3 flex items-center ">
+                    <div className="rounded-[10px]">
+                        <img src="/images/logo padhang 3.png" alt="Eye" height="60" width="60" />
                     </div>
                     <span className="text-2xl font-semibold text-white">Padhang</span>
                 </div>
@@ -52,8 +52,17 @@ export default function AppLayout({
                         );
                     })}
                 </nav>
-
-                <div className="mt-auto flex items-center gap-3 rounded-[14px] bg-white/10 p-3">
+                
+                <div className="mt-auto mb-7 flex gap-1.5 px-2 text-base font-base text-white/70">
+                    Supported by
+                    <img
+                        src="/images/logo-huawei.png"
+                        alt="Huawei"
+                        className="h-6 w-auto object-contain brightness-0 invert"
+                    />
+                    Huawei
+                </div>
+                <div className="flex items-center gap-3 rounded-[14px] bg-white/10 p-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-brand-lime text-lg font-semibold text-brand-ink">
                         {userInitial}
                     </div>

@@ -91,6 +91,8 @@ const media = [
 
 const tw = {
     root: 'isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:[&_a]:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
+    actions: 'flex flex-wrap items-center gap-3 max-[640px]:w-full',
+    outlineButton: 'border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#830000]',
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     nav: 'sticky top-0 z-40 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
@@ -351,6 +353,9 @@ export default function Welcome() {
                     <section className={`${tw.blue} ${tw.hero} h-screen`}>
                         <div className={`${tw.wrap} ${tw.heroGrid}`}>
                             <div className={tw.heroCopy}>
+                                <p className={tw.heroText}>
+                                    Supported By <img src="/images/logo-huawei.png" alt="Huawei" className="inline-block h-6 w-auto object-contain brightness-0 invert" /> Huawei
+                                </p>
                                 <h1 className={tw.heroTitle}>
                                     Lebih paham sekitar, <span>lebih</span>{' '}
                                     percaya diri melangkah
@@ -360,9 +365,9 @@ export default function Welcome() {
                                 </p>
                                 <a
                                     className={`${tw.button} ${tw.yellowButton}`}
-                                    href="#fitur"
+                                    href="/login"
                                 >
-                                    Mulai jelajahi <ArrowRight size={18} />
+                                    Login <ArrowRight size={18} />
                                 </a>
                             </div>
                             <div className={tw.heroVisual}>

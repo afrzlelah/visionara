@@ -92,8 +92,9 @@ export default function Profile() {
                     <div className="flex flex-col gap-6">
                         <div className="relative mt-8 w-full rounded-[20px] border border-neutral-200 bg-white px-5 pt-6 pb-6 shadow-[0_6px_20px_rgba(131,0,0,0.05)] md:px-6 md:pt-7">
                             {/* Avatar */}
-                            <div className="absolute -top-10 left-5 md:left-6">
-                                <div className="size-20 rounded-full bg-linear-to-tr from-brand-red via-brand-red-bright to-brand-blue p-0.5 shadow-sm">
+                            {/* Baris atas: avatar dan identitas */}
+                            <div className="flex items-center gap-4 md:gap-5">
+                                <div className="size-20 shrink-0 rounded-full bg-linear-to-tr from-brand-red via-brand-red-bright to-brand-blue p-[2px] shadow-sm md:size-24">
                                     {user.photo_url ? (
                                         <img
                                             src={user.photo_url}
@@ -101,25 +102,22 @@ export default function Profile() {
                                             className="size-full rounded-full border-[3px] border-white object-cover"
                                         />
                                     ) : (
-                                        <div className="flex size-full items-center justify-center rounded-full border-[3px] border-white bg-brand-lime text-2xl font-black text-brand-ink">
+                                        <div className="flex size-full items-center justify-center rounded-full border-[3px] border-white bg-brand-lime text-2xl font-black text-brand-ink md:text-3xl">
                                             {userInitial}
                                         </div>
                                     )}
                                 </div>
-                            </div>
 
-                            {/* Nama dan info */}
-                            <div className="ml-23 flex flex-col gap-0.5 pt-1">
-                                <h2 className="truncate text-lg leading-tight font-bold text-brand-ink md:text-2xl">{user.name}</h2>
-                                <p className="text-[11px] font-medium tracking-wide text-neutral-500 md:text-sm">
-                                    {user.gender || 'Gender'} <span className="mx-1 opacity-50">|</span> {user.age || 'Age'}
-                                </p>
+                                <div className="flex min-w-0 flex-col gap-0.5">
+                                    <h2 className="truncate text-lg leading-tight font-bold text-brand-ink md:text-2xl">{user.name}</h2>
+                                    <p className="text-[11px] font-medium tracking-wide text-neutral-500 md:text-sm">
+                                        {user.gender || 'Gender'} <span className="mx-1 opacity-50">|</span> {user.age || 'Age'}
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Bio */}
-                            <div className="mt-8">
-                                <p className="text-[13px] leading-relaxed text-neutral-600 md:text-base">{user.bio || 'Bio....'}</p>
-                            </div>
+                            <p className="text-[13px] leading-relaxed text-neutral-600 md:text-base mt-5">{user.bio || 'Bio....'}</p>
                         </div>
 
                         {/* Tombol Edit */}
