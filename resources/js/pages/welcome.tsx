@@ -11,7 +11,7 @@ import {
     Smartphone,
     X,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { register } from '@/routes';
 
 const navItems = [
@@ -90,9 +90,12 @@ const media = [
 ];
 
 const tw = {
-    root: 'isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:[&_a]:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
+    root: 'scroll-smooth isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_section[id]]:scroll-mt-[90px] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
+    reveal: 'translate-y-12 scale-90 rotate-[-2deg] opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] data-[revealed=true]:translate-y-0 data-[revealed=true]:scale-100 data-[revealed=true]:rotate-0 data-[revealed=true]:opacity-100 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:rotate-0 motion-reduce:opacity-100 motion-reduce:transition-none',
+    cardMotion: 'group transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-2 hover:scale-[1.035] hover:rotate-[1deg] hover:shadow-[0_20px_38px_#182a3b28] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:hover:rotate-0',
+    imageMotion: 'transition-transform duration-1000 ease-out group-hover:scale-110 motion-reduce:transition-none',
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
-    nav: 'sticky top-0 z-40 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
+    nav: 'fixed inset-x-0 top-0 z-50 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
     brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[#e6005e] max-[640px]:text-[25px]',
     brandInverse: '!text-white',
@@ -104,8 +107,8 @@ const tw = {
         'hidden size-10 cursor-pointer place-items-center border-0 bg-transparent text-[#202124] max-[640px]:grid',
     navLinks:
         'flex items-center gap-[clamp(18px,2.7vw,38px)] text-[13px] font-semibold [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-[#d50057] max-[900px]:gap-[15px] max-[900px]:text-[11px] max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[66px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-0 max-[640px]:bg-white max-[640px]:px-5 max-[640px]:pb-[15px] max-[640px]:pt-[7px] max-[640px]:shadow-[0_15px_20px_#00193312] [&_a]:max-[640px]:border-b [&_a]:max-[640px]:border-[#edf1f4] [&_a]:max-[640px]:py-3 [&_a]:max-[640px]:text-sm',
-    navClosed: 'max-[640px]:hidden',
-    navOpen: 'max-[640px]:flex',
+    navClosed: 'transition-[max-height,opacity,transform] duration-300 ease-out max-[640px]:pointer-events-none max-[640px]:max-h-0 max-[640px]:overflow-hidden max-[640px]:opacity-0 max-[640px]:-translate-y-2',
+    navOpen: 'transition-[max-height,opacity,transform] duration-300 ease-out max-[640px]:pointer-events-auto max-[640px]:max-h-[420px] max-[640px]:translate-y-0 max-[640px]:opacity-100',
     blue: "relative isolate overflow-hidden bg-[#d50057] text-white before:pointer-events-none before:absolute before:-z-10 before:left-[-155px] before:top-[215px] before:size-[510px] before:rotate-[42deg] before:rounded-[40%_60%_55%_45%] before:bg-white/5 before:content-[''] after:pointer-events-none after:absolute after:-z-10 after:right-[-230px] after:bottom-[-340px] after:size-[490px] after:rounded-full after:border after:border-white/15 after:shadow-[0_0_0_40px_rgb(255_255_255_/_4%),0_0_0_80px_rgb(255_255_255_/_3%)] after:content-['']",
     hero: 'flex min-h-[635px] items-center max-[900px]:min-h-[570px] max-[640px]:min-h-0',
     heroGrid:
@@ -118,16 +121,16 @@ const tw = {
         'm-0 max-w-[580px] text-[clamp(42px,5vw,68px)] leading-[1.03] font-extrabold tracking-[-2.9px] [&_span]:text-[#dfff00] max-[900px]:text-[clamp(38px,6vw,53px)] max-[640px]:max-w-[470px] max-[640px]:text-[clamp(39px,11vw,54px)] max-[640px]:tracking-[-2px] max-[390px]:text-[38px]',
     heroText:
         'my-6 mb-7 max-w-[425px] text-[17px] leading-[1.65] text-[#e4f4ff] max-[640px]:my-[18px] max-[640px]:mb-[22px] max-[640px]:max-w-[350px] max-[640px]:text-[15px]',
-    button: 'inline-flex min-h-12 w-fit items-center justify-center gap-[11px] rounded-[4px] px-5 text-[15px] font-bold transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-[0_9px_24px_#002b6630] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#202124] max-[640px]:min-h-[46px] max-[640px]:text-sm',
+    button: 'inline-flex min-h-12 w-fit items-center justify-center gap-[11px] rounded-[4px] px-5 text-[15px] font-bold transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-1 hover:scale-[1.05] hover:shadow-[0_12px_28px_#002b6640] active:scale-95 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#202124] max-[640px]:min-h-[46px] max-[640px]:text-sm motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100',
     yellowButton: 'bg-[#dfff00] text-[#17202a]',
     heroVisual:
         'relative grid min-h-[440px] place-items-center max-[900px]:min-h-[380px] max-[640px]:mt-[5px] max-[640px]:min-h-[360px] max-[390px]:min-h-[320px]',
     heroImage:
         'relative aspect-[.84] w-[min(410px,82%)] overflow-hidden rounded-[42%_2%_29%_2%] bg-[#effaff] shadow-[24px_24px_0_#ffffff1c] max-[900px]:w-[88%] max-[640px]:aspect-[.9] max-[640px]:w-[min(315px,76%)] max-[390px]:w-[78%] [&_img]:size-full [&_img]:object-cover [&_img]:object-[center_35%] [&_img]:saturate-[.8]',
-    scroll: 'absolute bottom-7 left-1/2 grid size-[34px] -translate-x-1/2 place-items-center rounded-full border border-white/40 text-white max-[640px]:hidden',
+    scroll: 'absolute bottom-7 left-1/2 grid size-[34px] -translate-x-1/2 place-items-center rounded-full border border-white/40 text-white transition-transform duration-300 hover:scale-110 max-[640px]:hidden motion-reduce:transition-none',
     statsWrap:
         'relative z-[3] mx-auto -mt-[54px] w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:-mt-[35px] max-[640px]:w-[calc(100%-38px)]',
-    stats: 'grid min-h-[111px] grid-cols-3 items-center rounded-lg bg-white shadow-[0_12px_40px_#17365817] max-[640px]:min-h-[88px]',
+    stats: 'grid min-h-[111px] grid-cols-3 items-center rounded-lg bg-white shadow-[0_12px_40px_#17365817] transition-[transform,box-shadow] duration-300 hover:scale-[1.015] hover:shadow-[0_16px_44px_#17365824] max-[640px]:min-h-[88px] motion-reduce:transition-none motion-reduce:hover:scale-100',
     stat: 'relative flex min-h-[57px] flex-col items-center justify-center gap-0.5 max-[640px]:min-h-[50px]',
     statNumber:
         'text-[38px] leading-none font-extrabold tracking-[-1px] text-[#d50057] max-[640px]:text-[clamp(25px,8vw,32px)] max-[390px]:text-[25px]',
@@ -149,7 +152,7 @@ const tw = {
     aboutShape:
         'absolute inset-[57px_5px_6px_24px] rounded-tl-[36%] bg-linear-to-br from-[#d50057] to-[#e6005e] max-[640px]:inset-[45px_0_0]',
     aboutPhoto:
-        'relative z-[1] h-[470px] w-[83%] rounded-t-[48%] object-cover object-[center_20%] max-[900px]:h-[385px] max-[640px]:h-[345px] max-[640px]:w-4/5',
+        'relative z-[1] h-[470px] w-[83%] rounded-t-[48%] object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-[1.04] max-[900px]:h-[385px] max-[640px]:h-[345px] max-[640px]:w-4/5 motion-reduce:transition-none',
     badge: 'absolute top-9 left-0 z-[2] flex items-center gap-[9px] rounded-[3px] bg-white px-[14px] py-[11px] text-[10px] font-bold shadow-[0_7px_24px_#193c5c19] max-[640px]:top-5 [&_span]:text-xl [&_span]:text-[#d50057]',
     eyebrow:
         'mb-[13px] text-[11px] font-extrabold tracking-[.12em] text-[#d50057]',
@@ -178,7 +181,7 @@ const tw = {
     serviceLime: 'bg-[#f5ffd0] text-[#263500]',
     serviceNumber: 'text-[9px] font-bold tracking-[.12em] opacity-70',
     serviceIcon:
-        'my-5 mb-[15px] grid size-[45px] place-items-center rounded-full bg-white/15 text-2xl [&_svg]:w-[23px] max-[640px]:my-[14px] max-[640px]:mb-[11px]',
+        'my-5 mb-[15px] grid size-[45px] place-items-center rounded-full bg-white/15 text-2xl transition-transform duration-300 group-hover:animate-bounce [&_svg]:w-[23px] max-[640px]:my-[14px] max-[640px]:mb-[11px] motion-reduce:animate-none',
     serviceIconCyan: 'bg-[#c6effb] text-[#d50057]',
     serviceIconLime: 'bg-[#e4f889] text-[#546a00]',
     serviceTitle: 'm-0 text-[19px] font-semibold tracking-[-.4px]',
@@ -190,7 +193,7 @@ const tw = {
         'bg-[#d50057] py-[92px] pb-[78px] max-[640px]:py-[70px] max-[640px]:pb-[54px]',
     testimonialWindow: 'min-w-0 max-[640px]:overflow-hidden',
     testimonialGrid:
-        'grid grid-cols-3 gap-5 max-[640px]:flex max-[640px]:gap-0 max-[640px]:translate-x-[var(--testimonial-offset)] max-[640px]:transition-transform max-[640px]:duration-300',
+        'grid grid-cols-3 gap-5 max-[640px]:flex max-[640px]:gap-0 max-[640px]:translate-x-[var(--testimonial-offset)] max-[640px]:transition-transform max-[640px]:duration-500 max-[640px]:ease-out',
     testimonialCard:
         'relative flex min-h-[257px] flex-col overflow-hidden rounded-[9px] bg-white px-[22px] pt-[23px] pb-[18px] text-[#1c2934] shadow-[0_10px_25px_#004f9b19] max-[900px]:px-[17px] max-[640px]:min-h-[225px] max-[640px]:flex-[0_0_100%] max-[640px]:p-5',
     testimonialTop: 'flex items-center justify-between text-[#69b5ef]',
@@ -204,7 +207,7 @@ const tw = {
     partnersGrid:
         'grid grid-cols-7 items-center gap-x-6 gap-y-[30px] max-[900px]:grid-cols-4 max-[640px]:grid-cols-2 max-[640px]:gap-x-3 max-[640px]:gap-y-5',
     partner:
-        'flex min-h-[60px] items-center justify-center gap-[7px] text-left text-[11px] leading-[1.2] font-bold text-[#394c5a] max-[640px]:min-h-[55px] max-[640px]:text-[10px]',
+        'flex min-h-[60px] items-center justify-center gap-[7px] text-left text-[11px] leading-[1.2] font-bold text-[#394c5a] transition-transform duration-300 hover:scale-110 hover:-rotate-2 max-[640px]:min-h-[55px] max-[640px]:text-[10px] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:hover:rotate-0',
     partnerSymbol: 'text-[26px] max-[640px]:text-[23px]',
     partnerFeatured: 'min-h-[76px] rounded bg-[#25235f] text-[#ffe81c]',
     appSection: 'min-h-[480px] bg-[#d50057] max-[640px]:min-h-0',
@@ -244,7 +247,7 @@ const tw = {
     mediaLogos:
         'flex flex-wrap items-center justify-center gap-[clamp(24px,5vw,70px)]',
     mediaLogo:
-        'text-[22px] font-extrabold tracking-[-1px] text-[#67727c] opacity-80 grayscale max-[640px]:text-[18px]',
+        'text-[22px] font-extrabold tracking-[-1px] text-[#67727c] opacity-80 grayscale transition-[transform,opacity,filter] duration-300 hover:scale-110 hover:opacity-100 hover:grayscale-0 max-[640px]:text-[18px] motion-reduce:transition-none motion-reduce:hover:scale-100',
     contactBanner:
         'relative min-h-[305px] overflow-hidden bg-[#d50057] text-white',
     contactPhoto:
@@ -261,9 +264,9 @@ const tw = {
         'mx-auto w-[min(970px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     faqList: 'grid gap-[10px]',
     faqItem:
-        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[#d50057] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[#d50057] max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
+        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] transition-[border-color,box-shadow] duration-300 [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[#d50057] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[#d50057] [&_button_span]:transition-transform [&_button_span]:duration-300 max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
     faqAnswer:
-        'px-5 pr-[58px] pb-[17px] text-xs leading-[1.7] text-[#66717d] [&_p]:m-0 max-[640px]:pr-[45px] max-[640px]:pl-3 max-[640px]:pb-4',
+        'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out max-[640px]:pr-[45px] max-[640px]:pl-3',
     footer: 'bg-[#202124] py-[61px] pb-5 text-white max-[640px]:pt-[49px]',
     footerGrid:
         'grid grid-cols-[1.6fr_.72fr_.8fr_1fr] gap-[45px] pb-[42px] max-[640px]:grid-cols-2 max-[640px]:gap-x-5 max-[640px]:gap-y-8 max-[640px]:pb-[30px] [&_h3]:m-0 [&_h3]:mb-4 [&_h3]:text-xs [&_p]:m-0 [&_p]:text-[11px] [&_p]:leading-[1.7] [&_p]:text-[#c1c5c9] [&_a:not(.brand)]:text-[11px] [&_a:not(.brand)]:leading-[1.7] [&_a:not(.brand)]:text-[#c1c5c9] [&>div:not(.footer-brand-col)]:flex [&>div:not(.footer-brand-col)]:flex-col [&>div:not(.footer-brand-col)]:items-start [&>div:not(.footer-brand-col)]:gap-[7px] [&>div:not(.footer-brand-col)_h3]:mb-[7px] max-[640px]:[&_h3]:text-xs max-[640px]:[&_p]:text-[10px] max-[640px]:[&_a:not(.brand)]:text-[10px]',
@@ -281,7 +284,7 @@ function Brand({ inverse = false }: { inverse?: boolean }) {
         <a
             href="#beranda"
             aria-label="Padhang beranda"
-            className={`${tw.brand} ${inverse ? tw.brandInverse : ''}`}
+            className={`${tw.brand} transition-transform duration-300 hover:scale-[1.03] motion-reduce:transition-none ${inverse ? tw.brandInverse : ''}`}
         >
             <img src="/images/logo padhang.png" alt="Padhang" height="20" width="80" className="object-contain m-0 pl-1  " />
             <span>
@@ -302,7 +305,8 @@ function SectionHeading({
 }) {
     return (
         <div
-            className={`${tw.sectionHeading} ${light ? tw.sectionHeadingLight : ''}`}
+            className={`${tw.sectionHeading} ${tw.reveal} ${light ? tw.sectionHeadingLight : ''}`}
+            data-reveal
         >
             <p className={tw.eyebrow}>{eyebrow}</p>
             <h2>{title}</h2>
@@ -315,15 +319,70 @@ export default function Welcome() {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
     const [testimonialPage, setTestimonialPage] = useState(0);
 
+    useEffect(() => {
+        const pageScroller = document.documentElement;
+        pageScroller.classList.add('scroll-smooth', 'motion-reduce:scroll-auto');
+        const targets = document.querySelectorAll<HTMLElement>(
+            '#beranda [data-reveal]',
+        );
+        const revealAll = () =>
+            targets.forEach((target) =>
+                target.setAttribute('data-revealed', 'true'),
+            );
+
+        if (
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            !('IntersectionObserver' in window)
+        ) {
+            revealAll();
+            return () =>
+                pageScroller.classList.remove(
+                    'scroll-smooth',
+                    'motion-reduce:scroll-auto',
+                );
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.setAttribute('data-revealed', 'true');
+                    const delay =
+                        Number.parseFloat(
+                            window.getComputedStyle(entry.target).transitionDelay,
+                        ) * 1000;
+                    window.setTimeout(
+                        () =>
+                            (entry.target as HTMLElement).style.removeProperty(
+                                'transition-delay',
+                            ),
+                        (Number.isFinite(delay) ? delay : 0) + 750,
+                    );
+                    observer.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -32px 0px' },
+        );
+
+        targets.forEach((target) => observer.observe(target));
+        return () => {
+            observer.disconnect();
+            pageScroller.classList.remove(
+                'scroll-smooth',
+                'motion-reduce:scroll-auto',
+            );
+        };
+    }, []);
+
     return (
         <>
             <Head title="Padhang — Semua Bisa Akses" />
             <div className={tw.root} id="beranda">
-                <header className={tw.nav}>
+                <header className={`${tw.nav} transition-shadow duration-300`}>
                     <div className={`${tw.wrap} ${tw.navInner}`}>
                         <Brand />
                         <button
-                            className={tw.menuButton}
+                            className={`${tw.menuButton} transition-transform duration-200 hover:scale-110 active:scale-95 motion-reduce:transition-none`}
                             aria-label={menuOpen ? 'Tutup menu' : 'Buka menu'}
                             aria-expanded={menuOpen}
                             onClick={() => setMenuOpen(!menuOpen)}
@@ -347,10 +406,20 @@ export default function Welcome() {
                     </div>
                 </header>
 
-                <main>
-                    <section className={`${tw.blue} ${tw.hero} h-screen`}>
+                <main className="pt-[78px] max-[900px]:pt-[70px] max-[640px]:pt-[66px]">
+                    <section className={`${tw.hero} ${tw.blue} h-screen`}>
                         <div className={`${tw.wrap} ${tw.heroGrid}`}>
-                            <div className={tw.heroCopy}>
+                            <div className={`${tw.heroCopy} ${tw.reveal}`} data-reveal>
+                                {/* Supported By */}
+                                <div className="mb-5 flex items-center gap-3 text-white">
+                                    <span className="text-lg md:text-xl font-normal tracking-wide">Supported By</span>
+                                    <img
+                                        src="/images/logo-huawei-white.png"
+                                        alt="Huawei"
+                                        className="h-7 w-auto object-contain md:h-8"
+                                    />
+                                    <span className="text-lg md:text-xl font-normal tracking-wide">Huawei</span>
+                                </div>
                                 <h1 className={tw.heroTitle}>
                                     Lebih paham sekitar, <span>lebih</span>{' '}
                                     percaya diri melangkah
@@ -365,9 +434,10 @@ export default function Welcome() {
                                     Mulai jelajahi <ArrowRight size={18} />
                                 </a>
                             </div>
-                            <div className={tw.heroVisual}>
-                                <div className={tw.heroImage}>
+                            <div className={`${tw.heroVisual} ${tw.reveal}`} data-reveal>
+                                <div className={`${tw.heroImage} group`}>
                                     <img
+                                        className={tw.imageMotion}
                                         src="/images/phone.webp"
                                         alt="Ilustrasi teknologi asistif Padhang"
                                     />
@@ -379,12 +449,13 @@ export default function Welcome() {
                             className={tw.scroll}
                             aria-label="Gulir ke tentang Padhang"
                         >
-                            <ArrowDown size={17} />
+                            <ArrowDown size={17} className="animate-bounce motion-reduce:animate-none" />
                         </a>
                     </section>
 
                     <section
-                        className={tw.statsWrap}
+                        className={`${tw.statsWrap} ${tw.reveal}`}
+                        data-reveal
                         aria-label="Pencapaian Padhang"
                     >
                         <div className={`${tw.stats} p-10`} >
@@ -408,7 +479,7 @@ export default function Welcome() {
 
                     <section className={tw.section} id="tentang">
                         <div className={`${tw.wrap} ${tw.aboutGrid}`}>
-                            <div className={tw.aboutVisual}>
+                            <div className={`${tw.aboutVisual} ${tw.reveal} group`} data-reveal>
                                 <div className={tw.aboutShape} />
                                 <img
                                     className={tw.aboutPhoto}
@@ -419,7 +490,7 @@ export default function Welcome() {
                                     {/* <span>✳</span> Semua Bisa Akses */}
                                 </span>
                             </div>
-                            <div>
+                            <div className={tw.reveal} data-reveal>
                                 <p className={tw.eyebrow}>TENTANG PADHANG</p>
                                 <h2 className={tw.aboutTitle}>
                                     Teknologi asistif untuk
@@ -462,7 +533,7 @@ export default function Welcome() {
                                         </span>
                                     </div>
                                 </div>
-                                <a className={tw.textLink} href="#fitur">
+                                <a className={`${tw.textLink} transition-transform duration-200 hover:translate-x-1 motion-reduce:transition-none`} href="#fitur">
                                     Selengkapnya <ArrowUpRight size={17} />
                                 </a>
                             </div>
@@ -485,7 +556,9 @@ export default function Welcome() {
                             </div>
                             <div className={tw.serviceCards}>
                                 <article
-                                    className={`${tw.serviceCard} ${tw.serviceBlue}`}
+                                    className={`${tw.serviceCard} ${tw.serviceBlue} ${tw.cardMotion} ${tw.reveal}`}
+                                    data-reveal
+                                    style={{ transitionDelay: '80ms' }}
                                 >
                                     <div className={tw.serviceNumber}>
                                         01 / PAHAMI
@@ -506,7 +579,9 @@ export default function Welcome() {
                                     </a>
                                 </article>
                                 <article
-                                    className={`${tw.serviceCard} ${tw.serviceCyan}`}
+                                    className={`${tw.serviceCard} ${tw.serviceCyan} ${tw.cardMotion} ${tw.reveal}`}
+                                    data-reveal
+                                    style={{ transitionDelay: '160ms' }}
                                 >
                                     <div className={tw.serviceNumber}>
                                         02 / JELAJAHI
@@ -531,7 +606,9 @@ export default function Welcome() {
                                     </a>
                                 </article>
                                 <article
-                                    className={`${tw.serviceCard} ${tw.serviceLime}`}
+                                    className={`${tw.serviceCard} ${tw.serviceLime} ${tw.cardMotion} ${tw.reveal}`}
+                                    data-reveal
+                                    style={{ transitionDelay: '240ms' }}
                                 >
                                     <div className={tw.serviceNumber}>
                                         03 / TERHUBUNG
@@ -577,7 +654,8 @@ export default function Welcome() {
                                 >
                                     {testimonials.map((item) => (
                                         <article
-                                            className={tw.testimonialCard}
+                                            className={`${tw.testimonialCard} ${tw.cardMotion} ${tw.reveal}`}
+                                            data-reveal
                                             key={item.name}
                                         >
                                             <div className={tw.testimonialTop}>
@@ -647,7 +725,9 @@ export default function Welcome() {
                             <div className={tw.partnersGrid}>
                                 {partners.map((name, i) => (
                                     <div
-                                        className={`${tw.partner} ${i % 6 === 3 ? tw.partnerFeatured : ''}`}
+                                        className={`${tw.partner} ${tw.reveal} ${i % 6 === 3 ? tw.partnerFeatured : ''}`}
+                                        data-reveal
+                                        style={{ transitionDelay: `${(i % 7) * 60}ms` }}
                                         key={name}
                                     >
                                         <span
@@ -664,7 +744,7 @@ export default function Welcome() {
 
                     <section className={`${tw.blue} ${tw.appSection}`} id="cara-kerja">
                         <div className={`${tw.wrap} ${tw.appGrid}`}>
-                            <div className={tw.appCopy}>
+                            <div className={`${tw.appCopy} ${tw.reveal}`} data-reveal>
                                 <p className={tw.appHash}>#AksesLebihMudah</p>
                                 <h2 className={tw.appTitle}>
                                     Satu platform untuk
@@ -688,8 +768,8 @@ export default function Welcome() {
                                     <Smartphone size={17} /> Bantuan yang terhubung dalam satu tempat.
                                 </div>
                             </div>
-                            <div className={tw.phoneStage}>
-                                <div className="absolute right-0 bottom-[-100px] size-[350px] rounded-full bg-white/10" />
+                            <div className={`${tw.phoneStage} ${tw.reveal}`} data-reveal>
+                                <div className="absolute right-0 bottom-[-100px] size-[350px] animate-pulse rounded-full bg-white/10 motion-reduce:animate-none" />
                                 <div className={tw.phone}>
                                     <div className={tw.phoneNotch} />
                                     <div className={tw.phoneStatus}>
@@ -746,8 +826,8 @@ export default function Welcome() {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="absolute bottom-[-330px] h-[470px] w-[470px] rounded-full border border-white/20" />
-                                <div className="absolute bottom-[-284px] h-[390px] w-[390px] rounded-full border border-white/20" />
+                                <div className="absolute bottom-[-330px] h-[470px] w-[470px] animate-pulse rounded-full border border-white/20 motion-reduce:animate-none" />
+                                <div className="absolute bottom-[-284px] h-[390px] w-[390px] animate-pulse rounded-full border border-white/20 [animation-delay:500ms] motion-reduce:animate-none" />
                             </div>
                         </div>
                     </section>
@@ -761,7 +841,9 @@ export default function Welcome() {
                             <div className={tw.mediaLogos}>
                                 {media.map((name, i) => (
                                     <span
-                                        className={`${tw.mediaLogo} ${['font-semibold tracking-[-1.4px]', '', 'text-[15px]', 'font-serif font-medium italic', 'text-[23px] text-[#13191e]', 'text-[#60666b]', 'text-[15px]'][i]}`}
+                                        className={`${tw.mediaLogo} ${tw.reveal} ${['font-semibold tracking-[-1.4px]', '', 'text-[15px]', 'font-serif font-medium italic', 'text-[23px] text-[#13191e]', 'text-[#60666b]', 'text-[15px]'][i]}`}
+                                        data-reveal
+                                        style={{ transitionDelay: `${i * 60}ms` }}
                                         key={name}
                                     >
                                         {name}
@@ -778,14 +860,14 @@ export default function Welcome() {
                         />
                         <div className={tw.contactOverlay} />
                         <div className={`${tw.wrap} ${tw.contactInner}`}>
-                            <div className={tw.contactPerson}>
+                            <div className={`${tw.contactPerson} ${tw.reveal}`} data-reveal>
                                 <img
                                     src="/images/phone.webp"
                                     alt="Ilustrasi dukungan teknologi dan relawan Padhang"
                                 />
                                 <span>☎</span>
                             </div>
-                            <div className={tw.contactCopy}>
+                            <div className={`${tw.contactCopy} ${tw.reveal}`} data-reveal>
                                 <p className={tw.eyebrow}>DUKUNGAN YANG TERHUBUNG</p>
                                 <h2>
                                     AI membantu memahami sekitar. Relawan melengkapi dukungan saat dibutuhkan.
@@ -813,7 +895,9 @@ export default function Welcome() {
                             <div className={tw.faqList}>
                                 {faqs.map(([question, answer], index) => (
                                     <article
-                                        className={`${tw.faqItem} ${openFaq === index ? 'border-[#b7ddfb]' : ''}`}
+                                        className={`${tw.faqItem} ${tw.reveal} ${openFaq === index ? 'border-[#b7ddfb]' : ''}`}
+                                        data-reveal
+                                        style={{ transitionDelay: `${index * 70}ms` }}
                                         key={question}
                                     >
                                         <h3>
@@ -831,7 +915,7 @@ export default function Welcome() {
                                                 }
                                             >
                                                 {question}
-                                                <span>
+                                                <span className={openFaq === index ? 'scale-110' : ''}>
                                                     {openFaq === index ? (
                                                         <Minus size={19} />
                                                     ) : (
@@ -841,11 +925,13 @@ export default function Welcome() {
                                             </button>
                                         </h3>
                                         <div
-                                            className={tw.faqAnswer}
+                                            className={`${tw.faqAnswer} ${openFaq === index ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
                                             id={`faq-answer-${index}`}
-                                            hidden={openFaq !== index}
+                                            aria-hidden={openFaq !== index}
                                         >
-                                            <p>{answer}</p>
+                                            <div className="overflow-hidden px-5 pt-0 pb-[17px] text-xs leading-[1.7] text-[#66717d] [&_p]:m-0 max-[640px]:px-3 max-[640px]:pb-4">
+                                                <p>{answer}</p>
+                                            </div>
                                         </div>
                                     </article>
                                 ))}
@@ -854,7 +940,7 @@ export default function Welcome() {
                     </section>
                 </main>
 
-                <footer className={tw.footer}>
+                <footer className={`${tw.footer} ${tw.reveal}`} data-reveal>
                     <div className={tw.wrap}>
                         <div className={tw.footerGrid}>
                             <div className={tw.footerBrand}>
