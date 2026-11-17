@@ -40,11 +40,10 @@ export default function AppLayout({
                                 key={href}
                                 href={href}
                                 aria-current={active ? 'page' : undefined}
-                                className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all active:scale-[0.98] ${
-                                    active
+                                className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all active:scale-[0.98] ${active
                                         ? 'bg-brand-lime font-semibold text-brand-ink'
                                         : 'font-medium text-white/80 hover:bg-white/10 hover:text-white'
-                                }`}
+                                    }`}
                             >
                                 <Icon className="size-5" />
                                 <span className="text-base">{label}</span>
@@ -52,7 +51,7 @@ export default function AppLayout({
                         );
                     })}
                 </nav>
-                
+
                 <div className="mt-auto mb-7 pt-2 flex gap-1 px-2 text-[13px] text-black/80  bg-white rounded-lg flex-col">
                     <div>Supported by :</div>
                     <div className="flex items-bottom">
@@ -60,17 +59,17 @@ export default function AppLayout({
                             src="/images/logo-uin-walisongo.png"
                             alt="UIN Walisongo"
                             className="h-15 p-1.5 w-auto "
-                            />
+                        />
                         <img
                             src="/images/logo-huawei-merah.jpeg"
                             alt="Huawei"
                             className="h-18 w-auto "
-                            />
+                        />
                         <img
                             src="/images/logo-huawei-ict.png"
                             alt="Huawei ICT Academy"
                             className="h-15 p-1 w-auto "
-                            />
+                        />
                     </div>
                 </div>
                 <div className="flex items-center gap-3 rounded-[14px] bg-white/10 p-3">
@@ -103,9 +102,8 @@ export default function AppLayout({
                                 className="relative flex h-full w-14 cursor-pointer flex-col items-center justify-center transition-all active:scale-95"
                             >
                                 <Icon
-                                    className={`size-5 transition-all ${
-                                        active ? 'scale-110 text-brand-lime' : 'text-white/70'
-                                    }`}
+                                    className={`size-5 transition-all ${active ? 'scale-110 text-brand-lime' : 'text-white/70'
+                                        }`}
                                 />
                                 {active && (
                                     <span className="absolute bottom-1.5 size-1.5 animate-pulse rounded-full bg-brand-lime" />

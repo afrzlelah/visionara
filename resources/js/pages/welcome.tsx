@@ -944,7 +944,7 @@ export default function Welcome() {
 
                 <footer className={`${tw.footer} ${tw.reveal}`} data-reveal>
                     <div className={tw.wrap}>
-                        <div className={tw.footerGrid}>
+                        <div className={`${tw.footerGrid}`}  >
                             <div className={tw.footerBrand}>
                                 <Brand inverse />
                                 <strong>Teknologi asistif berbasis web</strong>
@@ -979,24 +979,24 @@ export default function Welcome() {
                                     <MessageCircle size={17} /> Daftar relawan
                                 </a>
                             </div>
-                            <div className="mt-auto mb-7 pt-2 flex gap-1 px-2 text-[13px] text-black/80  bg-white rounded-lg flex-col">
+                            <div className="mt-auto mb-7 pt-2 flex gap-1 px-2 text-[13px] text-black/80  bg-white rounded-lg flex-col ">
                                 <div>Supported by :</div>
                                 <div className="flex items-bottom">
                                     <img
                                         src="/images/logo-uin-walisongo.png"
                                         alt="UIN Walisongo"
-                                        className="h-20 p-1.5 w-auto "
-                                        />
+                                        className="h-17 p-1.5 w-auto "
+                                    />
                                     <img
                                         src="/images/logo-huawei-merah.jpeg"
                                         alt="Huawei"
-                                        className="h-23 w-auto "
-                                        />
+                                        className="h-17 w-auto "
+                                    />
                                     <img
-                                        src="/images/logo-huawei-ict.png"
+                                        src="/images/logo-huawei-ict.jpeg"
                                         alt="Huawei ICT Academy"
-                                        className="h-20 p-1 w-auto "
-                                        />
+                                        className="h-17 p-1 w-auto "
+                                    />
                                 </div>
                             </div>
                         </div>
