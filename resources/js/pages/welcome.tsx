@@ -29,21 +29,21 @@ const testimonials = [
         name: 'Konteks lingkungan',
         org: 'Kebutuhan pengguna',
         mark: 'AI',
-        color: '#d50057',
+        color: 'var(--color-brand-red)',
     },
     {
         quote: 'Pemindaian otomatis dirancang untuk mengurangi tindakan berulang saat pengguna mengeksplorasi lingkungan sekitar.',
         name: 'Pemindaian otomatis',
         org: 'Konsep Padhang',
         mark: 'SCAN',
-        color: '#7c285e',
+        color: 'var(--color-brand-blue)',
     },
     {
         quote: 'Relawan dapat melengkapi AI ketika situasi tidak jelas, kompleks, atau membutuhkan bantuan manusia secara langsung.',
         name: 'Bantuan relawan',
         org: 'Dukungan manusia',
         mark: 'SOS',
-        color: '#56833c',
+        color: 'var(--color-brand-red)',
     },
 ];
 
@@ -77,12 +77,12 @@ const partners = [
 ];
 const partnerMarks = ['✿', '◈', '▦', '♧', '⚖', '✳'];
 const partnerMarkColors = [
-    'text-[#d50057]',
-    'text-[#43a773]',
-    'text-[#14a9ae]',
-    'text-[#e3b800]',
-    'text-[#df5468]',
-    'text-[#098fa5]',
+    'text-[var(--color-brand-red)]',
+    'text-[var(--color-brand-blue)]',
+    'text-[var(--color-brand-blue)]',
+    'text-[var(--color-brand-lime)]',
+    'text-[var(--color-brand-red-bright)]',
+    'text-[var(--color-brand-blue)]',
 ];
 const media = [
     'Gemini Vision AI', 'Deteksi otomatis', 'Navigasi GPS', 'Text-to-Speech',
@@ -90,41 +90,41 @@ const media = [
 ];
 
 const tw = {
-    root: 'scroll-smooth isolate w-full overflow-hidden bg-white font-sans text-[#202124] [--padhang-primary:#d50057] [--padhang-accent:#e6005e] [--padhang-highlight:#dfff00] [&_section[id]]:scroll-mt-[90px] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[#202124] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[#202124] motion-reduce:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
+    root: 'scroll-smooth isolate w-full overflow-hidden bg-white font-sans text-[var(--color-brand-ink)] [--padhang-primary:var(--color-brand-red)] [--padhang-accent:var(--color-brand-red-bright)] [--padhang-highlight:var(--color-brand-lime)] [&_section[id]]:scroll-mt-[90px] [&_a:focus-visible]:outline-3 [&_a:focus-visible]:outline-offset-3 [&_a:focus-visible]:outline-[var(--color-brand-ink)] [&_button:focus-visible]:outline-3 [&_button:focus-visible]:outline-offset-3 [&_button:focus-visible]:outline-[var(--color-brand-ink)] motion-reduce:scroll-auto motion-reduce:[&_a]:transition-none motion-reduce:[&_button]:transition-none motion-reduce:[&_*]:animate-none',
     reveal: 'translate-y-12 scale-90 rotate-[-2deg] opacity-0 transition-[opacity,transform] duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] data-[revealed=true]:translate-y-0 data-[revealed=true]:scale-100 data-[revealed=true]:rotate-0 data-[revealed=true]:opacity-100 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:rotate-0 motion-reduce:opacity-100 motion-reduce:transition-none',
     cardMotion: 'group transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-2 hover:scale-[1.035] hover:rotate-[1deg] hover:shadow-[0_20px_38px_#182a3b28] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:hover:rotate-0',
     imageMotion: 'transition-transform duration-1000 ease-out group-hover:scale-110 motion-reduce:transition-none',
     actions: 'flex flex-wrap items-center gap-3 max-[640px]:w-full',
-    outlineButton: 'border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#830000]',
+    outlineButton: 'border-2 border-white bg-transparent text-white hover:bg-white hover:text-[var(--color-brand-red)]',
     wrap: 'mx-auto w-[min(1200px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     nav: 'fixed inset-x-0 top-0 z-50 h-[78px] bg-white shadow-[0_2px_14px_#00275d0c] max-[900px]:h-[70px] max-[640px]:h-[66px]',
     navInner: 'flex h-full items-center justify-between',
-    brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[#e6005e] max-[640px]:text-[25px]',
+    brand: 'inline-flex items-center text-[28px] font-extrabold tracking-[-1.6px] text-[var(--color-brand-red-bright)] max-[640px]:text-[25px]',
     brandInverse: '!text-white',
     brandMark:
         'relative inline-block size-[30px] rotate-[-42deg] max-[640px]:size-[27px]',
     brandMarkBar:
-        'absolute left-[9px] top-0 block h-[29px] w-[11px] rounded-lg bg-[#e6005e] first:rotate-0 last:rotate-90 max-[640px]:left-2 max-[640px]:h-[26px] max-[640px]:w-[10px]',
+        'absolute left-[9px] top-0 block h-[29px] w-[11px] rounded-lg bg-[var(--color-brand-red-bright)] first:rotate-0 last:rotate-90 max-[640px]:left-2 max-[640px]:h-[26px] max-[640px]:w-[10px]',
     menuButton:
-        'hidden size-10 cursor-pointer place-items-center border-0 bg-transparent text-[#202124] max-[640px]:grid',
+        'hidden size-10 cursor-pointer place-items-center border-0 bg-transparent text-[var(--color-brand-ink)] max-[640px]:grid',
     navLinks:
-        'flex items-center gap-[clamp(18px,2.7vw,38px)] text-[13px] font-semibold [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-[#d50057] max-[900px]:gap-[15px] max-[900px]:text-[11px] max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[66px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-0 max-[640px]:bg-white max-[640px]:px-5 max-[640px]:pb-[15px] max-[640px]:pt-[7px] max-[640px]:shadow-[0_15px_20px_#00193312] [&_a]:max-[640px]:border-b [&_a]:max-[640px]:border-[#edf1f4] [&_a]:max-[640px]:py-3 [&_a]:max-[640px]:text-sm',
+        'flex items-center gap-[clamp(18px,2.7vw,38px)] text-[13px] font-semibold [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-[var(--color-brand-red)] max-[900px]:gap-[15px] max-[900px]:text-[11px] max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[66px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-0 max-[640px]:bg-white max-[640px]:px-5 max-[640px]:pb-[15px] max-[640px]:pt-[7px] max-[640px]:shadow-[0_15px_20px_#00193312] [&_a]:max-[640px]:border-b [&_a]:max-[640px]:border-[#edf1f4] [&_a]:max-[640px]:py-3 [&_a]:max-[640px]:text-sm',
     navClosed: 'transition-[max-height,opacity,transform] duration-300 ease-out max-[640px]:pointer-events-none max-[640px]:max-h-0 max-[640px]:overflow-hidden max-[640px]:opacity-0 max-[640px]:-translate-y-2',
     navOpen: 'transition-[max-height,opacity,transform] duration-300 ease-out max-[640px]:pointer-events-auto max-[640px]:max-h-[420px] max-[640px]:translate-y-0 max-[640px]:opacity-100',
-    blue: "relative isolate overflow-hidden bg-[#d50057] text-white before:pointer-events-none before:absolute before:-z-10 before:left-[-155px] before:top-[215px] before:size-[510px] before:rotate-[42deg] before:rounded-[40%_60%_55%_45%] before:bg-white/5 before:content-[''] after:pointer-events-none after:absolute after:-z-10 after:right-[-230px] after:bottom-[-340px] after:size-[490px] after:rounded-full after:border after:border-white/15 after:shadow-[0_0_0_40px_rgb(255_255_255_/_4%),0_0_0_80px_rgb(255_255_255_/_3%)] after:content-['']",
+    blue: "relative isolate overflow-hidden bg-[var(--color-brand-red)] text-white before:pointer-events-none before:absolute before:-z-10 before:left-[-155px] before:top-[215px] before:size-[510px] before:rotate-[42deg] before:rounded-[40%_60%_55%_45%] before:bg-white/5 before:content-[''] after:pointer-events-none after:absolute after:-z-10 after:right-[-230px] after:bottom-[-340px] after:size-[490px] after:rounded-full after:border after:border-white/15 after:shadow-[0_0_0_40px_rgb(255_255_255_/_4%),0_0_0_80px_rgb(255_255_255_/_3%)] after:content-['']",
     hero: 'flex min-h-[635px] items-center max-[900px]:min-h-[570px] max-[640px]:min-h-0',
     heroGrid:
         'grid grid-cols-[1.02fr_.98fr] items-center gap-[46px] py-[70px] pb-[100px] max-[900px]:gap-[15px] max-[900px]:py-[60px] max-[900px]:pb-20 max-[640px]:grid-cols-1 max-[640px]:gap-3 max-[640px]:py-[55px] max-[640px]:pb-20',
     heroCopy: 'relative z-[2] max-w-[565px] max-[640px]:max-w-[460px]',
     heroKicker:
         'mb-[22px] flex items-center gap-[10px] text-[10px] font-bold tracking-[.17em] max-[640px]:mb-[17px] max-[640px]:text-[9px]',
-    heroKickerLine: 'h-0.5 w-[27px] bg-[#dfff00]',
+    heroKickerLine: 'h-0.5 w-[27px] bg-[var(--color-brand-lime)]',
     heroTitle:
-        'm-0 max-w-[580px] text-[clamp(42px,5vw,68px)] leading-[1.03] font-extrabold tracking-[-2.9px] [&_span]:text-[#dfff00] max-[900px]:text-[clamp(38px,6vw,53px)] max-[640px]:max-w-[470px] max-[640px]:text-[clamp(39px,11vw,54px)] max-[640px]:tracking-[-2px] max-[390px]:text-[38px]',
+        'm-0 max-w-[580px] text-[clamp(42px,5vw,68px)] leading-[1.03] font-extrabold tracking-[-2.9px] [&_span]:text-[var(--color-brand-lime)] max-[900px]:text-[clamp(38px,6vw,53px)] max-[640px]:max-w-[470px] max-[640px]:text-[clamp(39px,11vw,54px)] max-[640px]:tracking-[-2px] max-[390px]:text-[38px]',
     heroText:
         'my-6 mb-7 max-w-[425px] text-[17px] leading-[1.65] text-[#e4f4ff] max-[640px]:my-[18px] max-[640px]:mb-[22px] max-[640px]:max-w-[350px] max-[640px]:text-[15px]',
-    button: 'inline-flex min-h-12 w-fit items-center justify-center gap-[11px] rounded-[4px] px-5 text-[15px] font-bold transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-1 hover:scale-[1.05] hover:shadow-[0_12px_28px_#002b6640] active:scale-95 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[#202124] max-[640px]:min-h-[46px] max-[640px]:text-sm motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100',
-    yellowButton: 'bg-[#dfff00] text-[#17202a]',
+    button: 'inline-flex min-h-12 w-fit items-center justify-center gap-[11px] rounded-[4px] px-5 text-[15px] font-bold transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-1 hover:scale-[1.05] hover:shadow-[0_12px_28px_#002b6640] active:scale-95 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-ink)] max-[640px]:min-h-[46px] max-[640px]:text-sm motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 motion-reduce:active:scale-100',
+    yellowButton: 'bg-[var(--color-brand-lime)] text-[var(--color-brand-ink)]',
     heroVisual:
         'relative grid min-h-[440px] place-items-center max-[900px]:min-h-[380px] max-[640px]:mt-[5px] max-[640px]:min-h-[360px] max-[390px]:min-h-[320px]',
     heroImage:
@@ -135,11 +135,11 @@ const tw = {
     stats: 'grid min-h-[111px] grid-cols-3 items-center rounded-lg bg-white shadow-[0_12px_40px_#17365817] transition-[transform,box-shadow] duration-300 hover:scale-[1.015] hover:shadow-[0_16px_44px_#17365824] max-[640px]:min-h-[88px] motion-reduce:transition-none motion-reduce:hover:scale-100',
     stat: 'relative flex min-h-[57px] flex-col items-center justify-center gap-0.5 max-[640px]:min-h-[50px]',
     statNumber:
-        'text-[38px] leading-none font-extrabold tracking-[-1px] text-[#d50057] max-[640px]:text-[clamp(25px,8vw,32px)] max-[390px]:text-[25px]',
+        'text-[38px] leading-none font-extrabold tracking-[-1px] text-[var(--color-brand-red)] max-[640px]:text-[clamp(25px,8vw,32px)] max-[390px]:text-[25px]',
     statLabel:
         'text-[13px] font-semibold max-[640px]:text-[10px] max-[640px]:text-center max-[390px]:text-[9px]',
     statDivider:
-        'absolute top-1/2 right-0 h-11 w-px -translate-y-1/2 bg-[#6bb9ff] max-[640px]:h-[35px]',
+        'absolute top-1/2 right-0 h-11 w-px -translate-y-1/2 bg-[var(--color-brand-blue)] max-[640px]:h-[35px]',
     section: 'py-[105px] max-[640px]:py-[70px]',
     partnersSection: 'pt-[92px] pb-[100px] max-[640px]:py-[72px]',
     mediaSection:
@@ -152,80 +152,80 @@ const tw = {
     aboutVisual:
         'relative flex min-h-[480px] items-end justify-center max-[900px]:min-h-[390px] max-[640px]:mx-[6px] max-[640px]:min-h-[350px]',
     aboutShape:
-        'absolute inset-[57px_5px_6px_24px] rounded-tl-[36%] bg-linear-to-br from-[#d50057] to-[#e6005e] max-[640px]:inset-[45px_0_0]',
+        'absolute inset-[57px_5px_6px_24px] rounded-tl-[36%] bg-linear-to-br from-[var(--color-brand-red)] to-[var(--color-brand-red-bright)] max-[640px]:inset-[45px_0_0]',
     aboutPhoto:
         'relative z-[1] h-[470px] w-[83%] rounded-t-[48%] object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-[1.04] max-[900px]:h-[385px] max-[640px]:h-[345px] max-[640px]:w-4/5 motion-reduce:transition-none',
-    badge: 'absolute top-9 left-0 z-[2] flex items-center gap-[9px] rounded-[3px] bg-white px-[14px] py-[11px] text-[10px] font-bold shadow-[0_7px_24px_#193c5c19] max-[640px]:top-5 [&_span]:text-xl [&_span]:text-[#d50057]',
+    badge: 'absolute top-9 left-0 z-[2] flex items-center gap-[9px] rounded-[3px] bg-white px-[14px] py-[11px] text-[10px] font-bold shadow-[0_7px_24px_#193c5c19] max-[640px]:top-5 [&_span]:text-xl [&_span]:text-[var(--color-brand-red)]',
     eyebrow:
-        'mb-[13px] text-[11px] font-extrabold tracking-[.12em] text-[#d50057]',
+        'mb-[13px] text-[11px] font-extrabold tracking-[.12em] text-[var(--color-brand-red)]',
     aboutTitle:
         'm-0 text-[clamp(32px,3.6vw,47px)] leading-[1.12] font-bold tracking-[-1.6px] max-[900px]:text-[36px] max-[640px]:text-[34px]',
     body: 'my-[22px] mb-[26px] text-sm leading-[1.8] text-[#66717d] max-[640px]:my-[17px] max-[640px]:mb-[21px] max-[640px]:text-[13px]',
     impact: 'border-y border-[#e7edf2] py-[17px] pb-[18px]',
-    sdgTitle: 'mb-3 flex items-center gap-2 text-[#13a8d2]',
+    sdgTitle: 'mb-3 flex items-center gap-2 text-[var(--color-brand-blue)]',
     sdgWheel: 'text-[30px] leading-none',
     sdgTags:
-        'mt-[11px] flex gap-[7px] [&_span]:flex [&_span]:min-h-[66px] [&_span]:w-[85px] [&_span]:flex-col [&_span]:justify-between [&_span]:bg-[#e34668] [&_span]:p-2 [&_span]:text-[19px] [&_span]:font-extrabold [&_span]:text-white [&_span:nth-child(2)]:bg-[#d7a63b] [&_span:nth-child(3)]:bg-[#c7295f] [&_small]:text-[7px] [&_small]:leading-[1.2] max-[640px]:[&_span]:min-h-[61px] max-[640px]:[&_span]:w-[82px]',
+        'mt-[11px] flex gap-[7px] [&_span]:flex [&_span]:min-h-[66px] [&_span]:w-[85px] [&_span]:flex-col [&_span]:justify-between [&_span]:bg-[var(--color-brand-red)] [&_span]:p-2 [&_span]:text-[19px] [&_span]:font-extrabold [&_span]:text-white [&_span:nth-child(2)]:bg-[var(--color-brand-lime)] [&_span:nth-child(3)]:bg-[var(--color-brand-red-bright)] [&_small]:text-[7px] [&_small]:leading-[1.2] max-[640px]:[&_span]:min-h-[61px] max-[640px]:[&_span]:w-[82px]',
     textLink:
-        'mt-5 inline-flex items-center gap-2.5 bg-[#dfff00] px-[13px] py-[10px] text-[13px] font-bold',
+        'mt-5 inline-flex items-center gap-2.5 bg-[var(--color-brand-lime)] px-[13px] py-[10px] text-[13px] font-bold',
     sectionHeading:
         'mx-auto mb-12 text-center max-[640px]:mb-8 [&_h2]:m-0 [&_h2]:text-[clamp(29px,3.5vw,43px)] [&_h2]:leading-[1.12] [&_h2]:font-bold [&_h2]:tracking-[-1.6px] max-[640px]:[&_h2]:text-[31px]',
-    sectionHeadingLight: '[&_.eyebrow]:text-[#dfff00] [&_h2]:text-white',
+    sectionHeadingLight: '[&_.eyebrow]:text-[var(--color-brand-lime)] [&_h2]:text-white',
     servicesSection: 'pt-10 pb-[105px] max-[640px]:pt-2 max-[640px]:pb-[70px]',
     serviceIntro:
-        'my-[-15px] mb-7 flex items-center justify-between gap-[30px] max-[640px]:my-[-6px] max-[640px]:mb-[22px] max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-3 [&_p]:m-0 [&_p]:max-w-[440px] [&_p]:text-[13px] [&_p]:leading-[1.6] [&_p]:text-[#6e7d88] [&_a]:inline-flex [&_a]:items-center [&_a]:gap-2 [&_a]:text-[12px] [&_a]:font-bold [&_a]:text-[#d50057]',
+        'my-[-15px] mb-7 flex items-center justify-between gap-[30px] max-[640px]:my-[-6px] max-[640px]:mb-[22px] max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-3 [&_p]:m-0 [&_p]:max-w-[440px] [&_p]:text-[13px] [&_p]:leading-[1.6] [&_p]:text-[#6e7d88] [&_a]:inline-flex [&_a]:items-center [&_a]:gap-2 [&_a]:text-[12px] [&_a]:font-bold [&_a]:text-[var(--color-brand-red)]',
     serviceCards:
         'grid grid-cols-3 gap-[17px] max-[640px]:grid-cols-1 max-[640px]:gap-3',
     serviceCard:
         "relative min-h-[250px] overflow-hidden rounded-[7px] p-6 after:absolute after:top-[68px] after:right-[-74px] after:size-40 after:rounded-full after:border after:border-white/50 after:shadow-[0_0_0_20px_rgb(255_255_255_/_12%),0_0_0_40px_rgb(255_255_255_/_6%)] after:content-[''] max-[900px]:p-[19px] max-[640px]:min-h-[218px] max-[640px]:p-[21px]",
-    serviceBlue: 'bg-[#e6005e] text-white',
-    serviceCyan: 'bg-[#e5f9ff] text-[#17384a]',
-    serviceLime: 'bg-[#f5ffd0] text-[#263500]',
+    serviceBlue: 'bg-[var(--color-brand-red-bright)] text-white',
+    serviceCyan: 'bg-[#e5f9ff] text-[var(--color-brand-ink)]',
+    serviceLime: 'bg-[#f5ffd0] text-[var(--color-brand-ink)]',
     serviceNumber: 'text-[9px] font-bold tracking-[.12em] opacity-70',
     serviceIcon:
         'my-5 mb-[15px] grid size-[45px] place-items-center rounded-full bg-white/15 text-2xl transition-transform duration-300 group-hover:animate-bounce [&_svg]:w-[23px] max-[640px]:my-[14px] max-[640px]:mb-[11px] motion-reduce:animate-none',
-    serviceIconCyan: 'bg-[#c6effb] text-[#d50057]',
-    serviceIconLime: 'bg-[#e4f889] text-[#546a00]',
+    serviceIconCyan: 'bg-[#c6effb] text-[var(--color-brand-red)]',
+    serviceIconLime: 'bg-[#e4f889] text-[var(--color-brand-ink)]',
     serviceTitle: 'm-0 text-[19px] font-semibold tracking-[-.4px]',
     serviceDescription:
         'mt-[7px] mb-0 max-w-[290px] text-[11px] leading-[1.6] opacity-80',
     serviceArrow:
         'absolute right-5 bottom-[17px] z-[2] grid size-8 place-items-center rounded-full border border-current [&_svg]:w-4',
     testimonialsSection:
-        'bg-[#d50057] py-[92px] pb-[78px] max-[640px]:py-[70px] max-[640px]:pb-[54px]',
+        'bg-[var(--color-brand-red)] py-[92px] pb-[78px] max-[640px]:py-[70px] max-[640px]:pb-[54px]',
     testimonialWindow: 'min-w-0 max-[640px]:overflow-hidden',
     testimonialGrid:
         'grid grid-cols-3 gap-5 max-[640px]:flex max-[640px]:gap-0 max-[640px]:translate-x-[var(--testimonial-offset)] max-[640px]:transition-transform max-[640px]:duration-500 max-[640px]:ease-out',
     testimonialCard:
         'relative flex min-h-[257px] flex-col overflow-hidden rounded-[9px] bg-white px-[22px] pt-[23px] pb-[18px] text-[#1c2934] shadow-[0_10px_25px_#004f9b19] max-[900px]:px-[17px] max-[640px]:min-h-[225px] max-[640px]:flex-[0_0_100%] max-[640px]:p-5',
-    testimonialTop: 'flex items-center justify-between text-[#69b5ef]',
-    pill: 'rounded-[3px] border border-[#a4d5ff] px-2 py-[5px] text-[9px] font-bold text-[#1886dc]',
+    testimonialTop: 'flex items-center justify-between text-[var(--color-brand-blue)]',
+    pill: 'rounded-[3px] border border-[#a4d5ff] px-2 py-[5px] text-[9px] font-bold text-[var(--color-brand-blue)]',
     quote: 'relative z-[1] my-[23px] mb-auto text-xs leading-[1.7] text-[#75818b] max-[900px]:text-[11px] max-[640px]:text-xs',
     testimonialBottom:
         'mt-[18px] flex items-end justify-between border-t border-[#dbe2e7] pt-[14px] [&_div]:flex [&_div]:flex-col [&_div]:gap-[3px] [&_strong]:text-xs [&_span]:text-[10px] [&_span]:text-[#7d8993] [&_b]:text-sm',
     quoteGhost:
         'absolute right-[11px] bottom-[49px] font-serif text-[97px] leading-none text-[#e5f4ff]',
-    dots: 'mt-[25px] flex justify-center gap-[5px] [&_button]:grid [&_button]:size-[18px] [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:border-0 [&_button]:bg-transparent [&_span]:size-2 [&_span]:rounded-full [&_span]:border [&_span]:border-[#dfff00] [&_span.active-dot]:w-4 [&_span.active-dot]:rounded-full [&_span.active-dot]:bg-[#dfff00]',
+    dots: 'mt-[25px] flex justify-center gap-[5px] [&_button]:grid [&_button]:size-[18px] [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:border-0 [&_button]:bg-transparent [&_span]:size-2 [&_span]:rounded-full [&_span]:border [&_span]:border-[var(--color-brand-lime)] [&_span.active-dot]:w-4 [&_span.active-dot]:rounded-full [&_span.active-dot]:bg-[var(--color-brand-lime)]',
     partnersGrid:
         'grid grid-cols-7 items-center gap-x-6 gap-y-[30px] max-[900px]:grid-cols-4 max-[640px]:grid-cols-2 max-[640px]:gap-x-3 max-[640px]:gap-y-5',
     partner:
         'flex min-h-[60px] items-center justify-center gap-[7px] text-left text-[11px] leading-[1.2] font-bold text-[#394c5a] transition-transform duration-300 hover:scale-110 hover:-rotate-2 max-[640px]:min-h-[55px] max-[640px]:text-[10px] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:hover:rotate-0',
     partnerSymbol: 'text-[26px] max-[640px]:text-[23px]',
-    partnerFeatured: 'min-h-[76px] rounded bg-[#25235f] text-[#ffe81c]',
-    appSection: 'min-h-[480px] bg-[#d50057] max-[640px]:min-h-0',
+    partnerFeatured: 'min-h-[76px] rounded bg-[var(--color-brand-blue)] text-[var(--color-brand-lime)]',
+    appSection: 'min-h-[480px] bg-[var(--color-brand-red)] max-[640px]:min-h-0',
     appGrid:
         'grid min-h-[480px] grid-cols-2 items-center gap-[60px] max-[640px]:min-h-0 max-[640px]:grid-cols-1 max-[640px]:gap-0',
     appCopy:
         'py-[65px] max-[640px]:pt-[62px] max-[640px]:pr-0 max-[640px]:pb-[18px]',
     appHash:
-        'mb-[10px] text-[clamp(30px,4vw,45px)] leading-none font-extrabold tracking-[-1.8px] text-[#dfff00] max-[640px]:text-[37px]',
+        'mb-[10px] text-[clamp(30px,4vw,45px)] leading-none font-extrabold tracking-[-1.8px] text-[var(--color-brand-lime)] max-[640px]:text-[37px]',
     appTitle:
         'm-0 text-[clamp(31px,4vw,46px)] leading-[1.1] font-bold tracking-[-1.5px] text-white max-[640px]:text-[37px]',
     appDescription:
         'my-[17px] mb-[21px] max-w-[380px] text-[13px] leading-[1.7] text-[#def0ff]',
     playButton:
         'flex min-h-[49px]  items-center gap-2.5 rounded-md bg-[#12171a] px-[11px] py-1.5 text-white',
-    playTriangle: 'text-[26px] text-[#61d488]',
+    playTriangle: 'text-[26px] text-[var(--color-brand-blue)]',
     appCaption:
         'mt-[21px] flex items-center gap-[7px] text-[10px] text-[#c0e3ff]',
     phoneStage:
@@ -237,39 +237,39 @@ const tw = {
     phoneHeader:
         'flex items-center justify-between px-1 pt-1 pb-3 [&_.brand]:text-[20px] [&_.brand-mark]:size-5 [&_.brand-mark_i]:left-[6px] [&_.brand-mark_i]:h-[19px] [&_.brand-mark_i]:w-2',
     phoneAvatar:
-        'grid size-6 place-items-center rounded-full bg-[#dff6ff] text-[11px] font-extrabold text-[#d50057]',
+        'grid size-6 place-items-center rounded-full bg-[#dff6ff] text-[11px] font-extrabold text-[var(--color-brand-red)]',
     phoneBanner:
-        'flex min-h-[145px] flex-col rounded-[13px] bg-linear-to-br from-[#d50057] to-[#e6005e] p-[14px] text-white max-[640px]:min-h-[124px] [&_small]:text-[7px] [&_small]:opacity-80 [&_b]:my-2 [&_b]:mb-1 [&_b]:max-w-[160px] [&_b]:text-base [&_b]:leading-[1.1] [&_span]:text-[8px] [&_i]:mt-[10px] [&_i]:w-fit [&_i]:rounded-sm [&_i]:bg-[#dfff00] [&_i]:px-[7px] [&_i]:py-[5px] [&_i]:text-[7px] [&_i]:font-extrabold [&_i]:not-italic [&_i]:text-[#263000] max-[640px]:[&_b]:text-sm',
+        'flex min-h-[145px] flex-col rounded-[13px] bg-linear-to-br from-[var(--color-brand-red)] to-[var(--color-brand-red-bright)] p-[14px] text-white max-[640px]:min-h-[124px] [&_small]:text-[7px] [&_small]:opacity-80 [&_b]:my-2 [&_b]:mb-1 [&_b]:max-w-[160px] [&_b]:text-base [&_b]:leading-[1.1] [&_span]:text-[8px] [&_i]:mt-[10px] [&_i]:w-fit [&_i]:rounded-sm [&_i]:bg-[var(--color-brand-lime)] [&_i]:px-[7px] [&_i]:py-[5px] [&_i]:text-[7px] [&_i]:font-extrabold [&_i]:not-italic [&_i]:text-[var(--color-brand-ink)] max-[640px]:[&_b]:text-sm',
     phoneLabel:
         'mt-[15px] mb-[9px] text-[10px] font-bold max-[640px]:mt-[11px]',
     phoneTiles:
         'grid grid-cols-3 gap-[7px] [&_span]:flex [&_span]:min-h-[62px] [&_span]:flex-col [&_span]:items-center [&_span]:justify-center [&_span]:gap-[5px] [&_span]:rounded-lg [&_span]:bg-white [&_span]:text-[17px] [&_span]:shadow-[0_3px_11px_#2976a619] [&_small]:text-[7px] max-[640px]:[&_span]:min-h-[54px]',
     phoneNav:
-        'mt-[13px] flex justify-around border-t border-[#e6edf2] pt-[9px] text-[#1486dd] max-[640px]:mt-[9px] [&_span]:flex [&_span]:flex-col [&_span]:items-center [&_span]:gap-0.5 [&_span]:text-[13px] [&_small]:text-[6px] [&_small]:text-[#83909a]',
+        'mt-[13px] flex justify-around border-t border-[#e6edf2] pt-[9px] text-[var(--color-brand-blue)] max-[640px]:mt-[9px] [&_span]:flex [&_span]:flex-col [&_span]:items-center [&_span]:gap-0.5 [&_span]:text-[13px] [&_small]:text-[6px] [&_small]:text-[#83909a]',
     mediaLogos:
         'flex flex-wrap items-center justify-center gap-[clamp(24px,5vw,70px)]',
     mediaLogo:
         'text-[22px] font-extrabold tracking-[-1px] text-[#67727c] opacity-80 grayscale transition-[transform,opacity,filter] duration-300 hover:scale-110 hover:opacity-100 hover:grayscale-0 max-[640px]:text-[18px] motion-reduce:transition-none motion-reduce:hover:scale-100',
     contactBanner:
-        'relative min-h-[305px] overflow-hidden bg-[#d50057] text-white',
+        'relative min-h-[305px] overflow-hidden bg-[var(--color-brand-red)] text-white',
     contactPhoto:
         'absolute inset-0 bg-cover bg-[center_48%] opacity-[.22] grayscale',
     contactOverlay:
-        'absolute inset-0 bg-linear-to-r from-[#e6005e] from-[8%] via-[#e6005e] via-1/2 to-[#e6005e]',
+        'absolute inset-0 bg-linear-to-r from-[var(--color-brand-red-bright)] from-[8%] via-[var(--color-brand-red-bright)] via-1/2 to-[var(--color-brand-red-bright)]',
     contactInner:
         'relative grid min-h-[305px] grid-cols-[.85fr_1fr] items-center max-[640px]:min-h-[300px] max-[640px]:grid-cols-[.85fr_1.15fr] max-[640px]:gap-[10px] max-[390px]:grid-cols-[.78fr_1.22fr]',
     contactPerson:
-        'relative flex h-[305px] items-end justify-center self-end max-[640px]:h-[270px] [&_img]:h-[280px] [&_img]:w-[280px] [&_img]:rounded-t-[48%] [&_img]:object-cover [&_img]:object-[center_20%] [&_img]:saturate-[.78] [&_img]:shadow-[0_15px_0_-8px_#025bbb] max-[640px]:[&_img]:h-[240px] max-[640px]:[&_img]:w-[205px] max-[390px]:[&_img]:h-[220px] max-[390px]:[&_img]:w-[175px] [&_span]:absolute [&_span]:top-[55px] [&_span]:right-[15%] [&_span]:grid [&_span]:size-12 [&_span]:place-items-center [&_span]:rounded-full [&_span]:bg-[#dfff00] [&_span]:text-[23px] max-[640px]:[&_span]:top-[54px] max-[640px]:[&_span]:right-0 max-[640px]:[&_span]:size-[37px] max-[640px]:[&_span]:text-lg',
+        'relative flex h-[305px] items-end justify-center self-end max-[640px]:h-[270px] [&_img]:h-[280px] [&_img]:w-[280px] [&_img]:rounded-t-[48%] [&_img]:object-cover [&_img]:object-[center_20%] [&_img]:saturate-[.78] [&_img]:shadow-[0_15px_0_-8px_var(--color-brand-blue)] max-[640px]:[&_img]:h-[240px] max-[640px]:[&_img]:w-[205px] max-[390px]:[&_img]:h-[220px] max-[390px]:[&_img]:w-[175px] [&_span]:absolute [&_span]:top-[55px] [&_span]:right-[15%] [&_span]:grid [&_span]:size-12 [&_span]:place-items-center [&_span]:rounded-full [&_span]:bg-[var(--color-brand-lime)] [&_span]:text-[23px] max-[640px]:[&_span]:top-[54px] max-[640px]:[&_span]:right-0 max-[640px]:[&_span]:size-[37px] max-[640px]:[&_span]:text-lg',
     contactCopy:
-        'max-w-[470px] py-[30px] [&_h2]:mb-[22px] [&_h2]:text-[clamp(27px,3vw,38px)] [&_h2]:leading-[1.13] [&_h2]:font-bold [&_h2]:tracking-[-1px] max-[640px]:[&_h2]:text-[26px] max-[390px]:[&_h2]:text-[23px] [&_.eyebrow]:text-[#dfff00] max-[640px]:[&_.eyebrow]:text-[9px] max-[640px]:[&_.button]:gap-[7px] max-[640px]:[&_.button]:px-3 max-[640px]:[&_.button]:text-xs',
+        'max-w-[470px] py-[30px] [&_h2]:mb-[22px] [&_h2]:text-[clamp(27px,3vw,38px)] [&_h2]:leading-[1.13] [&_h2]:font-bold [&_h2]:tracking-[-1px] max-[640px]:[&_h2]:text-[26px] max-[390px]:[&_h2]:text-[23px] [&_.eyebrow]:text-[var(--color-brand-lime)] max-[640px]:[&_.eyebrow]:text-[9px] max-[640px]:[&_.button]:gap-[7px] max-[640px]:[&_.button]:px-3 max-[640px]:[&_.button]:text-xs',
     faqWrap:
         'mx-auto w-[min(970px,calc(100%-64px))] max-[900px]:w-[min(calc(100%-44px),720px)] max-[640px]:w-[calc(100%-38px)]',
     faqList: 'grid gap-[10px]',
     faqItem:
-        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] transition-[border-color,box-shadow] duration-300 [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[#d50057] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[#d50057] [&_button_span]:transition-transform [&_button_span]:duration-300 max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
+        'rounded border border-[#ecf0f3] bg-white shadow-[0_4px_15px_#182a3b0d] transition-[border-color,box-shadow] duration-300 [&_h3]:m-0 [&_button]:flex [&_button]:min-h-[59px] [&_button]:w-full [&_button]:items-center [&_button]:justify-between [&_button]:gap-[18px] [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-5 [&_button]:py-[13px] [&_button]:text-left [&_button]:text-[13px] [&_button]:font-bold [&_button]:text-[#28333d] [&_button]:cursor-pointer [&_button]:focus-visible:outline-3 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-[var(--color-brand-red)] [&_button_span]:grid [&_button_span]:size-[29px] [&_button_span]:shrink-0 [&_button_span]:place-items-center [&_button_span]:rounded-full [&_button_span]:bg-[#eaf6ff] [&_button_span]:text-[var(--color-brand-red)] [&_button_span]:transition-transform [&_button_span]:duration-300 max-[640px]:[&_button]:min-h-[58px] max-[640px]:[&_button]:px-3 max-[640px]:[&_button]:text-xs',
     faqAnswer:
         'grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out max-[640px]:pr-[45px] max-[640px]:pl-3',
-    footer: 'bg-[#202124] py-[61px] pb-5 text-white max-[640px]:pt-[49px]',
+    footer: 'bg-[var(--color-brand-ink)] py-[61px] pb-5 text-white max-[640px]:pt-[49px]',
     footerGrid:
         'grid grid-cols-[1.6fr_.72fr_.8fr_1fr] gap-[45px] pb-[42px] max-[640px]:grid-cols-2 max-[640px]:gap-x-5 max-[640px]:gap-y-8 max-[640px]:pb-[30px] [&_h3]:m-0 [&_h3]:mb-4 [&_h3]:text-xs [&_p]:m-0 [&_p]:text-[11px] [&_p]:leading-[1.7] [&_p]:text-[#c1c5c9] [&_a:not(.brand)]:text-[11px] [&_a:not(.brand)]:leading-[1.7] [&_a:not(.brand)]:text-[#c1c5c9] [&>div:not(.footer-brand-col)]:flex [&>div:not(.footer-brand-col)]:flex-col [&>div:not(.footer-brand-col)]:items-start [&>div:not(.footer-brand-col)]:gap-[7px] [&>div:not(.footer-brand-col)_h3]:mb-[7px] max-[640px]:[&_h3]:text-xs max-[640px]:[&_p]:text-[10px] max-[640px]:[&_a:not(.brand)]:text-[10px]',
     footerBrand:
@@ -733,7 +733,7 @@ export default function Welcome() {
                                         key={name}
                                     >
                                         <span
-                                            className={`${tw.partnerSymbol} ${partnerMarkColors[i % 6]} ${i % 6 === 3 ? '!text-[#ffe81c]' : ''}`}
+                                            className={`${tw.partnerSymbol} ${partnerMarkColors[i % 6]} ${i % 6 === 3 ? '!text-[var(--color-brand-lime)]' : ''}`}
                                         >
                                             {partnerMarks[i % 6]}
                                         </span>
@@ -843,7 +843,7 @@ export default function Welcome() {
                             <div className={tw.mediaLogos}>
                                 {media.map((name, i) => (
                                     <span
-                                        className={`${tw.mediaLogo} ${tw.reveal} ${['font-semibold tracking-[-1.4px]', '', 'text-[15px]', 'font-serif font-medium italic', 'text-[23px] text-[#13191e]', 'text-[#60666b]', 'text-[15px]'][i]}`}
+                                        className={`${tw.mediaLogo} ${tw.reveal} ${['font-semibold tracking-[-1.4px]', '', 'text-[15px]', 'font-serif font-medium italic', 'text-[23px] text-[var(--color-brand-ink)]', 'text-[#60666b]', 'text-[15px]'][i]}`}
                                         data-reveal
                                         style={{ transitionDelay: `${i * 60}ms` }}
                                         key={name}
@@ -897,7 +897,7 @@ export default function Welcome() {
                             <div className={tw.faqList}>
                                 {faqs.map(([question, answer], index) => (
                                     <article
-                                        className={`${tw.faqItem} ${tw.reveal} ${openFaq === index ? 'border-[#b7ddfb]' : ''}`}
+                                        className={`${tw.faqItem} ${tw.reveal} ${openFaq === index ? 'border-[var(--color-brand-blue)]' : ''}`}
                                         data-reveal
                                         style={{ transitionDelay: `${index * 70}ms` }}
                                         key={question}
