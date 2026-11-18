@@ -66,7 +66,7 @@ export default function AppLayout({
                             className="h-18 w-auto "
                         />
                         <img
-                            src="/images/logo-huawei-ict.png"
+                            src="/images/logo-huawei-ict.jpeg"
                             alt="Huawei ICT Academy"
                             className="h-15 p-1 w-auto "
                         />
